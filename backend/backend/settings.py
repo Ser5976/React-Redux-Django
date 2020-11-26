@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'todo',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -78,16 +79,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'HOST': os.environ.get('POSTGRES_ADDR', '127.0.0.1'),
-        'PORT': '5432',
-        'NAME': os.environ.get('POSTGRES_DB', 'backend'),
-        'USER': os.environ.get('POSTGRES_USER', 'admin'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'admin'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'HOST': os.environ.get('POSTGRES_ADDR', '127.0.0.1'),
+#         'PORT': '5432',
+#         'NAME': os.environ.get('POSTGRES_DB', 'backend'),
+#         'USER': os.environ.get('POSTGRES_USER', 'admin'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'admin'),
+#     }
+# }
 
 
 # Password validation
@@ -134,3 +135,8 @@ CORS_ORIGIN_WHITELIST = (
 )
 # for allowing requests from react app
 CORS_ORIGIN_ALLOW_ALL = True
+
+try:
+    from backend.local_settings import DATABASES
+except ImportError as e:
+    pass

@@ -7,11 +7,14 @@ from django.utils.translation import ugettext_lazy as _
 
 # local Django
 from backend.mixins import DateTimeMixin
+from users.models import CustomUser
 
 # Create your models here.
 
 
 class Item(DateTimeMixin):
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
+                              verbose_name=_('Owner'))
     title = models.CharField(_('Item'), max_length=120)
     description = models.TextField()
 
