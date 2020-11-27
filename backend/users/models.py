@@ -18,12 +18,12 @@ class CustomUser(DateTimeMixin):
 
     class Meta:
         ordering = ['-id']
-        verbose_name = _('User')
-        verbose_name_plural = _('Users')
+        verbose_name = _('Custom User')
+        verbose_name_plural = _('Custom Users')
 
     @property
     def fullname(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
     def __str__(self):  # __unicode__ on Python 2
-        return str(self.username)
+        return str(self.user.username)

@@ -24,3 +24,10 @@ class Item(DateTimeMixin):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        try:
+            self.owner
+        except CustomUser.DoesNotExist:
+            self.owner = CustomUser.objects.get(user__is_superuser=True)
+        super(Item, self).save(*args, **kwargs)
