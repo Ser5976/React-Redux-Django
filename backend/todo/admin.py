@@ -1,11 +1,11 @@
 # todo/admin.py
 
 from django.contrib import admin
-from .models import Item
+from todo.models import Item
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'created_at')
+    list_display = ('title', 'description', 'owner', 'created_at')
 
 
 # Register your models here.
