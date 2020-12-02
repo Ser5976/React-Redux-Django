@@ -35,9 +35,9 @@ class ItemSerializer(serializers.ModelSerializer):
         ret = OrderedDict()
         errors = OrderedDict()
         fields = self._writable_fields
-        print('data ', data)
+        # print('data ', data)
         for field in fields:
-            print('field ', field)
+            # print('field ', field)
             validate_method = getattr(self, 'validate_' + field.field_name,
                                       None)
             primitive_value = field.get_value(data)
@@ -48,9 +48,9 @@ class ItemSerializer(serializers.ModelSerializer):
                     validated_value = field.run_validation(primitive_value)
                     if validate_method is not None:
                         validated_value = validate_method(validated_value)
-                print('validated_value ', validated_value)
+                # print('validated_value ', validated_value)
             except ValidationError as exc:
-                print('ValidationError')
+                # print('ValidationError')
                 errors[field.field_name] = exc.detail
             except DjangoValidationError as exc:
                 errors[field.field_name] = get_error_detail(exc)
@@ -60,7 +60,7 @@ class ItemSerializer(serializers.ModelSerializer):
                 set_value(ret, field.source_attrs, validated_value)
 
         if errors:
-            print('errors ', errors)
+            # print('errors ', errors)
             raise ValidationError(errors)
 
         return ret
