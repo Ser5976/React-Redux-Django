@@ -1,4 +1,4 @@
-# todo/serializers.py
+# api/serializers/items.py
 
 from collections.abc import Mapping
 from collections import OrderedDict
