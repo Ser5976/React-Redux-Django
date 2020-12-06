@@ -38,3 +38,6 @@ FOR WINDOWS
 
 # запустите nodejs на другом терминале
 10. npm start --prefix assets
+
+
+Сергей разработчик REACT
