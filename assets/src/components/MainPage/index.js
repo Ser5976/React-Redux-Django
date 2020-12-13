@@ -1,12 +1,11 @@
-// frontend/components/MainPage/MainPage.js
-// frontend/components/MainPage/MainPage.js
+// assets/components/MainPage/MainPage.js
 
 import React, { Component } from "react";
 import axios from "axios";
 
 import MainModal from "../MainModal";
 import Modal from "../Modal";
-import ModelUrls from "../../constants/urls";
+import Urls from "../../constants/urls";
 
 
 class MainPage extends Component {
@@ -26,10 +25,9 @@ class MainPage extends Component {
   }
   refreshList = () => {
     axios
-      .get(ModelUrls.ITEMS)
+      .get(Urls.ITEMS)
       .then(res => {
         this.setState({itemList: res.data });
-        console.log('test');
       })
       .catch(err => console.log(err));
   };
@@ -79,17 +77,17 @@ class MainPage extends Component {
     this.toggle();
     if (item.id) {
       axios
-        .put(ModelUrls.ITEMS + item.id + '/', item)
+        .put(Urls.ITEMS + item.id + '/', item)
         .then(res => this.refreshList());
       return;
     }
     axios
-      .post(ModelUrls.ITEMS, item)
+      .post(Urls.ITEMS, item)
       .then(res => this.refreshList());
   };
   handleDelete = item => {
     axios
-      .delete(ModelUrls.ITEMS + item.id)
+      .delete(Urls.ITEMS + item.id)
       .then(res => this.refreshList());
   };
   createItem = () => {

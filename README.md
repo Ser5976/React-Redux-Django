@@ -34,10 +34,7 @@ FOR WINDOWS
 8. python backend\manage.py createsuperuser
 
 # запустите локальный сервер Джанго
-9. python manage.py runserver
+9. python backend\manage.py runserver
 
 # запустите nodejs на другом терминале
 10. npm start --prefix assets
-
-
-Сергей разработчик REACT

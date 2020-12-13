@@ -6,3 +6,5 @@ DATABASES = {
         'NAME': 'todo.db',
     }
 }
+
+CALLBACK_URL_YOU_SET_ON_GITHUB = 'https://githun.com/Dima216'

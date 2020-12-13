@@ -18,8 +18,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from .social import FacebookLogin, GithubLogin
+
 
 urlpatterns = [
     path('api/', include('api.urls'), name='api'),
-    path('admin/', admin.site.urls)
+    path('admin/', admin.site.urls),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('dj-rest-auth/facebook/', FacebookLogin.as_view(), name='fb_login'),
+    path('dj-rest-auth/github/', GithubLogin.as_view(), name='github_login'),
 ]
