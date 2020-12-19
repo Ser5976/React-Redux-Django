@@ -10,15 +10,24 @@ from rest_framework.settings import api_settings
 from rest_framework import serializers
 from rest_framework.fields import get_error_detail, SkipField, set_value, empty
 
-from todo.models import Item
+from todo.models import Item, Address, Comment
 from users.models import User
 
 
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ('id', 'country', 'city', 'street', 'house_number',
+                  'zip_code', 'item', 'created_at',)
+
+
 class ItemSerializer(serializers.ModelSerializer):
+    address = AddressSerializer()
+
     class Meta:
         model = Item
-        fields = ('id', 'owner', 'title', 'description', 'created_at',
-                  'updated_at')
+        fields = ('id', 'owner', 'house_type', 'description', 'status',
+                  'address', 'created_at', 'updated_at')
 
     def to_internal_value(self, data):
         """
@@ -64,3 +73,9 @@ class ItemSerializer(serializers.ModelSerializer):
             raise ValidationError(errors)
 
         return ret
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'name', 'text', 'owner', 'acted', 'created_at',)

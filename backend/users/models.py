@@ -13,6 +13,17 @@ from users.managers import UserManager
 
 class User(AbstractBaseUser, DateTimeMixin, PermissionsMixin):
 
+    class ROLE(object):
+        CONSUMER = 1
+        COMPANY = 2
+
+        ALL = [CONSUMER, COMPANY]
+
+        CHOICES = (
+            (CONSUMER, _('Consumer')),
+            (COMPANY, _('Company')),
+        )
+
     username = models.CharField(_('Username'), max_length=50, unique=True)
     first_name = models.CharField(_('First name'), max_length=50, null=True,
                                   blank=True)
@@ -22,6 +33,12 @@ class User(AbstractBaseUser, DateTimeMixin, PermissionsMixin):
         verbose_name=_('Email address'),
         max_length=255,
         unique=True,
+    )
+    role = models.IntegerField(
+        _('Role'),
+        choices=ROLE.CHOICES,
+        default=ROLE.COMPANY,
+        db_index=True,
     )
     # phone_number = PhoneNumberField(_('Phone number'), max_length=20,
     #                                 null=True, blank=True)
