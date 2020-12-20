@@ -23,7 +23,7 @@ const ListCard = () => {
           return (
             <MyCard
               key={item.id}
-              title={item.title}
+              title={item.id}
               description={item.description}
               handleDelete={handleDelete}
               item={item}
