@@ -88,7 +88,7 @@ class Item(DateTimeMixin):
         ordering = ['created_at']
 
     def __str__(self):
-        return f'{self.house_type} {self.status}'
+        return f'{self.get_house_type_display()} {self.get_status_display()}'
 
     def save(self, *args, **kwargs):
         try:

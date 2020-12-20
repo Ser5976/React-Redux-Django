@@ -16,7 +16,7 @@ from pathlib import Path
 import environ
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, False)
+    DEBUG=(bool, True)
 )
 # reading .env file
 environ.Env.read_env()
@@ -29,7 +29,8 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+# SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = 'lwk=_5%yc!-+*2wqcyhv1k(0m28wc_5$+i!euz58vata-2#!+s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
@@ -105,8 +106,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # Parse database connection url strings like psql://user:pass@127.0.0.1:8458/db
+# DATABASES = {
+    # 'default': env.db('SQLITE_URL', default='sqlite:////tmp/my-tmp-sqlite.db'),
+# }
 DATABASES = {
-    'default': env.db('SQLITE_URL', default='sqlite:////tmp/my-tmp-sqlite.db'),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'todo.db',
+    }
 }
 
 # Password validation
