@@ -8,7 +8,7 @@ from todo.models import Item, Comment, Address
 
 
 class ItemViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     serializer_class = ItemSerializer
     queryset = Item.objects.all()
 
