@@ -82,7 +82,7 @@ class Item(DateTimeMixin):
     photo = models.ImageField(_('Photo'), upload_to=house_photo_path,
                               default='', blank=True)
     price = models.DecimalField(_('Price'), max_digits=6, decimal_places=2,
-                                default=0)
+                                blank=True, default=0)
 
     class Meta:
         verbose_name = _('Item')

@@ -29,7 +29,7 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'owner', 'house_type', 'description', 'status',
-                  'address', 'photo', 'created_at', 'updated_at')
+                  'address', 'photo', 'price', 'created_at', 'updated_at')
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
