@@ -49,12 +49,14 @@ const BaseState = ({ children }) => {
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
+    console.log(response.data);
 
     dispatch({
       type: 'LIST',
       payload: response.data,
     });
   };
+  console.log(state.itemList);
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
     dispatch({
