@@ -78,7 +78,7 @@ class Item(DateTimeMixin):
         db_index=True,
     )
     address = models.OneToOneField(Address, on_delete=models.CASCADE,
-                                   null=True, related_name='item')
+                                   blank=True, null=True, related_name='item')
     photo = models.ImageField(_('Photo'), upload_to=house_photo_path,
                               default='', blank=True)
 

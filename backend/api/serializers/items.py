@@ -15,10 +15,12 @@ from users.models import User
 
 
 class AddressSerializer(serializers.ModelSerializer):
+    # item = serializers.IntegerField(source='item.id')
+
     class Meta:
         model = Address
         fields = ('id', 'country', 'city', 'street', 'house_number',
-                  'zip_code', 'item', 'created_at',)
+                  'zip_code', 'created_at',)
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -27,9 +29,17 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'owner', 'house_type', 'description', 'status',
-                  'address', 'created_at', 'updated_at')
+                  'address', 'photo', 'created_at', 'updated_at')
+
+    def create(self, validated_data):
+        address_data = validated_data.pop('address')
+        address = Address.objects.create(**address_data)
+        validated_data['address'] = address
+        instance = Item.objects.create(**validated_data)
+        return instance
 
     def to_internal_value(self, data):
+
         """
         Dict of native values <- Dict of primitive datatypes.
         """
@@ -44,12 +54,13 @@ class ItemSerializer(serializers.ModelSerializer):
         ret = OrderedDict()
         errors = OrderedDict()
         fields = self._writable_fields
-        # print('data ', data)
+        # print('---data ', data)
         for field in fields:
-            # print('field ', field)
+            # print('---field ', field.field_name)
             validate_method = getattr(self, 'validate_' + field.field_name,
                                       None)
             primitive_value = field.get_value(data)
+            # print('primitive_value ', primitive_value)
             try:
                 if field.field_name == 'owner' and primitive_value == empty:
                     validated_value = User.objects.get(is_admin=True)
@@ -59,7 +70,10 @@ class ItemSerializer(serializers.ModelSerializer):
                         validated_value = validate_method(validated_value)
                 # print('validated_value ', validated_value)
             except ValidationError as exc:
-                # print('ValidationError')
+                # if field.field_name == 'address':
+                    # pass
+                # else:
+                print('---ValidationError ', field.field_name)
                 errors[field.field_name] = exc.detail
             except DjangoValidationError as exc:
                 errors[field.field_name] = get_error_detail(exc)
@@ -69,7 +83,7 @@ class ItemSerializer(serializers.ModelSerializer):
                 set_value(ret, field.source_attrs, validated_value)
 
         if errors:
-            # print('errors ', errors)
+            print('---errors ', errors)
             raise ValidationError(errors)
 
         return ret
