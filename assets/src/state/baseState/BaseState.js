@@ -10,6 +10,7 @@ const initialState = {
     description: '',
   },
   show: false,
+  ad: false,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -27,6 +28,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         show: !state.show,
+      };
+    case 'EDIT_AD':
+      return {
+        ...state,
+        ad: !state.ad,
       };
     case 'EDIT_ITEM':
       return {
@@ -47,16 +53,17 @@ const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const handleShow = () => dispatch({ type: 'SHOW_CLOSE' });
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
+  const editAd = () => dispatch({ type: 'EDIT_AD' });
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
-    console.log(response.data);
+    // console.log(response.data);
 
     dispatch({
       type: 'LIST',
       payload: response.data,
     });
   };
-  console.log(state.itemList);
+  //console.log(state.itemList);
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
     dispatch({
@@ -64,7 +71,7 @@ const BaseState = ({ children }) => {
       payload: item,
     });
   };
-  const { itemList, activeItem, show } = state;
+  const { itemList, activeItem, show, ad } = state;
 
   const editItem = (item) => {
     // console.log(item);
@@ -82,8 +89,8 @@ const BaseState = ({ children }) => {
   }; */
 
   const handleSubmit = async (e) => {
-    //e.preventDefault();
-    // console.log(activeItem.id);
+    e.preventDefault();
+    console.log(activeItem);
     if (activeItem.id) {
       await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeItem);
       refreshList();
@@ -107,6 +114,7 @@ const BaseState = ({ children }) => {
         itemList,
         activeItem,
         show,
+        ad,
         refreshList,
         handleChange,
         handleSubmit,
@@ -114,6 +122,7 @@ const BaseState = ({ children }) => {
         handleShow,
         handleClose,
         editItem,
+        editAd,
       }}
     >
       {children}

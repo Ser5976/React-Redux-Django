@@ -33,7 +33,7 @@ const reducer = (state, action) => {
 
 const RegistrationState = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const handleShow = () => dispatch({ type: 'SHOW_CLOSE' });
+  const handleRegistrationShow = () => dispatch({ type: 'SHOW_CLOSE' });
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
 
   const handleChangeInput = (e) => {
@@ -63,7 +63,7 @@ const RegistrationState = ({ children }) => {
         show,
         handleChangeInput,
         handleSubmitForm,
-        handleShow,
+        handleRegistrationShow,
         handleClose,
       }}
     >
