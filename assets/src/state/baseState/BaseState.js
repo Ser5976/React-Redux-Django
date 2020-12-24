@@ -4,6 +4,7 @@ import { BaseContext } from './BaseContext';
 import ModelUrls from '../../constants/urls';
 
 const initialState = {
+  itemCard: {},
   itemList: [],
   activeItem: {
     title: '',
@@ -18,6 +19,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         itemList: action.payload,
+      };
+    case 'CARD':
+      return {
+        ...state,
+        itemCard: action.payload,
       };
     case 'ADD_ITEM':
       return {
@@ -63,6 +69,15 @@ const BaseState = ({ children }) => {
       payload: response.data,
     });
   };
+  const refreshCard = async (name) => {
+    const response = await axios.get(ModelUrls.ITEMS + name);
+    // console.log(response.data);
+
+    dispatch({
+      type: 'CARD',
+      payload: response.data,
+    });
+  };
   //console.log(state.itemList);
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
@@ -71,7 +86,7 @@ const BaseState = ({ children }) => {
       payload: item,
     });
   };
-  const { itemList, activeItem, show, ad } = state;
+  const { itemList, itemCard, activeItem, show, ad } = state;
 
   const editItem = (item) => {
     // console.log(item);
@@ -112,6 +127,7 @@ const BaseState = ({ children }) => {
     <BaseContext.Provider
       value={{
         itemList,
+        itemCard,
         activeItem,
         show,
         ad,
@@ -123,6 +139,7 @@ const BaseState = ({ children }) => {
         handleClose,
         editItem,
         editAd,
+        refreshCard,
       }}
     >
       {children}
