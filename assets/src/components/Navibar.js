@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import MyModal from './MyModal';
 import FormModal from './FormModal';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
-import { BaseContext } from '../state/baseState/BaseContext';
 
 export default function Navibar() {
   const { handleRegistrationShow } = useContext(RegistrationContext);
-  const { handleShow } = useContext(BaseContext);
 
   return (
     <>
@@ -35,9 +32,11 @@ export default function Navibar() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Button variant="primary" className=" mr-2" onClick={handleShow}>
-              Добавить объявление
-            </Button>
+            <Link to="/addData">
+              <Button variant="primary" className=" mr-2">
+                Добавить объявление
+              </Button>
+            </Link>
 
             <Button
               variant="primary"
@@ -50,7 +49,6 @@ export default function Navibar() {
         </Navbar.Collapse>
       </Navbar>
       <FormModal />
-      <MyModal />
     </>
   );
 }

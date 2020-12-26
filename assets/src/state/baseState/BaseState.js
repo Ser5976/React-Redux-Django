@@ -7,10 +7,19 @@ const initialState = {
   itemCard: {},
   itemList: [],
   activeItem: {
-    title: '',
     description: '',
+    photo: null,
+    price: null,
+    status: null,
+    type: null,
+    address: {
+      country: null,
+      city: null,
+      street: null,
+      houseNumber: null,
+      zipCode: null,
+    },
   },
-  show: false,
   ad: false,
 };
 const reducer = (state, action) => {
@@ -30,6 +39,12 @@ const reducer = (state, action) => {
         ...state,
         activeItem: action.payload,
       };
+    case 'ADD_ITEM_ADDRESS':
+      return {
+        ...state,
+        activeItem: { ...state.activeItem, address: action.payload },
+      };
+
     case 'SHOW_CLOSE':
       return {
         ...state,
@@ -57,8 +72,8 @@ const reducer = (state, action) => {
 
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const handleShow = () => dispatch({ type: 'SHOW_CLOSE' });
-  const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
+  // const handleShow = () => dispatch({ type: 'SHOW_CLOSE' });
+  // const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
   const editAd = () => dispatch({ type: 'EDIT_AD' });
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
@@ -81,16 +96,30 @@ const BaseState = ({ children }) => {
   //console.log(state.itemList);
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
+    // console.log(item);
+
     dispatch({
       type: 'ADD_ITEM',
       payload: item,
     });
   };
+  const handleChangeAddress = (e) => {
+    const itemAddress = {
+      ...state.activeItem.address,
+      [e.target.name]: e.target.value,
+    };
+    //  console.log(itemAddress);
+    dispatch({
+      type: 'ADD_ITEM_ADDRESS',
+      payload: itemAddress,
+    });
+  };
+
   const { itemList, itemCard, activeItem, show, ad } = state;
 
   const editItem = (item) => {
     // console.log(item);
-    handleShow();
+    // handleShow();
     dispatch({
       type: 'EDIT_ITEM',
       payload: item,
@@ -105,7 +134,7 @@ const BaseState = ({ children }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(activeItem);
+    // console.log(activeItem);
     if (activeItem.id) {
       await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeItem);
       refreshList();
@@ -135,11 +164,10 @@ const BaseState = ({ children }) => {
         handleChange,
         handleSubmit,
         handleDelete,
-        handleShow,
-        handleClose,
         editItem,
         editAd,
         refreshCard,
+        handleChangeAddress,
       }}
     >
       {children}
