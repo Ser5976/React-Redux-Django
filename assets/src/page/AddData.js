@@ -160,7 +160,7 @@ const AddData = () => {
               <Form.Label>Номер дома</Form.Label>
               <Form.Control
                 type="text"
-                name="houseNumber"
+                name="house_number"
                 value={houseNumber}
                 onChange={handleChangeAddress}
               />

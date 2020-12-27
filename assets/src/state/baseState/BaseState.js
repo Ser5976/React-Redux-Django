@@ -16,7 +16,7 @@ const initialState = {
       country: null,
       city: null,
       street: null,
-      houseNumber: null,
+      house_number: null,
       zipCode: null,
     },
   },
