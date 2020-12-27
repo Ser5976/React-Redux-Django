@@ -86,11 +86,12 @@ const BaseState = ({ children }) => {
   };
   const refreshCard = async (name) => {
     const response = await axios.get(ModelUrls.ITEMS + name);
-    // console.log(response.data);
+    console.log(response.data);
+    console.log(response.data.address);
 
     dispatch({
       type: 'CARD',
-      payload: response.data,
+      payload: { ...response.data, ...response.data.address },
     });
   };
   //console.log(state.itemList);
@@ -119,7 +120,7 @@ const BaseState = ({ children }) => {
 
   const editItem = (item) => {
     // console.log(item);
-    // handleShow();
+    console.log(1);
     dispatch({
       type: 'EDIT_ITEM',
       payload: item,

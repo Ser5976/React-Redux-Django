@@ -12,9 +12,11 @@ const MyCard = ({ price, photo, handleDelete, item, editItem, ad }) => {
         <Card.Text>Цена:{price}</Card.Text>
         {ad ? (
           <div>
-            <Button variant="primary" onClick={() => editItem(item)}>
-              Edit
-            </Button>
+            <NavLink to="/addData" className="btn-primary" btn-lg role="button">
+              <Button variant="primary" onClick={() => editItem(item)}>
+                Edit
+              </Button>
+            </NavLink>
             <span> </span>
             <Button variant="danger" onClick={() => handleDelete(item)}>
               Delete

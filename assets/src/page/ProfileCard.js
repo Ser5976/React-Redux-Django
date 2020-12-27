@@ -13,8 +13,18 @@ const ProfileCard = ({ match }) => {
 
   // console.log(match);
   console.log(itemCard);
-  const { description, address, photo, price } = itemCard;
-  // const { country, city, street, house_number } = address;
+  const {
+    description,
+    photo,
+    price,
+    country,
+    city,
+    street,
+    house_number,
+  } = itemCard;
+
+  //const { country, city, street, house_number } = address;
+  // console.log(country);
 
   // console.log(typeof urlId);
 
@@ -37,12 +47,12 @@ const ProfileCard = ({ match }) => {
           <Card.Img variant="left" src={photo} alt="фото" />
         </NavLink>
         <Card.Body>
-          {/*  <p>
+          <p>
             {country}
             г.{city} ул.
             {street} д.
             {house_number}
-          </p> */}
+          </p>
           <div>{description}</div>
           <h3>Цена:{price}</h3>
         </Card.Body>

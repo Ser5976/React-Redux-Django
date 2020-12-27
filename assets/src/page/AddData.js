@@ -71,7 +71,7 @@ const AddData = () => {
                   type="radio"
                   label="Продаётся"
                   name="status"
-                  value="1"
+                  value={1}
                   onChange={handleChange}
                 />
                 <Form.Check
@@ -79,7 +79,7 @@ const AddData = () => {
                   type="radio"
                   label="В продаже"
                   name="status"
-                  value="2"
+                  value={2}
                   onChange={handleChange}
                 />
                 <Form.Check
@@ -87,7 +87,7 @@ const AddData = () => {
                   type="radio"
                   label="Продан"
                   name="status"
-                  value="3"
+                  value={3}
                   onChange={handleChange}
                 />
               </Col>
@@ -104,7 +104,7 @@ const AddData = () => {
                   type="radio"
                   label="Коттедж"
                   name="type"
-                  value="1"
+                  value={1}
                   onChange={handleChange}
                 />
                 <Form.Check
@@ -112,7 +112,7 @@ const AddData = () => {
                   type="radio"
                   label="Многоэтажный дом"
                   name="type"
-                  value="2"
+                  value={2}
                   onChange={handleChange}
                 />
               </Col>
