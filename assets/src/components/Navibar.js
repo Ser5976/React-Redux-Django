@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import MyModal from './MyModal';
 import FormModal from './FormModal';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 
 export default function Navibar() {
-  const { handleShow } = useContext(RegistrationContext);
+  const { handleRegistrationShow } = useContext(RegistrationContext);
 
   return (
     <>
@@ -17,13 +16,13 @@ export default function Navibar() {
           <Nav className="mr-auto">
             <Nav.Link></Nav.Link>
 
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+            <NavDropdown title="Продажа" id="collasible-nav-dropdown">
               <NavDropdown.Item>
                 <Link
                   to="/ListCard"
                   style={{ textDecoration: 'none', color: '#212529' }}
                 >
-                  Список
+                  Дома
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
@@ -33,14 +32,23 @@ export default function Navibar() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Button variant="primary" className=" mr-2" onClick={handleShow}>
-              Registration
+            <Link to="/addData">
+              <Button variant="primary" className=" mr-2">
+                Добавить объявление
+              </Button>
+            </Link>
+
+            <Button
+              variant="primary"
+              className=" mr-2"
+              onClick={handleRegistrationShow}
+            >
+              Войти
             </Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
       <FormModal />
-      <MyModal />
     </>
   );
 }

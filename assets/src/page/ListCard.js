@@ -10,6 +10,8 @@ const ListCard = () => {
     handleDelete,
     handleShow,
     editItem,
+    editAd,
+    ad,
   } = useContext(BaseContext);
   useEffect(() => {
     refreshList();
@@ -18,24 +20,25 @@ const ListCard = () => {
 
   return (
     <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
+      <Button variant="primary" className=" mr-2" onClick={editAd}>
+        Редактировать объявление
+      </Button>
       <CardColumns style={{ columnCount: 'auto' }}>
         {itemList.map((item) => {
           return (
             <MyCard
               key={item.id}
-              title={item.id}
-              description={item.description}
+              price={item.price}
+              photo={item.photo}
               handleDelete={handleDelete}
               item={item}
               handleShow={handleShow}
               editItem={editItem}
+              ad={ad}
             />
           );
         })}
       </CardColumns>
-      <Button variant="primary" className=" mr-2" onClick={handleShow}>
-        Add
-      </Button>
     </Container>
   );
 };
