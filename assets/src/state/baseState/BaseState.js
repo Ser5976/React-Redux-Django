@@ -38,6 +38,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         activeItem: action.payload,
+        photoFile: action.photoFile,
       };
     case 'ADD_ITEM_ADDRESS':
       return {
@@ -60,11 +61,6 @@ const reducer = (state, action) => {
         ...state,
         activeItem: action.payload,
       };
-    /* case 'RESET_ACTIV_ITEM':
-      return {
-        ...state,
-        activeItem: action.payload,
-      }; */
     default:
       return state;
   }
@@ -72,12 +68,9 @@ const reducer = (state, action) => {
 
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  // const handleShow = () => dispatch({ type: 'SHOW_CLOSE' });
-  // const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
   const editAd = () => dispatch({ type: 'EDIT_AD' });
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
-    // console.log(response.data);
 
     dispatch({
       type: 'LIST',
@@ -94,14 +87,20 @@ const BaseState = ({ children }) => {
       payload: { ...response.data, ...response.data.address },
     });
   };
-  //console.log(state.itemList);
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
-    // console.log(item);
 
     dispatch({
       type: 'ADD_ITEM',
       payload: item,
+    });
+  };
+  const handlePhoto = (e) => {
+    let photoFile = e.target.files[0];
+
+    dispatch({
+      type: 'ADD_ITEM',
+      photoFile: photoFile,
     });
   };
   const handleChangeAddress = (e) => {
@@ -109,7 +108,6 @@ const BaseState = ({ children }) => {
       ...state.activeItem.address,
       [e.target.name]: e.target.value,
     };
-    //  console.log(itemAddress);
     dispatch({
       type: 'ADD_ITEM_ADDRESS',
       payload: itemAddress,
@@ -119,34 +117,29 @@ const BaseState = ({ children }) => {
   const { itemList, itemCard, activeItem, show, ad } = state;
 
   const editItem = (item) => {
-    // console.log(item);
     console.log(1);
     dispatch({
       type: 'EDIT_ITEM',
       payload: item,
     });
-    // console.log(activeItem);
   };
-  /* const resetActivItem = () => {
-    const reset = { ...state.activeItem, title: '', description: '' };
-    dispatch({ type: 'RESET_ACTIV_ITEM', payload: reset });
-    handleClose();
-  }; */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(activeItem);
     if (activeItem.id) {
       await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeItem);
       refreshList();
-      // resetActivItem();
 
       return;
     }
-    console.log(activeItem);
-    await axios.post(ModelUrls.ITEMS, activeItem);
+    let itemData = new FormData('photo', state.photoFile);
+    // console.log(state);
+    for (var i = activeItem.length - 1; i >= 0; i--) {
+      itemData.append(i, activeItem[i])
+    }
+    // console.log('---', itemData.entries());
+    await axios.post(ModelUrls.ITEMS, itemData);
     refreshList();
-    //resetActivItem();
   };
   const handleDelete = async (item) => {
     await axios.delete(ModelUrls.ITEMS + item.id);
@@ -163,6 +156,7 @@ const BaseState = ({ children }) => {
         ad,
         refreshList,
         handleChange,
+        handlePhoto,
         handleSubmit,
         handleDelete,
         editItem,

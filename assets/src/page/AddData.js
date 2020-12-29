@@ -5,11 +5,11 @@ import { BaseContext } from '../state/baseState/BaseContext';
 const AddData = () => {
   const {
     handleChange,
+    handlePhoto,
     activeItem,
     handleSubmit,
     handleChangeAddress,
   } = useContext(BaseContext);
-
   const { description, photo, price, address } = activeItem;
   const { country, city, street, houseNumber, zipCode } = address;
   return (
@@ -40,7 +40,7 @@ const AddData = () => {
               type="file"
               name="photo"
               value={photo}
-              onChange={handleChange}
+              onChange={handlePhoto}
             />
           </Col>
         </Form.Group>
