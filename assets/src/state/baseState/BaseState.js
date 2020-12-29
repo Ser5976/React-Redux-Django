@@ -39,6 +39,11 @@ const reducer = (state, action) => {
         ...state,
         activeItem: action.payload,
       };
+    case 'PHOTO':
+      return {
+        ...state,
+        activeItem: action.payload,
+      };
     case 'ADD_ITEM_ADDRESS':
       return {
         ...state,
@@ -104,6 +109,15 @@ const BaseState = ({ children }) => {
       payload: item,
     });
   };
+  const handleChangePhoto = (file) => {
+    console.log(file);
+    const img = { ...state.activeItem, photo: file };
+    console.log(img);
+    dispatch({
+      type: 'PHOTO',
+      payload: img,
+    });
+  };
   const handleChangeAddress = (e) => {
     const itemAddress = {
       ...state.activeItem.address,
@@ -143,8 +157,29 @@ const BaseState = ({ children }) => {
 
       return;
     }
+
     console.log(activeItem);
-    await axios.post(ModelUrls.ITEMS, activeItem);
+
+    let activForm = new FormData();
+
+    for (let key in activeItem) {
+      if (key === 'address') {
+        let address = {};
+        for (let ak in activeItem.address) {
+          address[ak] = activeItem.address[ak];
+        }
+        console.log(address);
+        activForm.append('address', address);
+      } else {
+        activForm.append(key, activeItem[key]);
+        // console.log(key, activeItem[key]);
+      }
+    }
+    console.log(activForm);
+    for (let pair of activForm.entries()) {
+      console.log(pair[0] + ',' + pair[1]);
+    }
+    await axios.post(ModelUrls.ITEMS, activForm);
     refreshList();
     //resetActivItem();
   };
@@ -169,6 +204,7 @@ const BaseState = ({ children }) => {
         editAd,
         refreshCard,
         handleChangeAddress,
+        handleChangePhoto,
       }}
     >
       {children}
