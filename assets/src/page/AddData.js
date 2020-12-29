@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { BaseContext } from '../state/baseState/BaseContext';
 
@@ -9,7 +9,9 @@ const AddData = () => {
     activeItem,
     handleSubmit,
     handleChangeAddress,
+    handleChangePhoto,
   } = useContext(BaseContext);
+  const inputEl = useRef(null);
   const { description, photo, price, address } = activeItem;
   const { country, city, street, houseNumber, zipCode } = address;
   return (
@@ -39,8 +41,8 @@ const AddData = () => {
             <Form.Control
               type="file"
               name="photo"
-              value={photo}
-              onChange={handlePhoto}
+              ref={inputEl}
+              onChange={() => handleChangePhoto(inputEl.current.files[0])}
             />
           </Col>
         </Form.Group>

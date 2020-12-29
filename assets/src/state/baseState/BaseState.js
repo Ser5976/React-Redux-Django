@@ -40,6 +40,11 @@ const reducer = (state, action) => {
         activeItem: action.payload,
         photoFile: action.photoFile,
       };
+    case 'PHOTO':
+      return {
+        ...state,
+        activeItem: action.payload,
+      };
     case 'ADD_ITEM_ADDRESS':
       return {
         ...state,
@@ -95,12 +100,13 @@ const BaseState = ({ children }) => {
       payload: item,
     });
   };
-  const handlePhoto = (e) => {
-    let photoFile = e.target.files[0];
-
+  const handleChangePhoto = (file) => {
+    console.log(file);
+    const img = { ...state.activeItem, photo: file };
+    console.log(img);
     dispatch({
-      type: 'ADD_ITEM',
-      photoFile: photoFile,
+      type: 'PHOTO',
+      payload: img,
     });
   };
   const handleChangeAddress = (e) => {
@@ -132,13 +138,29 @@ const BaseState = ({ children }) => {
 
       return;
     }
-    let itemData = new FormData('photo', state.photoFile);
-    // console.log(state);
-    for (var i = activeItem.length - 1; i >= 0; i--) {
-      itemData.append(i, activeItem[i])
+
+    console.log(activeItem);
+
+    let activForm = new FormData();
+
+    for (let key in activeItem) {
+      if (key === 'address') {
+        let address = {};
+        for (let ak in activeItem.address) {
+          address[ak] = activeItem.address[ak];
+        }
+        console.log(address);
+        activForm.append('address', address);
+      } else {
+        activForm.append(key, activeItem[key]);
+        // console.log(key, activeItem[key]);
+      }
     }
-    // console.log('---', itemData.entries());
-    await axios.post(ModelUrls.ITEMS, itemData);
+    console.log(activForm);
+    for (let pair of activForm.entries()) {
+      console.log(pair[0] + ',' + pair[1]);
+    }
+    await axios.post(ModelUrls.ITEMS, activForm);
     refreshList();
   };
   const handleDelete = async (item) => {
@@ -163,6 +185,7 @@ const BaseState = ({ children }) => {
         editAd,
         refreshCard,
         handleChangeAddress,
+        handleChangePhoto,
       }}
     >
       {children}
