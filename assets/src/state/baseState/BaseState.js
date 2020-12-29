@@ -38,6 +38,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         activeItem: action.payload,
+        photoFile: action.photoFile,
+      };
+    case 'PHOTO':
+      return {
+        ...state,
+        activeItem: action.payload,
       };
     case 'ADD_ITEM_ADDRESS':
       return {
@@ -60,11 +66,6 @@ const reducer = (state, action) => {
         ...state,
         activeItem: action.payload,
       };
-    /* case 'RESET_ACTIV_ITEM':
-      return {
-        ...state,
-        activeItem: action.payload,
-      }; */
     default:
       return state;
   }
@@ -72,12 +73,9 @@ const reducer = (state, action) => {
 
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  // const handleShow = () => dispatch({ type: 'SHOW_CLOSE' });
-  // const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
   const editAd = () => dispatch({ type: 'EDIT_AD' });
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
-    // console.log(response.data);
 
     dispatch({
       type: 'LIST',
@@ -94,14 +92,21 @@ const BaseState = ({ children }) => {
       payload: { ...response.data, ...response.data.address },
     });
   };
-  //console.log(state.itemList);
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
-    // console.log(item);
 
     dispatch({
       type: 'ADD_ITEM',
       payload: item,
+    });
+  };
+  const handleChangePhoto = (file) => {
+    console.log(file);
+    const img = { ...state.activeItem, photo: file };
+    console.log(img);
+    dispatch({
+      type: 'PHOTO',
+      payload: img,
     });
   };
   const handleChangeAddress = (e) => {
@@ -109,7 +114,6 @@ const BaseState = ({ children }) => {
       ...state.activeItem.address,
       [e.target.name]: e.target.value,
     };
-    //  console.log(itemAddress);
     dispatch({
       type: 'ADD_ITEM_ADDRESS',
       payload: itemAddress,
@@ -119,34 +123,45 @@ const BaseState = ({ children }) => {
   const { itemList, itemCard, activeItem, show, ad } = state;
 
   const editItem = (item) => {
-    // console.log(item);
     console.log(1);
     dispatch({
       type: 'EDIT_ITEM',
       payload: item,
     });
-    // console.log(activeItem);
   };
-  /* const resetActivItem = () => {
-    const reset = { ...state.activeItem, title: '', description: '' };
-    dispatch({ type: 'RESET_ACTIV_ITEM', payload: reset });
-    handleClose();
-  }; */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(activeItem);
     if (activeItem.id) {
       await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeItem);
       refreshList();
-      // resetActivItem();
 
       return;
     }
+
     console.log(activeItem);
-    await axios.post(ModelUrls.ITEMS, activeItem);
+
+    let activForm = new FormData();
+
+    for (let key in activeItem) {
+      if (key === 'address') {
+        let address = {};
+        for (let ak in activeItem.address) {
+          address[ak] = activeItem.address[ak];
+        }
+        console.log(address);
+        activForm.append('address', address);
+      } else {
+        activForm.append(key, activeItem[key]);
+        // console.log(key, activeItem[key]);
+      }
+    }
+    console.log(activForm);
+    for (let pair of activForm.entries()) {
+      console.log(pair[0] + ',' + pair[1]);
+    }
+    await axios.post(ModelUrls.ITEMS, activForm);
     refreshList();
-    //resetActivItem();
   };
   const handleDelete = async (item) => {
     await axios.delete(ModelUrls.ITEMS + item.id);
@@ -163,12 +178,14 @@ const BaseState = ({ children }) => {
         ad,
         refreshList,
         handleChange,
+        handlePhoto,
         handleSubmit,
         handleDelete,
         editItem,
         editAd,
         refreshCard,
         handleChangeAddress,
+        handleChangePhoto,
       }}
     >
       {children}
