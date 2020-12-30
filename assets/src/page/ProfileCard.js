@@ -12,7 +12,7 @@ const ProfileCard = ({ match }) => {
   }, []);
 
   // console.log(match);
-  console.log(itemCard);
+  // console.log(itemCard);
   const {
     description,
     photo,

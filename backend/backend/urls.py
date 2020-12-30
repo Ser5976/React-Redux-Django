@@ -68,5 +68,5 @@ urlpatterns = [
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('dj-rest-auth/facebook/', FacebookLogin.as_view(), name='fb_login'),
     path('dj-rest-auth/github/', GithubLogin.as_view(), name='github_login'),
-    path('login', CustomLoginView.as_view(), name='custom_login'),
+    path('login/', CustomLoginView.as_view(), name='custom_login'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 //import axios from 'axios';
 import { RegistrationContext } from './RegistrationContext';
+import { authReducer } from '../../reducers/reducers';
 
 const initialState = {
   input: {
@@ -14,25 +15,9 @@ const initialState = {
   validated: false,
   show: false,
 };
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'CHANGE_INPUT_VALUE':
-      return { ...state, input: action.payload };
-    case 'VALIDATED':
-      return { ...state, validated: true };
-    case 'SHOW_CLOSE':
-      return {
-        ...state,
-        show: !state.show,
-      };
-
-    default:
-      return state;
-  }
-};
 
 const RegistrationState = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(authReducer, initialState);
   const handleRegistrationShow = () => dispatch({ type: 'SHOW_CLOSE' });
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
 

@@ -38,6 +38,18 @@ class ItemSerializer(serializers.ModelSerializer):
         instance = Item.objects.create(**validated_data)
         return instance
 
+    def update(self, instance, validated_data):
+        address_data = validated_data.pop('address')
+        address = instance.address
+        for attr, value in address_data.items():
+            setattr(address, attr, value)
+        address.save()
+        # validated_data['address'] = address
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
+
     def to_internal_value(self, data):
 
         """
