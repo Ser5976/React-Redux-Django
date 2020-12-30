@@ -94,7 +94,6 @@ const BaseState = ({ children }) => {
   };
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
-
     dispatch({
       type: 'ADD_ITEM',
       payload: item,
@@ -149,14 +148,11 @@ const BaseState = ({ children }) => {
         for (let ak in activeItem.address) {
           address[ak] = activeItem.address[ak];
         }
-        console.log(address);
-        activForm.append('address', address);
+        activForm.append('address', JSON.stringify(address));
       } else {
         activForm.append(key, activeItem[key]);
-        // console.log(key, activeItem[key]);
       }
     }
-    console.log(activForm);
     for (let pair of activForm.entries()) {
       console.log(pair[0] + ',' + pair[1]);
     }
@@ -178,7 +174,6 @@ const BaseState = ({ children }) => {
         ad,
         refreshList,
         handleChange,
-        handlePhoto,
         handleSubmit,
         handleDelete,
         editItem,

@@ -5,14 +5,13 @@ import { BaseContext } from '../state/baseState/BaseContext';
 const AddData = () => {
   const {
     handleChange,
-    handlePhoto,
     activeItem,
     handleSubmit,
     handleChangeAddress,
     handleChangePhoto,
   } = useContext(BaseContext);
   const inputEl = useRef(null);
-  const { description, photo, price, address } = activeItem;
+  const { description, price, address } = activeItem;
   const { country, city, street, houseNumber, zipCode } = address;
   return (
     <Container className="p-5">

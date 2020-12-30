@@ -1,5 +1,5 @@
 # api/serializers/items.py
-
+import json
 from collections.abc import Mapping
 from collections import OrderedDict
 
@@ -54,13 +54,13 @@ class ItemSerializer(serializers.ModelSerializer):
         ret = OrderedDict()
         errors = OrderedDict()
         fields = self._writable_fields
-        # print('---data ', data)
         for field in fields:
-            # print('---field ', field.field_name)
             validate_method = getattr(self, 'validate_' + field.field_name,
                                       None)
-            primitive_value = field.get_value(data)
-            # print('primitive_value ', primitive_value)
+            if field.field_name == 'address':
+                primitive_value = json.loads(data.get(field.field_name))
+            else:
+                primitive_value = field.get_value(data)
             try:
                 if field.field_name == 'owner' and primitive_value == empty:
                     validated_value = User.objects.get(is_admin=True)
@@ -68,12 +68,7 @@ class ItemSerializer(serializers.ModelSerializer):
                     validated_value = field.run_validation(primitive_value)
                     if validate_method is not None:
                         validated_value = validate_method(validated_value)
-                # print('validated_value ', validated_value)
             except ValidationError as exc:
-                # if field.field_name == 'address':
-                    # pass
-                # else:
-                print('---ValidationError ', field.field_name)
                 errors[field.field_name] = exc.detail
             except DjangoValidationError as exc:
                 errors[field.field_name] = get_error_detail(exc)
@@ -83,7 +78,6 @@ class ItemSerializer(serializers.ModelSerializer):
                 set_value(ret, field.source_attrs, validated_value)
 
         if errors:
-            print('---errors ', errors)
             raise ValidationError(errors)
 
         return ret
