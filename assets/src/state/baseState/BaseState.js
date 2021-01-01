@@ -21,20 +21,20 @@ const initialState = {
       // zip_code: '',
     },
   },
-  ad: false,
 };
 
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(itemReducer, initialState);
-  const editAd = () => dispatch({ type: 'EDIT_AD' });
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
+    console.log(response.data);
 
     dispatch({
       type: 'LIST',
       payload: response.data,
     });
   };
+
   const refreshCard = async (name) => {
     const response = await axios.get(ModelUrls.ITEMS + name);
     // console.log(response.data);
@@ -73,7 +73,7 @@ const BaseState = ({ children }) => {
     });
   };
 
-  const { itemList, itemCard, activeItem, ad } = state;
+  const { itemList, itemCard, activeItem } = state;
   // console.log(activeItem);
 
   const editItem = (item) => {
@@ -84,7 +84,7 @@ const BaseState = ({ children }) => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, history) => {
     e.preventDefault();
     let activeForm = new FormData();
 
@@ -102,6 +102,7 @@ const BaseState = ({ children }) => {
     if (activeItem.id) {
       await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
       refreshList();
+      history.push('/ListCard');
 
       return;
     }
@@ -113,7 +114,7 @@ const BaseState = ({ children }) => {
     const response = await axios.post(ModelUrls.ITEMS, activeForm);
     console.log(response.data);
     refreshList();
-    // console.log(itemList);
+    history.push('/ListCard');
   };
   const handleDelete = async (item) => {
     await axios.delete(ModelUrls.ITEMS + item.id);
@@ -126,13 +127,11 @@ const BaseState = ({ children }) => {
         itemList,
         itemCard,
         activeItem,
-        ad,
         refreshList,
         handleChange,
         handleSubmit,
         handleDelete,
         editItem,
-        editAd,
         refreshCard,
         handleChangeAddress,
         handleChangePhoto,

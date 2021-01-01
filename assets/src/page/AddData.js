@@ -1,8 +1,11 @@
 import React, { useContext, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { BaseContext } from '../state/baseState/BaseContext';
 
 const AddData = () => {
+  const history = useHistory();
+  console.log(history);
   const {
     handleChange,
     activeItem,
@@ -16,7 +19,7 @@ const AddData = () => {
   return (
     <Container className="p-5">
       <h2 className="text-center">Ввод данных</h2>
-      <Form className="mt-5" onSubmit={handleSubmit}>
+      <Form className="mt-5" onSubmit={(e) => handleSubmit(e, history)}>
         <Form.Group as={Row} controlId="formGroupDescription">
           <Form.Label column sm="2">
             <h5>Описание:</h5>
