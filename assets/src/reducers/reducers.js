@@ -28,12 +28,6 @@ export const itemReducer = (state, action) => {
         ...state,
         activeItem: { ...state.activeItem, address: action.payload },
       };
-
-    case 'SHOW_CLOSE':
-      return {
-        ...state,
-        show: !state.show,
-      };
     case 'EDIT_AD':
       return {
         ...state,

@@ -9,16 +9,16 @@ const initialState = {
   itemList: [],
   activeItem: {
     description: '',
-    photo: null,
-    price: null,
-    status: null,
-    type: null,
+    photo: undefined,
+    price: '',
+    status: undefined,
+    type: undefined,
     address: {
-      country: null,
-      city: null,
-      street: null,
-      house_number: null,
-      zipCode: null,
+      country: '',
+      city: '',
+      street: '',
+      house_number: '',
+      // zip_code: '',
     },
   },
   ad: false,
@@ -66,15 +66,18 @@ const BaseState = ({ children }) => {
       ...state.activeItem.address,
       [e.target.name]: e.target.value,
     };
+    // console.log(itemAddress);
     dispatch({
       type: 'ADD_ITEM_ADDRESS',
       payload: itemAddress,
     });
   };
 
-  const { itemList, itemCard, activeItem, show, ad } = state;
+  const { itemList, itemCard, activeItem, ad } = state;
+  // console.log(activeItem);
 
   const editItem = (item) => {
+    //  console.log(item);
     dispatch({
       type: 'EDIT_ITEM',
       payload: item,
@@ -104,11 +107,13 @@ const BaseState = ({ children }) => {
     }
 
     // console.log(activeItem);
-    // for (let pair of activeForm.entries()) {
-    //   console.log(pair[0] + ',' + pair[1]);
-    // }
-    await axios.post(ModelUrls.ITEMS, activeForm);
+    for (let pair of activeForm.entries()) {
+      console.log(pair[0] + ',' + pair[1]);
+    }
+    const response = await axios.post(ModelUrls.ITEMS, activeForm);
+    console.log(response.data);
     refreshList();
+    // console.log(itemList);
   };
   const handleDelete = async (item) => {
     await axios.delete(ModelUrls.ITEMS + item.id);
@@ -121,7 +126,6 @@ const BaseState = ({ children }) => {
         itemList,
         itemCard,
         activeItem,
-        show,
         ad,
         refreshList,
         handleChange,

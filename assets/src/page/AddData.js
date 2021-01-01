@@ -12,7 +12,7 @@ const AddData = () => {
   } = useContext(BaseContext);
   const inputEl = useRef(null);
   const { description, price, address } = activeItem;
-  const { country, city, street, houseNumber, zipCode } = address;
+  const { country, city, street, house_number, zip_code } = address;
   return (
     <Container className="p-5">
       <h2 className="text-center">Ввод данных</h2>
@@ -68,6 +68,7 @@ const AddData = () => {
               </Form.Label>
               <Col sm="8" key="inline - radio">
                 <Form.Check
+                  checked
                   inline
                   type="radio"
                   label="Продаётся"
@@ -101,6 +102,7 @@ const AddData = () => {
               </Form.Label>
               <Col sm="8" key="inline - radio">
                 <Form.Check
+                  checked
                   inline
                   type="radio"
                   label="Коттедж"
@@ -162,7 +164,7 @@ const AddData = () => {
               <Form.Control
                 type="text"
                 name="house_number"
-                value={houseNumber}
+                value={house_number}
                 onChange={handleChangeAddress}
               />
             </Form.Group>
@@ -172,8 +174,8 @@ const AddData = () => {
               <Form.Label>Индекс</Form.Label>
               <Form.Control
                 type="number"
-                name="zipCode"
-                value={zipCode}
+                name="zip_сode"
+                value={zip_code}
                 onChange={handleChangeAddress}
               />
             </Form.Group>
