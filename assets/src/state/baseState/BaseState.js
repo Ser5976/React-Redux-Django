@@ -7,6 +7,7 @@ import { itemReducer } from '../../reducers/reducers';
 const initialState = {
   itemCard: {},
   itemList: [],
+  validated: false,
   activeItem: {
     description: '',
     photo: undefined,
@@ -73,7 +74,7 @@ const BaseState = ({ children }) => {
     });
   };
 
-  const { itemList, itemCard, activeItem } = state;
+  const { itemList, itemCard, activeItem, validated } = state;
   // console.log(activeItem);
 
   const editItem = (item) => {
@@ -86,35 +87,42 @@ const BaseState = ({ children }) => {
 
   const handleSubmit = async (e, history) => {
     e.preventDefault();
-    let activeForm = new FormData();
+    const form = e.currentTarget;
+    if (form.checkValidity() === true) {
+      e.stopPropagation();
 
-    for (let key in activeItem) {
-      if (key === 'address') {
-        let address = {};
-        for (let ak in activeItem.address) {
-          address[ak] = activeItem.address[ak];
+      let activeForm = new FormData();
+
+      for (let key in activeItem) {
+        if (key === 'address') {
+          let address = {};
+          for (let ak in activeItem.address) {
+            address[ak] = activeItem.address[ak];
+          }
+          activeForm.append('address', JSON.stringify(address));
+        } else {
+          activeForm.append(key, activeItem[key]);
         }
-        activeForm.append('address', JSON.stringify(address));
-      } else {
-        activeForm.append(key, activeItem[key]);
       }
-    }
-    if (activeItem.id) {
-      await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
+      if (activeItem.id) {
+        await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
+        refreshList();
+        history.push('/ListCard');
+
+        return;
+      }
+
+      // console.log(activeItem);
+      for (let pair of activeForm.entries()) {
+        console.log(pair[0] + ',' + pair[1]);
+      }
+      const response = await axios.post(ModelUrls.ITEMS, activeForm);
+      console.log(response);
       refreshList();
       history.push('/ListCard');
-
-      return;
     }
 
-    // console.log(activeItem);
-    for (let pair of activeForm.entries()) {
-      console.log(pair[0] + ',' + pair[1]);
-    }
-    const response = await axios.post(ModelUrls.ITEMS, activeForm);
-    console.log(response.data);
-    refreshList();
-    history.push('/ListCard');
+    dispatch({ type: 'VALIDATED' });
   };
   const handleDelete = async (item) => {
     await axios.delete(ModelUrls.ITEMS + item.id);
@@ -127,6 +135,7 @@ const BaseState = ({ children }) => {
         itemList,
         itemCard,
         activeItem,
+        validated,
         refreshList,
         handleChange,
         handleSubmit,

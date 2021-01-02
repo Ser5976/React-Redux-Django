@@ -11,6 +11,7 @@ const AddData = () => {
     handleSubmit,
     handleChangeAddress,
     handleChangePhoto,
+    validated,
   } = useContext(BaseContext);
   const inputEl = useRef(null);
   const { description, price, address, status, house_type } = activeItem;
@@ -27,19 +28,28 @@ const AddData = () => {
   return (
     <Container className="p-5">
       <h2 className="text-center">Ввод данных</h2>
-      <Form className="mt-5" onSubmit={(e) => handleSubmit(e, history)}>
+      <Form
+        className="mt-5"
+        noValidate
+        validated={validated}
+        onSubmit={(e) => handleSubmit(e, history)}
+      >
         <Form.Group as={Row} controlId="formGroupDescription">
           <Form.Label column sm="2">
             <h5>Описание:</h5>
           </Form.Label>
           <Col sm="8">
             <Form.Control
+              required
               as="textarea"
               rows={7}
               name="description"
               value={description}
               onChange={handleChange}
             />
+            <Form.Control.Feedback type="invalid">
+              Обязательно для заполнения
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
         <hr />
@@ -49,11 +59,15 @@ const AddData = () => {
           </Form.Label>
           <Col sm="4">
             <Form.Control
+              required
               type="file"
               name="photo"
               ref={inputEl}
               onChange={() => handleChangePhoto(inputEl.current.files[0])}
             />
+            <Form.Control.Feedback type="invalid">
+              Выберите файл
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
         <hr />
@@ -63,11 +77,15 @@ const AddData = () => {
           </Form.Label>
           <Col sm="4">
             <Form.Control
+              required
               type="number"
               name="price"
               value={price}
               onChange={handleChange}
             />
+            <Form.Control.Feedback type="invalid">
+              Обязательно для заполнения
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
         <hr />
@@ -81,6 +99,7 @@ const AddData = () => {
                 {radioStatus.map((radio, index) => {
                   return (
                     <Form.Check
+                      required
                       key={index}
                       checked={+status === radio.value}
                       inline
@@ -104,6 +123,7 @@ const AddData = () => {
                 {radioType.map((radio, index) => {
                   return (
                     <Form.Check
+                      required
                       key={index}
                       checked={+house_type === radio.value}
                       inline
@@ -126,44 +146,60 @@ const AddData = () => {
             <Form.Group controlId="formGroupCountry">
               <Form.Label>Страна</Form.Label>
               <Form.Control
+                required
                 type="text"
                 name="country"
                 value={country}
                 onChange={handleChangeAddress}
               />
+              <Form.Control.Feedback type="invalid">
+                Обязательно для заполнения
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
             <Form.Group controlId="formGroupCity">
               <Form.Label>Город</Form.Label>
               <Form.Control
+                required
                 type="text"
                 name="city"
                 value={city}
                 onChange={handleChangeAddress}
               />
+              <Form.Control.Feedback type="invalid">
+                Обязательно для заполнения
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
             <Form.Group controlId="formGroupStreet">
               <Form.Label>Улица</Form.Label>
               <Form.Control
+                required
                 type="text"
                 name="street"
                 value={street}
                 onChange={handleChangeAddress}
               />
+              <Form.Control.Feedback type="invalid">
+                Обязательно для заполнения
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col sm="2">
             <Form.Group controlId="formGroupHouseNumber">
               <Form.Label>Номер дома</Form.Label>
               <Form.Control
+                required
                 type="text"
                 name="house_number"
                 value={house_number}
                 onChange={handleChangeAddress}
               />
+              <Form.Control.Feedback type="invalid">
+                Обязательно для заполнения
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col sm="2">

@@ -7,6 +7,8 @@ export const itemReducer = (state, action) => {
         ...state,
         itemList: action.payload,
       };
+    case 'VALIDATED':
+      return { ...state, validated: true };
     case 'CARD':
       return {
         ...state,
@@ -28,11 +30,7 @@ export const itemReducer = (state, action) => {
         ...state,
         activeItem: { ...state.activeItem, address: action.payload },
       };
-    case 'EDIT_AD':
-      return {
-        ...state,
-        ad: !state.ad,
-      };
+
     case 'EDIT_ITEM':
       return {
         ...state,
