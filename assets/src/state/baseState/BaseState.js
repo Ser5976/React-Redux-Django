@@ -12,7 +12,7 @@ const initialState = {
     photo: undefined,
     price: '',
     status: undefined,
-    type: undefined,
+    house_type: undefined,
     address: {
       country: '',
       city: '',

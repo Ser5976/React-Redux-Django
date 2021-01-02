@@ -1,8 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-import { Container, CardColumns, Button } from 'react-bootstrap';
+import { Container, CardColumns, Button, Nav } from 'react-bootstrap';
 import MyCard from '../components/MyCard';
 import { BaseContext } from '../state/baseState/BaseContext';
-import { Link } from 'react-router-dom';
 
 const ListCard = () => {
   const {
@@ -19,11 +18,11 @@ const ListCard = () => {
 
   return (
     <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
-      <Link to="/addData">
+      <Nav.Link href="/addData">
         <Button variant="primary" className=" mr-2">
           Добавить объявление
         </Button>
-      </Link>
+      </Nav.Link>
       <CardColumns style={{ columnCount: 'auto' }}>
         {itemList.map((item) => {
           return (

@@ -5,7 +5,6 @@ import { BaseContext } from '../state/baseState/BaseContext';
 
 const AddData = () => {
   const history = useHistory();
-  console.log(history);
   const {
     handleChange,
     activeItem,
@@ -14,8 +13,17 @@ const AddData = () => {
     handleChangePhoto,
   } = useContext(BaseContext);
   const inputEl = useRef(null);
-  const { description, price, address } = activeItem;
+  const { description, price, address, status, house_type } = activeItem;
   const { country, city, street, house_number, zip_code } = address;
+  const radioStatus = [
+    { label: 'Продатся', value: 1 },
+    { label: 'В продаже', value: 2 },
+    { label: 'Продан', value: 3 },
+  ];
+  const radioType = [
+    { label: 'Коттедж', value: 1 },
+    { label: 'Многоэтажный дом', value: 2 },
+  ];
   return (
     <Container className="p-5">
       <h2 className="text-center">Ввод данных</h2>
@@ -70,31 +78,20 @@ const AddData = () => {
                 <h5>Статус:</h5>
               </Form.Label>
               <Col sm="8" key="inline - radio">
-                <Form.Check
-                  checked
-                  inline
-                  type="radio"
-                  label="Продаётся"
-                  name="status"
-                  value={1}
-                  onChange={handleChange}
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  label="В продаже"
-                  name="status"
-                  value={2}
-                  onChange={handleChange}
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  label="Продан"
-                  name="status"
-                  value={3}
-                  onChange={handleChange}
-                />
+                {radioStatus.map((radio, index) => {
+                  return (
+                    <Form.Check
+                      key={index}
+                      checked={+status === radio.value}
+                      inline
+                      type="radio"
+                      label={radio.label}
+                      name="status"
+                      value={radio.value}
+                      onChange={handleChange}
+                    />
+                  );
+                })}
               </Col>
             </Form.Group>
           </Col>
@@ -104,23 +101,20 @@ const AddData = () => {
                 <h5>Тип:</h5>
               </Form.Label>
               <Col sm="8" key="inline - radio">
-                <Form.Check
-                  checked
-                  inline
-                  type="radio"
-                  label="Коттедж"
-                  name="type"
-                  value={1}
-                  onChange={handleChange}
-                />
-                <Form.Check
-                  inline
-                  type="radio"
-                  label="Многоэтажный дом"
-                  name="type"
-                  value={2}
-                  onChange={handleChange}
-                />
+                {radioType.map((radio, index) => {
+                  return (
+                    <Form.Check
+                      key={index}
+                      checked={+house_type === radio.value}
+                      inline
+                      type="radio"
+                      label={radio.label}
+                      name="house_type"
+                      value={radio.value}
+                      onChange={handleChange}
+                    />
+                  );
+                })}
               </Col>
             </Form.Group>
           </Col>
