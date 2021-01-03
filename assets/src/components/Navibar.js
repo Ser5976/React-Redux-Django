@@ -32,12 +32,6 @@ export default function Navibar() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Link to="/addData">
-              <Button variant="primary" className=" mr-2">
-                Добавить объявление
-              </Button>
-            </Link>
-
             <Button
               variant="primary"
               className=" mr-2"

@@ -7,34 +7,35 @@ import { itemReducer } from '../../reducers/reducers';
 const initialState = {
   itemCard: {},
   itemList: [],
+  validated: false,
   activeItem: {
     description: '',
-    photo: null,
-    price: null,
-    status: null,
-    type: null,
+    photo: undefined,
+    price: '',
+    status: undefined,
+    house_type: undefined,
     address: {
-      country: null,
-      city: null,
-      street: null,
-      house_number: null,
-      zipCode: null,
+      country: '',
+      city: '',
+      street: '',
+      house_number: '',
+      // zip_code: '',
     },
   },
-  ad: false,
 };
 
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(itemReducer, initialState);
-  const editAd = () => dispatch({ type: 'EDIT_AD' });
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
+    console.log(response.data);
 
     dispatch({
       type: 'LIST',
       payload: response.data,
     });
   };
+
   const refreshCard = async (name) => {
     const response = await axios.get(ModelUrls.ITEMS + name);
     // console.log(response.data);
@@ -66,49 +67,58 @@ const BaseState = ({ children }) => {
       ...state.activeItem.address,
       [e.target.name]: e.target.value,
     };
+    // console.log(itemAddress);
     dispatch({
       type: 'ADD_ITEM_ADDRESS',
       payload: itemAddress,
     });
   };
 
-  const { itemList, itemCard, activeItem, show, ad } = state;
+  const { itemList, itemCard, activeItem, validated } = state;
+  // console.log(activeItem);
 
   const editItem = (item) => {
+    //  console.log(item);
     dispatch({
       type: 'EDIT_ITEM',
       payload: item,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, history) => {
     e.preventDefault();
-    let activeForm = new FormData();
+    const form = e.currentTarget;
+    if (form.checkValidity() === true) {
+      e.stopPropagation();
 
-    for (let key in activeItem) {
-      if (key === 'address') {
-        let address = {};
-        for (let ak in activeItem.address) {
-          address[ak] = activeItem.address[ak];
+      let activeForm = new FormData();
+
+      for (let key in activeItem) {
+        if (key === 'address') {
+          let address = {};
+          for (let ak in activeItem.address) {
+            address[ak] = activeItem.address[ak];
+          }
+          activeForm.append('address', JSON.stringify(address));
+        } else {
+          activeForm.append(key, activeItem[key]);
         }
-        activeForm.append('address', JSON.stringify(address));
-      } else {
-        activeForm.append(key, activeItem[key]);
       }
-    }
-    if (activeItem.id) {
-      await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
+      if (activeItem.id) {
+        await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
+        refreshList();
+        history.push('/ListCard');
+
+        return;
+      }
+
+      const response = await axios.post(ModelUrls.ITEMS, activeForm);
+      console.log(response);
       refreshList();
-
-      return;
+      history.push('/ListCard');
     }
 
-    // console.log(activeItem);
-    // for (let pair of activeForm.entries()) {
-    //   console.log(pair[0] + ',' + pair[1]);
-    // }
-    await axios.post(ModelUrls.ITEMS, activeForm);
-    refreshList();
+    dispatch({ type: 'VALIDATED' });
   };
   const handleDelete = async (item) => {
     await axios.delete(ModelUrls.ITEMS + item.id);
@@ -121,14 +131,12 @@ const BaseState = ({ children }) => {
         itemList,
         itemCard,
         activeItem,
-        show,
-        ad,
+        validated,
         refreshList,
         handleChange,
         handleSubmit,
         handleDelete,
         editItem,
-        editAd,
         refreshCard,
         handleChangeAddress,
         handleChangePhoto,
