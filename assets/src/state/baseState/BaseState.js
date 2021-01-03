@@ -112,10 +112,6 @@ const BaseState = ({ children }) => {
         return;
       }
 
-      // console.log(activeItem);
-      for (let pair of activeForm.entries()) {
-        console.log(pair[0] + ',' + pair[1]);
-      }
       const response = await axios.post(ModelUrls.ITEMS, activeForm);
       console.log(response);
       refreshList();
