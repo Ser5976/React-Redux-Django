@@ -105,10 +105,13 @@ const BaseState = ({ children }) => {
         }
       }
       if (activeItem.id) {
-        await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
+        const response = await axios.put(
+          ModelUrls.ITEMS + activeItem.id + '/',
+          activeForm
+        );
         refreshList();
         history.push('/ListCard');
-
+        console.log(response);
         return;
       }
 

@@ -206,6 +206,7 @@ const AddData = () => {
             <Form.Group controlId="formGroupZipCode">
               <Form.Label>Индекс</Form.Label>
               <Form.Control
+                style={{ backgroundImage: 'none' }}
                 type="number"
                 name="zip_сode"
                 value={zip_code}
