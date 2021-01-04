@@ -13,7 +13,7 @@ export default function Navibar() {
         <Navbar.Brand>
           <Link
             to="/"
-            style={{ textDecoration: 'none', color: '#fff', }}
+            style={{ textDecoration: 'none', color: '#fff' }}
           >
             Django React
           </Link>
