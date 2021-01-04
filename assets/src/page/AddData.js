@@ -16,8 +16,9 @@ const AddData = () => {
     image,
   } = useContext(BaseContext);
   const inputEl = useRef(null);
-  const { description, price, address, status, house_type } = activeItem;
+  const { description, price, address, status, house_type, photo } = activeItem;
   const { country, city, street, house_number, zip_code } = address;
+  console.log(photo);
   const radioStatus = [
     { label: 'Продатся', value: 1 },
     { label: 'В продаже', value: 2 },
@@ -27,7 +28,6 @@ const AddData = () => {
     { label: 'Коттедж', value: 1 },
     { label: 'Многоэтажный дом', value: 2 },
   ];
-  console.log(image);
   return (
     <Container className="p-5">
       {bug ? (
@@ -63,14 +63,17 @@ const AddData = () => {
           <Form.Label column sm="2">
             <h5>Фото:</h5>
           </Form.Label>
-          <Col sm="4">
+          <Col sm="10">
             {image ? (
-              <Form.Control
-                type="file"
-                name="photo"
-                ref={inputEl}
-                onChange={() => handleChangePhoto(inputEl.current.files[0])}
-              />
+              <>
+                {/* <small>В настоящее время:{photo}</small> */}
+                <Form.Control
+                  type="file"
+                  name="photo"
+                  ref={inputEl}
+                  onChange={() => handleChangePhoto(inputEl.current.files[0])}
+                />
+              </>
             ) : (
               <Form.Control
                 required
@@ -224,7 +227,7 @@ const AddData = () => {
               <Form.Control
                 style={{ backgroundImage: 'none' }}
                 type="number"
-                name="zip_сode"
+                name="zip_code"
                 value={zip_code}
                 onChange={handleChangeAddress}
               />
