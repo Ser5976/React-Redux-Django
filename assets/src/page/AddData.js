@@ -207,7 +207,7 @@ const AddData = () => {
               <Form.Label>Индекс</Form.Label>
               <Form.Control
                 type="number"
-                name="zip_сode"
+                name="zip_code"
                 value={zip_code}
                 onChange={handleChangeAddress}
               />

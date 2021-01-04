@@ -15,7 +15,6 @@ from users.models import User
 
 
 class AddressSerializer(serializers.ModelSerializer):
-    # item = serializers.IntegerField(source='item.id')
 
     class Meta:
         model = Address
@@ -44,7 +43,6 @@ class ItemSerializer(serializers.ModelSerializer):
         for attr, value in address_data.items():
             setattr(address, attr, value)
         address.save()
-        # validated_data['address'] = address
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
