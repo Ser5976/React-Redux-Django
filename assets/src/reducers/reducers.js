@@ -9,6 +9,8 @@ export const itemReducer = (state, action) => {
       };
     case 'VALIDATED':
       return { ...state, validated: true };
+    case 'BUG':
+      return { ...state, bug: action.payload };
     case 'CARD':
       return {
         ...state,
@@ -34,6 +36,7 @@ export const itemReducer = (state, action) => {
     case 'EDIT_ITEM':
       return {
         ...state,
+        image: true,
         activeItem: action.payload,
       };
     default:

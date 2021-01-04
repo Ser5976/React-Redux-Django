@@ -8,6 +8,8 @@ const initialState = {
   itemCard: {},
   itemList: [],
   validated: false,
+  bug: null,
+  image: false,
   activeItem: {
     description: '',
     photo: undefined,
@@ -74,7 +76,7 @@ const BaseState = ({ children }) => {
     });
   };
 
-  const { itemList, itemCard, activeItem, validated } = state;
+  const { itemList, itemCard, activeItem, validated, bug, image } = state;
   // console.log(activeItem);
 
   const editItem = (item) => {
@@ -105,17 +107,23 @@ const BaseState = ({ children }) => {
         }
       }
       if (activeItem.id) {
-        await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
-        refreshList();
-        history.push('/ListCard');
-
+        try {
+          await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
+          refreshList();
+          history.push('/ListCard');
+        } catch (e) {
+          dispatch({ type: 'BUG', payload: e.message });
+        }
         return;
       }
 
-      const response = await axios.post(ModelUrls.ITEMS, activeForm);
-      console.log(response);
-      refreshList();
-      history.push('/ListCard');
+      try {
+        await axios.post(ModelUrls.ITEMS, activeForm);
+        refreshList();
+        history.push('/ListCard');
+      } catch (e) {
+        dispatch({ type: 'BUG', payload: e.message });
+      }
     }
 
     dispatch({ type: 'VALIDATED' });
@@ -132,6 +140,8 @@ const BaseState = ({ children }) => {
         itemCard,
         activeItem,
         validated,
+        bug,
+        image,
         refreshList,
         handleChange,
         handleSubmit,

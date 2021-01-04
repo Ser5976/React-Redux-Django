@@ -12,6 +12,8 @@ const AddData = () => {
     handleChangeAddress,
     handleChangePhoto,
     validated,
+    bug,
+    image,
   } = useContext(BaseContext);
   const inputEl = useRef(null);
   const { description, price, address, status, house_type } = activeItem;
@@ -25,8 +27,12 @@ const AddData = () => {
     { label: 'Коттедж', value: 1 },
     { label: 'Многоэтажный дом', value: 2 },
   ];
+  console.log(image);
   return (
     <Container className="p-5">
+      {bug ? (
+        <h6 className="text-center text-danger">Что-то пошло не так</h6>
+      ) : null}
       <h2 className="text-center">Ввод данных</h2>
       <Form
         className="mt-5"
@@ -58,13 +64,23 @@ const AddData = () => {
             <h5>Фото:</h5>
           </Form.Label>
           <Col sm="4">
-            <Form.Control
-              required
-              type="file"
-              name="photo"
-              ref={inputEl}
-              onChange={() => handleChangePhoto(inputEl.current.files[0])}
-            />
+            {image ? (
+              <Form.Control
+                type="file"
+                name="photo"
+                ref={inputEl}
+                onChange={() => handleChangePhoto(inputEl.current.files[0])}
+              />
+            ) : (
+              <Form.Control
+                required
+                type="file"
+                name="photo"
+                ref={inputEl}
+                onChange={() => handleChangePhoto(inputEl.current.files[0])}
+              />
+            )}
+
             <Form.Control.Feedback type="invalid">
               Выберите файл
             </Form.Control.Feedback>
@@ -206,6 +222,7 @@ const AddData = () => {
             <Form.Group controlId="formGroupZipCode">
               <Form.Label>Индекс</Form.Label>
               <Form.Control
+                style={{ backgroundImage: 'none' }}
                 type="number"
                 name="zip_code"
                 value={zip_code}
