@@ -130,3 +130,5 @@ yarn-error.log*
 
 # sqlite3
 *.db
+
+.eslintcache

@@ -8,14 +8,13 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError
 from rest_framework.settings import api_settings
 from rest_framework import serializers
-from rest_framework.fields import get_error_detail, SkipField, set_value, empty
+from rest_framework.fields import get_error_detail, SkipField, set_value
 
 from todo.models import Item, Address, Comment
 from users.models import User
 
 
 class AddressSerializer(serializers.ModelSerializer):
-    # item = serializers.IntegerField(source='item.id')
 
     class Meta:
         model = Address
@@ -44,7 +43,6 @@ class ItemSerializer(serializers.ModelSerializer):
         for attr, value in address_data.items():
             setattr(address, attr, value)
         address.save()
-        # validated_data['address'] = address
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
@@ -69,21 +67,25 @@ class ItemSerializer(serializers.ModelSerializer):
         for field in fields:
             validate_method = getattr(self, 'validate_' + field.field_name,
                                       None)
-            if field.field_name == 'address':
-                primitive_value = json.loads(data.get(field.field_name))
+            field_name = field.field_name
+            field_data = data.get(field_name)
+            if field_name == 'address':
+                primitive_value = json.loads(field_data)
+            elif field_name == 'photo' and isinstance(field_data, str):
+                continue
+            elif field_name == 'owner' and field_data is None:
+                primitive_value = User.objects.get(is_admin=True).id
             else:
                 primitive_value = field.get_value(data)
             try:
-                if field.field_name == 'owner' and primitive_value == empty:
-                    validated_value = User.objects.get(is_admin=True)
-                else:
-                    validated_value = field.run_validation(primitive_value)
-                    if validate_method is not None:
-                        validated_value = validate_method(validated_value)
+                validated_value = field.run_validation(primitive_value)
+                if validate_method is not None:
+                    validated_value = validate_method(validated_value)
             except ValidationError as exc:
-                errors[field.field_name] = exc.detail
+                print('ValidationError')
+                errors[field_name] = exc.detail
             except DjangoValidationError as exc:
-                errors[field.field_name] = get_error_detail(exc)
+                errors[field_name] = get_error_detail(exc)
             except SkipField:
                 pass
             else:

@@ -141,8 +141,7 @@ REST_FRAMEWORK = {
     ],
     # 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
-
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# REST_USE_JWT = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Internationalization

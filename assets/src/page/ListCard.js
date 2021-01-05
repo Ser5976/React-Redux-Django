@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Container, CardColumns, Button, Nav } from 'react-bootstrap';
+import { Container, CardColumns } from 'react-bootstrap';
 import MyCard from '../components/MyCard';
 import { BaseContext } from '../state/baseState/BaseContext';
 
@@ -18,11 +18,6 @@ const ListCard = () => {
 
   return (
     <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
-      <Nav.Link href="/addData">
-        <Button variant="primary" className=" mr-2">
-          Добавить объявление
-        </Button>
-      </Nav.Link>
       <CardColumns style={{ columnCount: 'auto' }}>
         {itemList.map((item) => {
           return (
