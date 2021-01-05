@@ -38,44 +38,66 @@ export default function Navibar() {
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Для бизнеса" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.4">
-                Замени на что-нибудь полезное
+              <NavDropdown.Item>
+                <Link
+                  to="/ListCard"
+                  style={{ textDecoration: 'none', color: '#212529' }}
+                >
+                  Список объектов
+                </Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Замени на что-нибудь полезное
+              <NavDropdown.Item>
+                <Link
+                  to="/addData"
+                  style={{ textDecoration: 'none', color: '#212529' }}
+                >
+                  Разместить объявление
+                </Link>
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Для администраторов" id="collasible-nav-dropdown">
                 <a
+                  target="_blank"
+                  rel="noreferrer"
                   href="http://127.0.0.1:8000/admin/"
                   style={{ textDecoration: 'none', color: '#212529', 'marginLeft': '20px' }}
                 >
                   Django admin
                 </a>
               <NavDropdown.Divider />
-              <a
+                <a
+                  target="_blank"
+                  rel="noreferrer"
                   href="http://127.0.0.1:8000/swagger/"
                   style={{ textDecoration: 'none', color: '#212529', 'marginLeft': '20px' }}
-              >
-                Swagger
-              </a>
+                >
+                  Swagger
+                </a>
               <NavDropdown.Divider />
-              <a
+                <a
+                  target="_blank"
+                  rel="noreferrer"
                   href="http://127.0.0.1:8000/silk/"
                   style={{ textDecoration: 'none', color: '#212529', 'marginLeft': '20px' }}
-              >
-                Silk
-              </a>
+                >
+                  Silk
+                </a>
             </NavDropdown>
           </Nav>
           <Nav>
             <Button
               variant="primary"
               className=" mr-2"
+            >
+              Вход
+            </Button>
+            <Button
+              variant="primary"
+              className=" mr-2"
               onClick={handleRegistrationShow}
             >
-              Войти
+              Регистрация
             </Button>
           </Nav>
         </Navbar.Collapse>
