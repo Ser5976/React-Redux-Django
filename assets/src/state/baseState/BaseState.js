@@ -55,7 +55,7 @@ const BaseState = ({ children }) => {
     });
   };
   const handleChangePhoto = (file) => {
-    // console.log(file);
+    console.log(file);
     const img = { ...state.activeItem, photo: file };
     // console.log(img);
     dispatch({
