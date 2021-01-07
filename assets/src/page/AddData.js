@@ -15,10 +15,11 @@ const AddData = () => {
     bug,
     image,
   } = useContext(BaseContext);
+  console.log(validated);
   const inputEl = useRef(null);
   const { description, price, address, status, house_type, photo } = activeItem;
   const { country, city, street, house_number, zip_code } = address;
-  console.log(typeof photo);
+
   const radioStatus = [
     { label: 'Продатся', value: 1 },
     { label: 'В продаже', value: 2 },
