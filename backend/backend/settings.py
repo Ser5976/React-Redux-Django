@@ -134,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# reast_framework settings
+# rest_framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -142,6 +142,9 @@ REST_FRAMEWORK = {
     # 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 # REST_USE_JWT = True
+# REST_AUTH_REGISTER_SERIALIZERS = {
+#     'REGISTER_SERIALIZER': 'api.serializers.auth.CustomRegisterSerializer'
+# }
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Internationalization
@@ -183,10 +186,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # gmail settings
 EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_USER = 'qwert'
-# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-EMAIL_HOST_PASSWORD = 'qwert'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+# EMAIL_HOST_USER = 'qwert'
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+# EMAIL_HOST_PASSWORD = 'qwert'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
