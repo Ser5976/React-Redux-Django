@@ -55,7 +55,7 @@ const BaseState = ({ children }) => {
     });
   };
   const handleChangePhoto = (file) => {
-    // console.log(file);
+    //  console.log(file);
     const img = { ...state.activeItem, photo: file };
     // console.log(img);
     dispatch({
@@ -132,6 +132,29 @@ const BaseState = ({ children }) => {
     refreshList();
     history.push('/ListCard');
   };
+  //Очистка стейта
+  const clearActiveItem = () => {
+    const emptyActiveItem = {
+      activeItem: {
+        description: '',
+        photo: undefined,
+        price: '',
+        status: undefined,
+        house_type: undefined,
+        address: {
+          country: '',
+          city: '',
+          street: '',
+          house_number: '',
+          zip_code: '',
+        },
+      },
+    };
+    dispatch({
+      type: 'CLEAR',
+      payload: { ...emptyActiveItem.activeItem },
+    });
+  };
 
   return (
     <BaseContext.Provider
@@ -150,6 +173,7 @@ const BaseState = ({ children }) => {
         refreshCard,
         handleChangeAddress,
         handleChangePhoto,
+        clearActiveItem,
       }}
     >
       {children}
