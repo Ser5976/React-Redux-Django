@@ -39,6 +39,12 @@ export const itemReducer = (state, action) => {
         image: true,
         activeItem: action.payload,
       };
+    case 'CLEAR':
+      return {
+        ...state,
+        activeItem: action.payload,
+        validated: false,
+      };
     default:
       return state;
   }

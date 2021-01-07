@@ -1,11 +1,15 @@
 import React, { useContext, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Card, Container } from 'react-bootstrap';
+import { NavLink, useHistory } from 'react-router-dom';
+import { Card, Container, Button } from 'react-bootstrap';
 import { BaseContext } from '../state/baseState/BaseContext';
 
 const ProfileCard = ({ match }) => {
-  const { itemCard, refreshCard } = useContext(BaseContext);
+  const { itemCard, refreshCard, editItem, handleDelete } = useContext(
+    BaseContext
+  );
   const urlId = match.params.name;
+  const history = useHistory();
+  // console.log(history);
   useEffect(() => {
     refreshCard(urlId);
     // eslint-disable-next-line
@@ -13,32 +17,9 @@ const ProfileCard = ({ match }) => {
 
   // console.log(match);
   // console.log(itemCard);
-  const {
-    description,
-    photo,
-    price,
-    country,
-    city,
-    street,
-    house_number,
-  } = itemCard;
-
-  //const { country, city, street, house_number } = address;
-  // console.log(country);
-
-  // console.log(typeof urlId);
-
-  /* let card = {};
-  for (let i = 0; i < itemList.length; i++) {
-    //console.log( itemList[i]);
-    // console.log(typeof itemList[i].id);
-    if (itemList[i].id === +urlId) {
-      for (let key in itemList[i]) {
-        card[key] = itemList[i][key];
-      }
-    }
-  } */
-  //console.log(card);
+  const { description, address, photo, price } = itemCard;
+  const ad = { ...address };
+  const { country, city, street, house_number, zip_code } = ad;
 
   return (
     <Container style={{ marginTop: '50px' }}>
@@ -49,12 +30,29 @@ const ProfileCard = ({ match }) => {
         <Card.Body>
           <p>
             {country}
-            г.{city} ул.
-            {street} д.
+            <span> </span>
+            г.{city}
+            <span> </span> ул.
+            {street}
+            <span> </span> д.
             {house_number}
+            <span> </span>
+            индекс:{zip_code}
           </p>
           <div>{description}</div>
           <h3>Цена:{price}</h3>
+          <NavLink to="/addData" className="btn-primary" role="button">
+            <Button variant="primary" onClick={() => editItem(itemCard)}>
+              Edit
+            </Button>
+          </NavLink>
+          <span> </span>
+          <Button
+            variant="danger"
+            onClick={() => handleDelete(itemCard, history)}
+          >
+            Delete
+          </Button>
         </Card.Body>
       </Card>
     </Container>

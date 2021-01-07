@@ -2,19 +2,18 @@ import React, { useContext } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import FormModal from './FormModal';
+import { BaseContext } from '../state/baseState/BaseContext';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 
 export default function Navibar() {
   const { handleRegistrationShow } = useContext(RegistrationContext);
+  const { clearActiveItem } = useContext(BaseContext);
 
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand>
-          <Link
-            to="/"
-            style={{ textDecoration: 'none', color: '#fff' }}
-          >
+          <Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>
             Django React
           </Link>
         </Navbar.Brand>
@@ -51,45 +50,58 @@ export default function Navibar() {
                 <Link
                   to="/addData"
                   style={{ textDecoration: 'none', color: '#212529' }}
+                  onClick={clearActiveItem}
                 >
                   Разместить объявление
                 </Link>
               </NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Для администраторов" id="collasible-nav-dropdown">
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href="http://127.0.0.1:8000/admin/"
-                  style={{ textDecoration: 'none', color: '#212529', 'marginLeft': '20px' }}
-                >
-                  Django admin
-                </a>
+            <NavDropdown
+              title="Для администраторов"
+              id="collasible-nav-dropdown"
+            >
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="http://127.0.0.1:8000/admin/"
+                style={{
+                  textDecoration: 'none',
+                  color: '#212529',
+                  marginLeft: '20px',
+                }}
+              >
+                Django admin
+              </a>
               <NavDropdown.Divider />
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href="http://127.0.0.1:8000/swagger/"
-                  style={{ textDecoration: 'none', color: '#212529', 'marginLeft': '20px' }}
-                >
-                  Swagger
-                </a>
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="http://127.0.0.1:8000/swagger/"
+                style={{
+                  textDecoration: 'none',
+                  color: '#212529',
+                  marginLeft: '20px',
+                }}
+              >
+                Swagger
+              </a>
               <NavDropdown.Divider />
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href="http://127.0.0.1:8000/silk/"
-                  style={{ textDecoration: 'none', color: '#212529', 'marginLeft': '20px' }}
-                >
-                  Silk
-                </a>
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="http://127.0.0.1:8000/silk/"
+                style={{
+                  textDecoration: 'none',
+                  color: '#212529',
+                  marginLeft: '20px',
+                }}
+              >
+                Silk
+              </a>
             </NavDropdown>
           </Nav>
           <Nav>
-            <Button
-              variant="primary"
-              className=" mr-2"
-            >
+            <Button variant="primary" className=" mr-2">
               Вход
             </Button>
             <Button

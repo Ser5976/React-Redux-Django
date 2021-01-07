@@ -21,7 +21,7 @@ const initialState = {
       city: '',
       street: '',
       house_number: '',
-      // zip_code: '',
+      zip_code: '',
     },
   },
 };
@@ -30,7 +30,7 @@ const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(itemReducer, initialState);
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
-    console.log(response.data);
+    //console.log(response.data);
 
     dispatch({
       type: 'LIST',
@@ -41,11 +41,10 @@ const BaseState = ({ children }) => {
   const refreshCard = async (name) => {
     const response = await axios.get(ModelUrls.ITEMS + name);
     // console.log(response.data);
-    // console.log(response.data.address);
 
     dispatch({
       type: 'CARD',
-      payload: { ...response.data, ...response.data.address },
+      payload: { ...response.data },
     });
   };
   const handleChange = (e) => {
@@ -56,7 +55,7 @@ const BaseState = ({ children }) => {
     });
   };
   const handleChangePhoto = (file) => {
-    // console.log(file);
+    //  console.log(file);
     const img = { ...state.activeItem, photo: file };
     // console.log(img);
     dispatch({
@@ -110,7 +109,7 @@ const BaseState = ({ children }) => {
         try {
           await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
           refreshList();
-          history.push('/ListCard');
+          history.goBack();
         } catch (e) {
           dispatch({ type: 'BUG', payload: e.message });
         }
@@ -128,9 +127,33 @@ const BaseState = ({ children }) => {
 
     dispatch({ type: 'VALIDATED' });
   };
-  const handleDelete = async (item) => {
+  const handleDelete = async (item, history) => {
     await axios.delete(ModelUrls.ITEMS + item.id);
     refreshList();
+    history.push('/ListCard');
+  };
+  //Очистка стейта
+  const clearActiveItem = () => {
+    const emptyActiveItem = {
+      activeItem: {
+        description: '',
+        photo: undefined,
+        price: '',
+        status: undefined,
+        house_type: undefined,
+        address: {
+          country: '',
+          city: '',
+          street: '',
+          house_number: '',
+          zip_code: '',
+        },
+      },
+    };
+    dispatch({
+      type: 'CLEAR',
+      payload: { ...emptyActiveItem.activeItem },
+    });
   };
 
   return (
@@ -150,6 +173,7 @@ const BaseState = ({ children }) => {
         refreshCard,
         handleChangeAddress,
         handleChangePhoto,
+        clearActiveItem,
       }}
     >
       {children}
