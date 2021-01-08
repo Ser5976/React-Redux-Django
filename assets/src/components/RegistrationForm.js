@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 
 const RegistrationForm = ({
   validated,
@@ -7,9 +7,31 @@ const RegistrationForm = ({
   handleChange,
   handleSubmit,
 }) => {
-  console.log(activeUsers);
+  // console.log(activeUsers);
+
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form.Group as={Row} controlId="FormGroupRadio">
+        {[
+          { label: 'Покупатель', value: 1 },
+          { label: 'Продавец', value: 2 },
+        ].map((radio, index) => {
+          return (
+            <Col>
+              <Form.Check
+                required
+                key={index}
+                type="radio"
+                label={radio.label}
+                name="role"
+                value={radio.value}
+                onChange={handleChange}
+              />
+            </Col>
+          );
+        })}
+      </Form.Group>
+      <hr />
       <Form.Group controlId="FormGroupUsername">
         <Form.Label>Имя пользователя</Form.Label>
 

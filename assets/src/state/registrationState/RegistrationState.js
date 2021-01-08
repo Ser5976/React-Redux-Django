@@ -32,6 +32,7 @@ const RegistrationState = ({ children }) => {
       payload: inputValue,
     });
   };
+  console.log(activeUsers);
   const handleSubmitForm = async (event) => {
     event.preventDefault();
 
