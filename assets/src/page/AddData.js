@@ -28,6 +28,11 @@ const AddData = () => {
     { label: 'Коттедж', value: 1 },
     { label: 'Многоэтажный дом', value: 2 },
   ];
+  const splitPhoto = () => {
+    const photo1 = photo.split('/');
+    const photo2 = photo1[photo1.length - 1];
+    return photo2;
+  };
 
   return (
     <Container className="p-5">
@@ -69,7 +74,7 @@ const AddData = () => {
               <>
                 <>
                   {typeof photo == 'string' ? (
-                    <small>В настоящее время:{photo}</small>
+                    <small>В настоящее время:{splitPhoto()}</small>
                   ) : null}
                 </>
 
