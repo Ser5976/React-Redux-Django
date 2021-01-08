@@ -15,7 +15,6 @@ const AddData = () => {
     bug,
     image,
   } = useContext(BaseContext);
-  console.log(validated);
   const inputEl = useRef(null);
   const { description, price, address, status, house_type, photo } = activeItem;
   const { country, city, street, house_number, zip_code } = address;
@@ -29,6 +28,7 @@ const AddData = () => {
     { label: 'Коттедж', value: 1 },
     { label: 'Многоэтажный дом', value: 2 },
   ];
+
   return (
     <Container className="p-5">
       {bug ? (
