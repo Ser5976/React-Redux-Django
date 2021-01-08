@@ -7,8 +7,9 @@ export const ModelUrls = {
     COMMENTS: `${ROOT_URL}/api/comments/`,
 };
 
+let ROOT_AUTH = 'dj-rest-auth';
 export const AuthUrls = {
-    LOGIN: `${ROOT_URL}/login/`,
-    LOGOUT: `${ROOT_URL}/dj-rest-auth/logout/`,
-    REGISTRATION: `${ROOT_URL}/dj-rest-auth/registration/`,
+    LOGIN: `${ROOT_URL}/${ROOT_AUTH}/login/`,
+    LOGOUT: `${ROOT_URL}/${ROOT_AUTH}/logout/`,
+    REGISTRATION: `${ROOT_URL}/${ROOT_AUTH}/registration/`,
 };
