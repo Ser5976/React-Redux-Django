@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import FormModal from './FormModal';
@@ -6,8 +6,17 @@ import { BaseContext } from '../state/baseState/BaseContext';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 
 export default function Navibar() {
-  const { handleRegistrationShow } = useContext(RegistrationContext);
+  const {
+    handleRegistrationShow,
+    token,
+    logout,
+    receiveTokenLocalStorage,
+  } = useContext(RegistrationContext);
   const { clearActiveItem } = useContext(BaseContext);
+  useEffect(() => {
+    receiveTokenLocalStorage();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
@@ -101,16 +110,35 @@ export default function Navibar() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Button variant="primary" className=" mr-2">
-              Вход
-            </Button>
-            <Button
-              variant="primary"
-              className=" mr-2"
-              onClick={handleRegistrationShow}
-            >
-              Регистрация
-            </Button>
+            <>
+              {token ? (
+                <Button variant="primary" className=" mr-2" onClick={logout}>
+                  Выйти
+                </Button>
+              ) : (
+                <Button variant="primary" className=" mr-2">
+                  Вход
+                </Button>
+              )}
+            </>
+            <>
+              {token ? (
+                <img
+                  style={{ width: '50px', height: '50px' }}
+                  src="https://download-cs.net/steam/avatars/3412.jpg"
+                  className="img-thumbnail"
+                  alt=" картинка"
+                />
+              ) : (
+                <Button
+                  variant="primary"
+                  className=" mr-2"
+                  onClick={handleRegistrationShow}
+                >
+                  Регистрация
+                </Button>
+              )}
+            </>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

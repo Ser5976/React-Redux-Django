@@ -14,12 +14,13 @@ const initialState = {
   },
   validated: false,
   show: false,
+  token: undefined,
 };
 
 const RegistrationState = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
-  const { activeUsers, validated, show } = state;
+  const { activeUsers, validated, show, token } = state;
   const handleRegistrationShow = () => {
     dispatch({ type: 'SHOW_CLOSE' });
     const emptyActiveUsers = {
@@ -57,13 +58,22 @@ const RegistrationState = ({ children }) => {
       // console.log(activeUsers);
       const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
       console.log(response);
-      console.log(response.config.data.username);
-      let token = response.data['key'];
-      localStorage.setItem('token', token);
+      //console.log(response.config.data.username);
+      localStorage.setItem('token', response.data['key']);
+      let token = localStorage.getItem('token');
+      dispatch({ type: 'AUTH', payload: token });
       dispatch({ type: 'SHOW_CLOSE' });
     }
 
     dispatch({ type: 'VALIDATED' });
+  };
+  const logout = () => {
+    localStorage.removeItem('token');
+    dispatch({ type: 'LOGOUT' });
+  };
+  const receiveTokenLocalStorage = () => {
+    let token = localStorage.getItem('token');
+    dispatch({ type: 'AUTH', payload: token });
   };
 
   return (
@@ -72,10 +82,13 @@ const RegistrationState = ({ children }) => {
         activeUsers,
         validated,
         show,
+        token,
         handleChangeInput,
         handleSubmitForm,
         handleRegistrationShow,
         handleClose,
+        logout,
+        receiveTokenLocalStorage,
       }}
     >
       {children}
