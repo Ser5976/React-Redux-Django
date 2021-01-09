@@ -1,3 +1,5 @@
+import os
+import uuid
 # Django
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -9,6 +11,12 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 # local Django
 from backend.mixins import DateTimeMixin
 from users.managers import UserManager
+
+
+def avatar_path(self, filename):
+    f_name, f_ext = os.path.splitext(filename)
+    return 'avatars/{f_name}'.format(
+        f_name=str(uuid.uuid4()) + f_ext)
 
 
 class User(AbstractBaseUser, DateTimeMixin, PermissionsMixin):
@@ -42,6 +50,8 @@ class User(AbstractBaseUser, DateTimeMixin, PermissionsMixin):
     )
     # phone_number = PhoneNumberField(_('Phone number'), max_length=20,
     #                                 null=True, blank=True)
+    avatar = models.ImageField(_('Avatar'), upload_to=avatar_path, default='',
+                               blank=True)
     is_valid = models.BooleanField(_('Is valid'), default=True)
     is_active = models.BooleanField(_('Is active'), default=True)
     is_admin = models.BooleanField(_('Is admin'), default=False)

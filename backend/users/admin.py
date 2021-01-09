@@ -87,6 +87,7 @@ class UserAdmin(BaseUserAdmin):
             'role',
             'email',
             'username',
+            'avatar',
         )}),
         ('Permissions', {'fields': (
             'is_active', 'is_valid', 'is_admin', 'is_staff',
@@ -97,7 +98,8 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'role', 'username', 'password1', 'password2')}
+            'fields': ('email', 'role', 'username', 'avatar', 'password1',
+                       'password2')}
          ),
     )
     search_fields = ('username',)
