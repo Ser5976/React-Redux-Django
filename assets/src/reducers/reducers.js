@@ -53,7 +53,7 @@ export const itemReducer = (state, action) => {
 export const authReducer = (state, action) => {
   switch (action.type) {
     case 'CHANGE_INPUT_VALUE':
-      return { ...state, input: action.payload };
+      return { ...state, activeUsers: action.payload };
     case 'VALIDATED':
       return { ...state, validated: true };
     case 'SHOW_CLOSE':

@@ -1,16 +1,16 @@
 import React, { useReducer } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import { RegistrationContext } from './RegistrationContext';
 import { authReducer } from '../../reducers/reducers';
+import { AuthUrls } from '../../constants/urls';
 
 const initialState = {
-  input: {
-    name: '',
-    surname: '',
+  activeUsers: {
     email: '',
     username: '',
     password1: '',
     password2: '',
+    role: undefined,
   },
   validated: false,
   show: false,
@@ -20,30 +20,37 @@ const RegistrationState = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   const handleRegistrationShow = () => dispatch({ type: 'SHOW_CLOSE' });
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
+  const { activeUsers, validated, show } = state;
 
   const handleChangeInput = (e) => {
-    const inputValue = { ...state.input, [e.target.name]: e.target.value };
+    const inputValue = {
+      ...state.activeUsers,
+      [e.target.name]: e.target.value,
+    };
     dispatch({
       type: 'CHANGE_INPUT_VALUE',
       payload: inputValue,
     });
   };
-  const handleSubmitForm = (event) => {
+  console.log(activeUsers);
+  const handleSubmitForm = async (event) => {
     event.preventDefault();
-    event.stopPropagation();
-    // console.log(input);
+
     const form = event.currentTarget;
     if (form.checkValidity() === true) {
-      console.log(input);
+      event.stopPropagation();
+      console.log(activeUsers);
+      const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
+      console.log(response);
     }
 
     dispatch({ type: 'VALIDATED' });
   };
-  const { input, validated, show } = state;
+
   return (
     <RegistrationContext.Provider
       value={{
-        input,
+        activeUsers,
         validated,
         show,
         handleChangeInput,

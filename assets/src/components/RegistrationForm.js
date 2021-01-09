@@ -1,35 +1,37 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 
-const RegistrationForm = ({ validated, input, handleChange, handleSubmit }) => {
+const RegistrationForm = ({
+  validated,
+  activeUsers,
+  handleChange,
+  handleSubmit,
+}) => {
+  // console.log(activeUsers);
+
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
-      <Form.Group controlId="formGroupName">
-        <Form.Label>Имя </Form.Label>
-        <Form.Control placeholder="Имя" name="name" onChange={handleChange} />
+      <Form.Group as={Row} controlId="FormGroupRadio">
+        {[
+          { label: 'Покупатель', value: 1 },
+          { label: 'Продавец', value: 2 },
+        ].map((radio, index) => {
+          return (
+            <Col>
+              <Form.Check
+                required
+                key={index}
+                type="radio"
+                label={radio.label}
+                name="role"
+                value={radio.value}
+                onChange={handleChange}
+              />
+            </Col>
+          );
+        })}
       </Form.Group>
-      <Form.Group controlId="formGroupSurname">
-        <Form.Label>Фамилия </Form.Label>
-        <Form.Control
-          placeholder="Фамилия"
-          name="surname"
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group controlId="formGroupEmail">
-        <Form.Label>Электронная почта </Form.Label>
-        <Form.Control
-          required
-          type="email"
-          placeholder="Введите адрес электронной почты"
-          name="email"
-          onChange={handleChange}
-        />
-
-        <Form.Control.Feedback type="invalid">
-          Некорректно набран email
-        </Form.Control.Feedback>
-      </Form.Group>
+      <hr />
       <Form.Group controlId="FormGroupUsername">
         <Form.Label>Имя пользователя</Form.Label>
 
@@ -45,18 +47,33 @@ const RegistrationForm = ({ validated, input, handleChange, handleSubmit }) => {
           Пожалуйста введите имя пользователя
         </Form.Control.Feedback>
       </Form.Group>
+      <Form.Group controlId="formGroupEmail">
+        <Form.Label>Электронная почта </Form.Label>
+        <Form.Control
+          required
+          type="email"
+          placeholder="Введите адрес электронной почты"
+          name="email"
+          onChange={handleChange}
+        />
+
+        <Form.Control.Feedback type="invalid">
+          Некорректно набран email
+        </Form.Control.Feedback>
+      </Form.Group>
+
       <Form.Group controlId="formGroupPassword1">
         <Form.Label>Пароль</Form.Label>
         <Form.Control
           type="password"
           placeholder="Пароль"
-          minLength="6"
+          minLength="8"
           required
           name="password1"
           onChange={handleChange}
         />
         <Form.Text className="text-muted">
-          Ваш пароль должен содержать не менее 6 символов
+          Ваш пароль должен содержать не менее 8 символов
         </Form.Text>
         <Form.Control.Feedback type="invalid">
           В пароле недостаточно символов
@@ -69,7 +86,7 @@ const RegistrationForm = ({ validated, input, handleChange, handleSubmit }) => {
           placeholder="Повторите пароль"
           required
           name="password2"
-          pattern={input.password1}
+          pattern={activeUsers.password1}
           onChange={handleChange}
         />
         <Form.Control.Feedback type="invalid">
@@ -77,7 +94,7 @@ const RegistrationForm = ({ validated, input, handleChange, handleSubmit }) => {
         </Form.Control.Feedback>
       </Form.Group>
       <Button variant="primary" type="submit">
-        Отправить
+        Зарегистрироваться
       </Button>
     </Form>
   );

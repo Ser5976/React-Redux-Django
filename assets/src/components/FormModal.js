@@ -5,7 +5,7 @@ import RegistrationForm from './RegistrationForm';
 
 const FormModal = () => {
   const {
-    input,
+    activeUsers,
     validated,
     handleChangeInput,
     handleSubmitForm,
@@ -23,7 +23,7 @@ const FormModal = () => {
           handleChange={handleChangeInput}
           handleSubmit={handleSubmitForm}
           validated={validated}
-          input={input}
+          activeUsers={activeUsers}
         />
       </Modal.Body>
     </Modal>
