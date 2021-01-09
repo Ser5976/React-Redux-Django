@@ -11,16 +11,15 @@ const RegistrationForm = ({
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
-      <Form.Group as={Row} controlId="FormGroupRadio">
+      <Form.Group as={Row}>
         {[
           { label: 'Покупатель', value: 1 },
           { label: 'Продавец', value: 2 },
         ].map((radio, index) => {
           return (
-            <Col>
+            <Col key={`${index}`}>
               <Form.Check
                 required
-                key={index}
                 type="radio"
                 label={radio.label}
                 name="role"

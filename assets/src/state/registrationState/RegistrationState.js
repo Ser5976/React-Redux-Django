@@ -39,12 +39,14 @@ const RegistrationState = ({ children }) => {
     const form = event.currentTarget;
     if (form.checkValidity() === true) {
       event.stopPropagation();
-      console.log(activeUsers);
+      // console.log(activeUsers);
       const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
-      console.log(response);
+      let token = response.data['key'];
+      localStorage.setItem('token', token);
     }
 
     dispatch({ type: 'VALIDATED' });
+    dispatch({ type: 'SHOW_CLOSE' });
   };
 
   return (
