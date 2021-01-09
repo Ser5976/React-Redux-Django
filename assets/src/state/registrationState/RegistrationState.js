@@ -18,9 +18,24 @@ const initialState = {
 
 const RegistrationState = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
-  const handleRegistrationShow = () => dispatch({ type: 'SHOW_CLOSE' });
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
   const { activeUsers, validated, show } = state;
+  const handleRegistrationShow = () => {
+    dispatch({ type: 'SHOW_CLOSE' });
+    const emptyActiveUsers = {
+      activeUsers: {
+        email: '',
+        username: '',
+        password1: '',
+        password2: '',
+        role: undefined,
+      },
+    };
+    dispatch({
+      type: 'AUTH_CLEAR',
+      payload: { ...emptyActiveUsers.activeUsers },
+    });
+  };
 
   const handleChangeInput = (e) => {
     const inputValue = {
@@ -32,7 +47,7 @@ const RegistrationState = ({ children }) => {
       payload: inputValue,
     });
   };
-  console.log(activeUsers);
+  // console.log(activeUsers);
   const handleSubmitForm = async (event) => {
     event.preventDefault();
 
@@ -41,12 +56,14 @@ const RegistrationState = ({ children }) => {
       event.stopPropagation();
       // console.log(activeUsers);
       const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
+      console.log(response);
+      console.log(response.config.data.username);
       let token = response.data['key'];
       localStorage.setItem('token', token);
+      dispatch({ type: 'SHOW_CLOSE' });
     }
 
     dispatch({ type: 'VALIDATED' });
-    dispatch({ type: 'SHOW_CLOSE' });
   };
 
   return (
