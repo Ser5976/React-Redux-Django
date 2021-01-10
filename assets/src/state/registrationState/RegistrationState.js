@@ -12,6 +12,10 @@ const initialState = {
     password2: '',
     role: undefined,
   },
+  activeLogin: {
+    username: '',
+    password: '',
+  },
   validated: false,
   show: false,
   token: undefined,
@@ -19,10 +23,14 @@ const initialState = {
 
 const RegistrationState = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  // зыкрытие модального окна зегистрации
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
-  const { activeUsers, validated, show, token } = state;
+
+  const { activeUsers, validated, show, token, activeLogin } = state;
+  //открытие модального окна регистрации
   const handleRegistrationShow = () => {
     dispatch({ type: 'SHOW_CLOSE' });
+    // очистка регистрации
     const emptyActiveUsers = {
       activeUsers: {
         email: '',
@@ -37,7 +45,7 @@ const RegistrationState = ({ children }) => {
       payload: { ...emptyActiveUsers.activeUsers },
     });
   };
-
+  // получение зачений из формы регистрации
   const handleChangeInput = (e) => {
     const inputValue = {
       ...state.activeUsers,
@@ -49,6 +57,7 @@ const RegistrationState = ({ children }) => {
     });
   };
   // console.log(activeUsers);
+  // отправка данных из формы на сервер
   const handleSubmitForm = async (event) => {
     event.preventDefault();
 
@@ -67,13 +76,27 @@ const RegistrationState = ({ children }) => {
 
     dispatch({ type: 'VALIDATED' });
   };
+  // очистка LocalStorage
   const logout = () => {
     localStorage.removeItem('token');
     dispatch({ type: 'LOGOUT' });
   };
+  //Проверка наличия токена на LocalStorage
   const receiveTokenLocalStorage = () => {
     let token = localStorage.getItem('token');
     dispatch({ type: 'AUTH', payload: token });
+  };
+  //получение значений  авторизации
+  const handleChangeLogin = (e) => {
+    const inputValueLogin = {
+      ...state.activeLogin,
+      [e.target.name]: e.target.value,
+    };
+    console.log(activeLogin);
+    dispatch({
+      type: 'CHANGE_ACTIVE_LOGIN',
+      payload: inputValueLogin,
+    });
   };
 
   return (
@@ -83,12 +106,14 @@ const RegistrationState = ({ children }) => {
         validated,
         show,
         token,
+        activeLogin,
         handleChangeInput,
         handleSubmitForm,
         handleRegistrationShow,
         handleClose,
         logout,
         receiveTokenLocalStorage,
+        handleChangeLogin,
       }}
     >
       {children}

@@ -77,6 +77,8 @@ export const authReducer = (state, action) => {
         ...state,
         token: undefined,
       };
+    case 'CHANGE_ACTIVE_LOGIN':
+      return { ...state, activeLogin: action.payload };
     default:
       return state;
   }

@@ -116,9 +116,11 @@ export default function Navibar() {
                   Выйти
                 </Button>
               ) : (
-                <Button variant="primary" className=" mr-2">
-                  Вход
-                </Button>
+                <Link to="/loginCard">
+                  <Button variant="primary" className=" mr-2">
+                    Вход
+                  </Button>
+                </Link>
               )}
             </>
             <>
