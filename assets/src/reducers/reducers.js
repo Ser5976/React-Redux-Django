@@ -61,6 +61,22 @@ export const authReducer = (state, action) => {
         ...state,
         show: !state.show,
       };
+    case 'AUTH_CLEAR':
+      return {
+        ...state,
+        activeItem: action.payload,
+        validated: false,
+      };
+    case 'AUTH':
+      return {
+        ...state,
+        token: action.payload,
+      };
+    case 'LOGOUT':
+      return {
+        ...state,
+        token: undefined,
+      };
     default:
       return state;
   }

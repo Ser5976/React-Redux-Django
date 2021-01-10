@@ -14,13 +14,29 @@ const initialState = {
   },
   validated: false,
   show: false,
+  token: undefined,
 };
 
 const RegistrationState = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
-  const handleRegistrationShow = () => dispatch({ type: 'SHOW_CLOSE' });
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
-  const { activeUsers, validated, show } = state;
+  const { activeUsers, validated, show, token } = state;
+  const handleRegistrationShow = () => {
+    dispatch({ type: 'SHOW_CLOSE' });
+    const emptyActiveUsers = {
+      activeUsers: {
+        email: '',
+        username: '',
+        password1: '',
+        password2: '',
+        role: undefined,
+      },
+    };
+    dispatch({
+      type: 'AUTH_CLEAR',
+      payload: { ...emptyActiveUsers.activeUsers },
+    });
+  };
 
   const handleChangeInput = (e) => {
     const inputValue = {
@@ -32,7 +48,7 @@ const RegistrationState = ({ children }) => {
       payload: inputValue,
     });
   };
-  console.log(activeUsers);
+  // console.log(activeUsers);
   const handleSubmitForm = async (event) => {
     event.preventDefault();
 
@@ -41,12 +57,23 @@ const RegistrationState = ({ children }) => {
       event.stopPropagation();
       // console.log(activeUsers);
       const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
-      let token = response.data['key'];
-      localStorage.setItem('token', token);
+      console.log(response);
+      //console.log(response.config.data.username);
+      localStorage.setItem('token', response.data['key']);
+      let token = localStorage.getItem('token');
+      dispatch({ type: 'AUTH', payload: token });
+      dispatch({ type: 'SHOW_CLOSE' });
     }
 
     dispatch({ type: 'VALIDATED' });
-    dispatch({ type: 'SHOW_CLOSE' });
+  };
+  const logout = () => {
+    localStorage.removeItem('token');
+    dispatch({ type: 'LOGOUT' });
+  };
+  const receiveTokenLocalStorage = () => {
+    let token = localStorage.getItem('token');
+    dispatch({ type: 'AUTH', payload: token });
   };
 
   return (
@@ -55,10 +82,13 @@ const RegistrationState = ({ children }) => {
         activeUsers,
         validated,
         show,
+        token,
         handleChangeInput,
         handleSubmitForm,
         handleRegistrationShow,
         handleClose,
+        logout,
+        receiveTokenLocalStorage,
       }}
     >
       {children}
