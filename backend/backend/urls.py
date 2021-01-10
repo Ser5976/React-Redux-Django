@@ -26,7 +26,7 @@ from rest_framework import permissions
 from rest_framework.documentation import include_docs_urls
 
 from .social import FacebookLogin, GithubLogin
-from .auth import CustomLoginView
+from .auth import CustomLoginView, CustomRegisterView
 
 
 doc_title = 'Django React API'
@@ -64,8 +64,10 @@ urlpatterns = [
     path('api/', include('api.urls'), name='api'),
     path('admin/', admin.site.urls),
     path('silk/', include('silk.urls', namespace='silk')),
-    path('dj-rest-auth/login/', CustomLoginView.as_view(), name='custom_login'),
+    path('dj-rest-auth/login/', CustomLoginView.as_view(),
+         name='custom_login'),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', CustomRegisterView.as_view()),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('dj-rest-auth/facebook/', FacebookLogin.as_view(), name='fb_login'),
     path('dj-rest-auth/github/', GithubLogin.as_view(), name='github_login'),
