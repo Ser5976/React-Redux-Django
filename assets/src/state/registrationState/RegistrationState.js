@@ -19,6 +19,7 @@ const initialState = {
   validated: false,
   show: false,
   token: undefined,
+  error: undefined,
 };
 
 const RegistrationState = ({ children }) => {
@@ -26,7 +27,7 @@ const RegistrationState = ({ children }) => {
   // зыкрытие модального окна зегистрации
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
 
-  const { activeUsers, validated, show, token, activeLogin } = state;
+  const { activeUsers, validated, show, token, activeLogin, error } = state;
   //открытие модального окна регистрации
   const handleRegistrationShow = () => {
     dispatch({ type: 'SHOW_CLOSE' });
@@ -92,11 +93,28 @@ const RegistrationState = ({ children }) => {
       ...state.activeLogin,
       [e.target.name]: e.target.value,
     };
-    console.log(activeLogin);
+    //console.log(activeLogin);
     dispatch({
       type: 'CHANGE_ACTIVE_LOGIN',
       payload: inputValueLogin,
     });
+  };
+  //отправка логина на сервер и получение токина
+  const handleSubmitLogin = async (event, history) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(AuthUrls.LOGIN, activeLogin);
+      // console.log(response);
+
+      localStorage.setItem('token', response.data['key']);
+      let token = localStorage.getItem('token');
+      dispatch({ type: 'AUTH', payload: token });
+      dispatch({ type: 'NO_ERROR' });
+      history.goBack();
+    } catch (e) {
+      console.log(e);
+      dispatch({ type: 'ERROR', payload: e.name });
+    }
   };
 
   return (
@@ -107,6 +125,7 @@ const RegistrationState = ({ children }) => {
         show,
         token,
         activeLogin,
+        error,
         handleChangeInput,
         handleSubmitForm,
         handleRegistrationShow,
@@ -114,6 +133,7 @@ const RegistrationState = ({ children }) => {
         logout,
         receiveTokenLocalStorage,
         handleChangeLogin,
+        handleSubmitLogin,
       }}
     >
       {children}
