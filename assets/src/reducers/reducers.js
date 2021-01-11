@@ -77,6 +77,18 @@ export const authReducer = (state, action) => {
         ...state,
         token: undefined,
       };
+    case 'CHANGE_ACTIVE_LOGIN':
+      return { ...state, activeLogin: action.payload };
+    case 'ERROR':
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case 'NO_ERROR':
+      return {
+        ...state,
+        error: undefined,
+      };
     default:
       return state;
   }
