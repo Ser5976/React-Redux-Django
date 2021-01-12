@@ -3,6 +3,7 @@ import axios from 'axios';
 import { RegistrationContext } from './RegistrationContext';
 import { authReducer } from '../../reducers/reducers';
 import { AuthUrls } from '../../constants/urls';
+import RegistrationForm from '../../components/RegistrationForm';
 
 const initialState = {
   activeUsers: {
@@ -116,6 +117,11 @@ const RegistrationState = ({ children }) => {
       dispatch({ type: 'ERROR', payload: e.name });
     }
   };
+  //открытие из логина окно регистрации и перенаправление нам предыдущую страницу
+  const registrationShow = (history) => {
+    history.goBack();
+    handleRegistrationShow();
+  };
 
   return (
     <RegistrationContext.Provider
@@ -134,6 +140,7 @@ const RegistrationState = ({ children }) => {
         receiveTokenLocalStorage,
         handleChangeLogin,
         handleSubmitLogin,
+        registrationShow,
       }}
     >
       {children}
