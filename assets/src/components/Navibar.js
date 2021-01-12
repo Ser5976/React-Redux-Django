@@ -10,11 +10,11 @@ export default function Navibar() {
     handleRegistrationShow,
     token,
     logout,
-    receiveTokenLocalStorage,
+    receiveUserLocalStorage,
   } = useContext(RegistrationContext);
   const { clearActiveItem } = useContext(BaseContext);
   useEffect(() => {
-    receiveTokenLocalStorage();
+    receiveUserLocalStorage();
     // eslint-disable-next-line
   }, []);
 

@@ -1,3 +1,5 @@
+import '../css/logincard.css';
+
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Card, Container, Form, Button, Col, Row } from 'react-bootstrap';
@@ -53,12 +55,13 @@ const LoginCard = () => {
                 </Button>
               </Col>
               <Col>
-                <div>
-                  Ещё нет учётной записи?
-                  <a href="#" onClick={handleRegistrationShow}>
-                    <small>Зарегистрироваться</small>
-                  </a>
-                </div>
+                Ещё нет учётной записи?
+                <Button
+                  className="link-button"
+                  onClick={handleRegistrationShow}
+                >
+                  <small className="register-link">Зарегистрироваться</small>
+                </Button>
               </Col>
             </Row>
           </Form>

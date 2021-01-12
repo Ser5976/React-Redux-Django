@@ -71,11 +71,15 @@ export const authReducer = (state, action) => {
       return {
         ...state,
         token: action.payload,
+        userName: action.userName,
+        userId: action.userId,
       };
     case 'LOGOUT':
       return {
         ...state,
         token: undefined,
+        userName: undefined,
+        userId: undefined,
       };
     case 'CHANGE_ACTIVE_LOGIN':
       return { ...state, activeLogin: action.payload };

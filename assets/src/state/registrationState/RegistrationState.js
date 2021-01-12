@@ -19,6 +19,8 @@ const initialState = {
   validated: false,
   show: false,
   token: undefined,
+  userName: undefined,
+  userId: undefined,
   error: undefined,
 };
 
@@ -46,7 +48,7 @@ const RegistrationState = ({ children }) => {
       payload: { ...emptyActiveUsers.activeUsers },
     });
   };
-  // получение зачений из формы регистрации
+  // получение значений из формы регистрации
   const handleChangeInput = (e) => {
     const inputValue = {
       ...state.activeUsers,
@@ -57,21 +59,26 @@ const RegistrationState = ({ children }) => {
       payload: inputValue,
     });
   };
-  // console.log(activeUsers);
-  // отправка данных из формы на сервер
+  // Добавление данных пользователя в LocalStorage
+  const setUserLocalStorage = (data) => {
+    let token = data['key'];
+    let userName = data['username'];
+    let userId = data['user_id'];
+    localStorage.setItem('token', token);
+    localStorage.setItem('userName', userName);
+    localStorage.setItem('userId', userId);
+    dispatch({ type: 'AUTH', payload: token, userName: userName, userId: userId });
+  };
+  // отправка данных из формы регистрации
   const handleSubmitForm = async (event) => {
     event.preventDefault();
 
     const form = event.currentTarget;
     if (form.checkValidity() === true) {
       event.stopPropagation();
-      // console.log(activeUsers);
       const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
-      console.log(response);
-      //console.log(response.config.data.username);
-      localStorage.setItem('token', response.data['key']);
-      let token = localStorage.getItem('token');
-      dispatch({ type: 'AUTH', payload: token });
+      // console.log(response);
+      setUserLocalStorage(response.data);
       dispatch({ type: 'SHOW_CLOSE' });
     }
 
@@ -80,12 +87,16 @@ const RegistrationState = ({ children }) => {
   // очистка LocalStorage
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userId');
     dispatch({ type: 'LOGOUT' });
   };
-  //Проверка наличия токена на LocalStorage
-  const receiveTokenLocalStorage = () => {
+  // Получение данных пользователя из LocalStorage
+  const receiveUserLocalStorage = () => {
     let token = localStorage.getItem('token');
-    dispatch({ type: 'AUTH', payload: token });
+    let userName = localStorage.getItem('userName');
+    let userId = localStorage.getItem('userId');
+    dispatch({ type: 'AUTH', payload: token, userName: userName, userId: userId });
   };
   //получение значений  авторизации
   const handleChangeLogin = (e) => {
@@ -99,16 +110,13 @@ const RegistrationState = ({ children }) => {
       payload: inputValueLogin,
     });
   };
-  //отправка логина на сервер и получение токина
+  //отправка логина на сервер и получение токeна
   const handleSubmitLogin = async (event, history) => {
     event.preventDefault();
     try {
       const response = await axios.post(AuthUrls.LOGIN, activeLogin);
       // console.log(response);
-
-      localStorage.setItem('token', response.data['key']);
-      let token = localStorage.getItem('token');
-      dispatch({ type: 'AUTH', payload: token });
+      setUserLocalStorage(response.data);
       dispatch({ type: 'NO_ERROR' });
       history.goBack();
     } catch (e) {
@@ -124,6 +132,7 @@ const RegistrationState = ({ children }) => {
         validated,
         show,
         token,
+        // userName,
         activeLogin,
         error,
         handleChangeInput,
@@ -131,7 +140,7 @@ const RegistrationState = ({ children }) => {
         handleRegistrationShow,
         handleClose,
         logout,
-        receiveTokenLocalStorage,
+        receiveUserLocalStorage,
         handleChangeLogin,
         handleSubmitLogin,
       }}
