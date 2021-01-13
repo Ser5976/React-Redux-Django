@@ -27,7 +27,7 @@ const initialState = {
 
 const RegistrationState = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
-  // зыкрытие модального окна зегистрации
+  // закрытие модального окна регистрации
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
 
   const { activeUsers, validated, show, token, userName, activeLogin, error } = state;
@@ -98,6 +98,7 @@ const RegistrationState = ({ children }) => {
     let userName = localStorage.getItem('userName');
     let userId = localStorage.getItem('userId');
     dispatch({ type: 'AUTH', payload: token, userName: userName, userId: userId });
+    return true;
   };
   //получение значений  авторизации
   const handleChangeLogin = (e) => {
