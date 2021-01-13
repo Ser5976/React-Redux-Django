@@ -1,9 +1,13 @@
+import '../css/navbar.css';
+
 import React, { useContext, useEffect } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
 import FormModal from './FormModal';
 import { BaseContext } from '../state/baseState/BaseContext';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
+import { AdminUrls } from '../constants/urls';
 
 export default function Navibar() {
   const {
@@ -36,7 +40,7 @@ export default function Navibar() {
               <NavDropdown.Item>
                 <Link
                   to="/ListCard"
-                  style={{ textDecoration: 'none', color: '#212529' }}
+                  className="dropdown-link"
                 >
                   Выбрать дом
                 </Link>
@@ -50,7 +54,7 @@ export default function Navibar() {
               <NavDropdown.Item>
                 <Link
                   to="/ListCard"
-                  style={{ textDecoration: 'none', color: '#212529' }}
+                  className="dropdown-link"
                 >
                   Список объектов
                 </Link>
@@ -59,7 +63,7 @@ export default function Navibar() {
               <NavDropdown.Item>
                 <Link
                   to="/addData"
-                  style={{ textDecoration: 'none', color: '#212529' }}
+                  className="dropdown-link"
                   onClick={clearActiveItem}
                 >
                   Разместить объявление
@@ -73,7 +77,7 @@ export default function Navibar() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="http://127.0.0.1:8000/admin/"
+                href={AdminUrls.ADMIN}
                 style={{
                   textDecoration: 'none',
                   color: '#212529',
@@ -86,7 +90,7 @@ export default function Navibar() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="http://127.0.0.1:8000/swagger/"
+                href={AdminUrls.SWAGGER}
                 style={{
                   textDecoration: 'none',
                   color: '#212529',
@@ -99,7 +103,7 @@ export default function Navibar() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="http://127.0.0.1:8000/silk/"
+                href={AdminUrls.SILK}
                 style={{
                   textDecoration: 'none',
                   color: '#212529',

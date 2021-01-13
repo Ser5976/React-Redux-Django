@@ -21,7 +21,7 @@ class ItemViewSet(viewsets.ModelViewSet):
 
 
 class AddressViewSet(viewsets.ModelViewSet):
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = AddressSerializer
     queryset = Address.objects.all()
 

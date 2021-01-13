@@ -7,6 +7,7 @@ const ProfileCard = ({ match }) => {
   const { itemCard, refreshCard, editItem, handleDelete } = useContext(
     BaseContext
   );
+  // console.log(match);
   const urlId = match.params.name;
   const history = useHistory();
   // console.log(history);
@@ -15,7 +16,6 @@ const ProfileCard = ({ match }) => {
     // eslint-disable-next-line
   }, []);
 
-  // console.log(match);
   // console.log(itemCard);
   const { description, address, photo, price } = itemCard;
   const ad = { ...address };
@@ -28,6 +28,7 @@ const ProfileCard = ({ match }) => {
           <Card.Img variant="left" src={photo} alt="фото" />
         </NavLink>
         <Card.Body>
+          <b>Адрес</b>
           <p>
             {country}
             <span> </span>
@@ -37,10 +38,11 @@ const ProfileCard = ({ match }) => {
             <span> </span> д.
             {house_number}
             <span> </span>
-            индекс:{zip_code}
+            индекс: {zip_code}
           </p>
+          <b>Описание</b>
           <div>{description}</div>
-          <h3>Цена:{price}</h3>
+          <h3>Цена: {price}</h3>
           <NavLink to="/addData" className="btn-primary" role="button">
             <Button variant="primary" onClick={() => editItem(itemCard)}>
               Edit

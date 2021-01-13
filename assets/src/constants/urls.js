@@ -13,3 +13,9 @@ export const AuthUrls = {
     LOGOUT: `${ROOT_URL}/${ROOT_AUTH}/logout/`,
     REGISTRATION: `${ROOT_URL}/${ROOT_AUTH}/registration/`,
 };
+
+export const AdminUrls = {
+    ADMIN: `${ROOT_URL}/admin/`,
+    SWAGGER: `${ROOT_URL}/swagger/`,
+    SILK: `${ROOT_URL}/silk/`,
+};
