@@ -42,7 +42,7 @@ const ProfileCard = ({ match }) => {
           </p>
           <b>Описание</b>
           <div>{description}</div>
-          <h3>Цена: {price}</h3>
+          <h3>Цена: {price} руб.</h3>
           <NavLink to="/addData" className="btn-primary" role="button">
             <Button variant="primary" onClick={() => editItem(itemCard)}>
               Edit

@@ -3,7 +3,7 @@ import { Container, CardColumns } from 'react-bootstrap';
 import MyCard from '../components/MyCard';
 import { BaseContext } from '../state/baseState/BaseContext';
 
-const ListCard = () => {
+const ListCard = (e) => {
   const {
     itemList,
     refreshList,
@@ -15,7 +15,6 @@ const ListCard = () => {
     refreshList();
     // eslint-disable-next-line
   }, []);
-
   return (
     <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
       <CardColumns style={{ columnCount: 'auto' }}>

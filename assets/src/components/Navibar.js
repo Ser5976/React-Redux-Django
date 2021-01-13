@@ -46,7 +46,7 @@ export default function Navibar() {
                 </Link>
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
+              <NavDropdown.Item href="#action/3.4" className="dropdown-link">
                 Замени на что-нибудь полезное
               </NavDropdown.Item>
             </NavDropdown>

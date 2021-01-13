@@ -14,7 +14,7 @@ const MyCard = ({ price, photo, item }) => {
         />
       </NavLink>
       <Card.Body>
-        <Card.Text>Цена:{price}</Card.Text>
+        <Card.Text>Цена: {price} руб.</Card.Text>
       </Card.Body>
     </Card>
   );
