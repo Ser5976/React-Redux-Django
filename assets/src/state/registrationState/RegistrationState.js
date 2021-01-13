@@ -3,6 +3,7 @@ import axios from 'axios';
 import { RegistrationContext } from './RegistrationContext';
 import { authReducer } from '../../reducers/reducers';
 import { AuthUrls } from '../../constants/urls';
+// import RegistrationForm from '../../components/RegistrationForm';
 
 const initialState = {
   activeUsers: {
@@ -29,7 +30,7 @@ const RegistrationState = ({ children }) => {
   // зыкрытие модального окна зегистрации
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
 
-  const { activeUsers, validated, show, token, activeLogin, error } = state;
+  const { activeUsers, validated, show, token, userName, activeLogin, error } = state;
   //открытие модального окна регистрации
   const handleRegistrationShow = () => {
     dispatch({ type: 'SHOW_CLOSE' });
@@ -124,6 +125,11 @@ const RegistrationState = ({ children }) => {
       dispatch({ type: 'ERROR', payload: e.name });
     }
   };
+  //открытие из логина окно регистрации и перенаправление нам предыдущую страницу
+  const registrationShow = (history) => {
+    history.goBack();
+    handleRegistrationShow();
+  };
 
   return (
     <RegistrationContext.Provider
@@ -132,7 +138,7 @@ const RegistrationState = ({ children }) => {
         validated,
         show,
         token,
-        // userName,
+        userName,
         activeLogin,
         error,
         handleChangeInput,
@@ -143,6 +149,7 @@ const RegistrationState = ({ children }) => {
         receiveUserLocalStorage,
         handleChangeLogin,
         handleSubmitLogin,
+        registrationShow,
       }}
     >
       {children}

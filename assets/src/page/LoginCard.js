@@ -11,7 +11,7 @@ const LoginCard = () => {
     handleChangeLogin,
     handleSubmitLogin,
     error,
-    handleRegistrationShow,
+    registrationShow,
   } = useContext(RegistrationContext);
 
   return (
@@ -55,13 +55,12 @@ const LoginCard = () => {
                 </Button>
               </Col>
               <Col>
-                Ещё нет учётной записи?
-                <Button
-                  className="link-button"
-                  onClick={handleRegistrationShow}
-                >
-                  <small className="register-link">Зарегистрироваться</small>
-                </Button>
+                <div>
+                  Ещё нет учётной записи?
+                  <a href="#" onClick={() => registrationShow(history)}>
+                    <small>Зарегистрироваться</small>
+                  </a>
+                </div>
               </Col>
             </Row>
           </Form>

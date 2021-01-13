@@ -9,6 +9,7 @@ export default function Navibar() {
   const {
     handleRegistrationShow,
     token,
+    userName,
     logout,
     receiveUserLocalStorage,
   } = useContext(RegistrationContext);
@@ -125,12 +126,11 @@ export default function Navibar() {
             </>
             <>
               {token ? (
-                <img
-                  style={{ width: '50px', height: '50px' }}
-                  src="https://download-cs.net/steam/avatars/3412.jpg"
-                  className="img-thumbnail"
-                  alt=" картинка"
-                />
+                <NavDropdown title={"Привет " + userName} id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.4">
+                    Личный кабинет
+                  </NavDropdown.Item>
+                </NavDropdown>
               ) : (
                 <Button
                   variant="primary"
