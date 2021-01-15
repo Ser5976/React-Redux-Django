@@ -28,7 +28,7 @@ export default function Navibar() {
   const [showCustomer, setShowCustomer] = useState(false);
   const [showBusiness, setShowBusiness] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
-  const showDropdown = (e)=>{
+  const toggleDropdown = (e)=>{
     let dropdownId = e.target.id;
     switch (dropdownId){
       case 'customer-dropdown':
@@ -39,22 +39,6 @@ export default function Navibar() {
         break;
       case 'admin-dropdown':
         setShowAdmin(!showAdmin);
-        break;
-      default:
-        console.log('error ', e.target)
-    }
-  }
-  const hideDropdown = e => {
-    let dropdownId = e.target.id;
-    switch (dropdownId){
-      case 'customer-dropdown':
-        setShowCustomer(false);
-        break;
-      case 'business-dropdown':
-        setShowBusiness(false);
-        break;
-      case 'admin-dropdown':
-        setShowAdmin(false);
         break;
       default:
         console.log('error ', e.target)
@@ -77,8 +61,8 @@ export default function Navibar() {
             <NavDropdown
               title="Для частных лиц"
               show={showCustomer}
-              onMouseEnter={showDropdown}
-              onMouseLeave={hideDropdown}
+              onMouseEnter={toggleDropdown}
+              onMouseLeave={toggleDropdown}
               id="customer-dropdown">
               <NavDropdown.Item>
                 <Link
@@ -96,8 +80,8 @@ export default function Navibar() {
             <NavDropdown
               title="Для бизнеса"
               show={showBusiness}
-              onMouseEnter={showDropdown}
-              onMouseLeave={hideDropdown}
+              onMouseEnter={toggleDropdown}
+              onMouseLeave={toggleDropdown}
               id="business-dropdown">
               <NavDropdown.Item>
                 <Link
@@ -121,8 +105,8 @@ export default function Navibar() {
             <NavDropdown
               title="Для администраторов"
               show={showAdmin}
-              onMouseEnter={showDropdown}
-              onMouseLeave={hideDropdown}
+              onMouseEnter={toggleDropdown}
+              onMouseLeave={toggleDropdown}
               id="admin-dropdown">
               <a
                 target="_blank"

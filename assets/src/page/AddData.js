@@ -20,7 +20,7 @@ const AddData = () => {
   const { country, city, street, house_number, zip_code } = address;
 
   const radioStatus = [
-    { label: 'Продатся', value: 1 },
+    { label: 'Продаётся', value: 1 },
     { label: 'В продаже', value: 2 },
     { label: 'Продан', value: 3 },
   ];
