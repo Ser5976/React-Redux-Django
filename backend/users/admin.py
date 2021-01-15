@@ -9,6 +9,7 @@ from django.contrib.auth.models import Permission
 
 # local Django
 from users.models import User
+from wallet.admin import WalletInline
 
 
 class LogEntryAdmin(admin.ModelAdmin):
@@ -105,6 +106,7 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('username',)
     ordering = ('username',)
     filter_horizontal = ()
+    inlines = (WalletInline,)
 
 
 # Now register the new UserAdmin...

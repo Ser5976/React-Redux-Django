@@ -23,6 +23,7 @@ const initialState = {
   userName: undefined,
   userId: undefined,
   error: undefined,
+  pathname: '/',
 };
 
 const RegistrationState = ({ children }) => {
@@ -30,7 +31,7 @@ const RegistrationState = ({ children }) => {
   // закрытие модального окна регистрации
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
 
-  const { activeUsers, validated, show, token, userName, activeLogin, error } = state;
+  const { activeUsers, validated, show, token, userName, activeLogin, error, pathname } = state;
   //открытие модального окна регистрации
   const handleRegistrationShow = () => {
     dispatch({ type: 'SHOW_CLOSE' });
@@ -70,6 +71,16 @@ const RegistrationState = ({ children }) => {
     localStorage.setItem('userId', userId);
     dispatch({ type: 'AUTH', payload: token, userName: userName, userId: userId });
   };
+
+  // Запомнить последний клик
+  const rememberLastEvent = (e) => {
+    let pathname = e.target.pathname;
+    if (pathname === undefined) {
+      pathname = e.target.parentElement.pathname;
+    }
+    dispatch({ type: 'GET_PATH', payload: pathname });
+  };
+
   // отправка данных из формы регистрации
   const handleSubmitForm = async (event) => {
     event.preventDefault();
@@ -86,11 +97,12 @@ const RegistrationState = ({ children }) => {
     dispatch({ type: 'VALIDATED' });
   };
   // очистка LocalStorage
-  const logout = () => {
+  const logout = (history) => {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
     localStorage.removeItem('userId');
     dispatch({ type: 'LOGOUT' });
+    history.push('/loginCard');
   };
   // Получение данных пользователя из LocalStorage
   const receiveUserLocalStorage = () => {
@@ -120,7 +132,7 @@ const RegistrationState = ({ children }) => {
       // console.log(response);
       setUserLocalStorage(response.data);
       dispatch({ type: 'NO_ERROR' });
-      history.goBack();
+      history.push(pathname);
     } catch (e) {
       console.log(e);
       dispatch({ type: 'ERROR', payload: e.name });
@@ -151,6 +163,7 @@ const RegistrationState = ({ children }) => {
         handleChangeLogin,
         handleSubmitLogin,
         registrationShow,
+        rememberLastEvent,
       }}
     >
       {children}

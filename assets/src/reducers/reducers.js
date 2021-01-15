@@ -80,6 +80,7 @@ export const authReducer = (state, action) => {
         token: undefined,
         userName: undefined,
         userId: undefined,
+        pathname: '/',
       };
     case 'CHANGE_ACTIVE_LOGIN':
       return { ...state, activeLogin: action.payload };
@@ -92,6 +93,11 @@ export const authReducer = (state, action) => {
       return {
         ...state,
         error: undefined,
+      };
+    case 'GET_PATH':
+      return {
+        ...state,
+        pathname: action.payload,
       };
     default:
       return state;

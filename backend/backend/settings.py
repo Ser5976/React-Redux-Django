@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 
     'todo',
     'users',
+    'wallet',
 ]
 
 SITE_ID = 1

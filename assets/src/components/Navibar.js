@@ -3,6 +3,7 @@ import '../css/navbar.css';
 import React, { useContext, useEffect } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import FormModal from './FormModal';
 import { BaseContext } from '../state/baseState/BaseContext';
@@ -10,12 +11,14 @@ import { RegistrationContext } from '../state/registrationState/RegistrationCont
 import { AdminUrls } from '../constants/urls';
 
 export default function Navibar() {
+  const history = useHistory();
   const {
     handleRegistrationShow,
     token,
     userName,
     logout,
     receiveUserLocalStorage,
+    rememberLastEvent,
   } = useContext(RegistrationContext);
   const { clearActiveItem } = useContext(BaseContext);
   useEffect(() => {
@@ -64,7 +67,7 @@ export default function Navibar() {
                 <Link
                   to="/addData"
                   className="dropdown-link"
-                  onClick={clearActiveItem}
+                  onClick={(event) => {rememberLastEvent(event); clearActiveItem();}}
                 >
                   Разместить объявление
                 </Link>
@@ -117,7 +120,7 @@ export default function Navibar() {
           <Nav>
             <>
               {token ? (
-                <Button variant="primary" className=" mr-2" onClick={logout}>
+                <Button variant="primary" className=" mr-2" onClick={(event) => logout(history)}>
                   Выйти
                 </Button>
               ) : (
