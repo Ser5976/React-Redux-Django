@@ -38,10 +38,7 @@ export default function Navibar() {
 
             <NavDropdown title="Для частных лиц" id="collasible-nav-dropdown">
               <NavDropdown.Item>
-                <Link
-                  to="/ListCard"
-                  className="dropdown-link"
-                >
+                <Link to="/ListCard" className="dropdown-link">
                   Выбрать дом
                 </Link>
               </NavDropdown.Item>
@@ -52,10 +49,7 @@ export default function Navibar() {
             </NavDropdown>
             <NavDropdown title="Для бизнеса" id="collasible-nav-dropdown">
               <NavDropdown.Item>
-                <Link
-                  to="/ListCard"
-                  className="dropdown-link"
-                >
+                <Link to="/ListCard" className="dropdown-link">
                   Список объектов
                 </Link>
               </NavDropdown.Item>
@@ -116,12 +110,8 @@ export default function Navibar() {
           </Nav>
           <Nav>
             <>
-              {token ? (
-                <Button variant="primary" className=" mr-2" onClick={logout}>
-                  Выйти
-                </Button>
-              ) : (
-                <Link to="/loginCard">
+              {token ? null : (
+                <Link to="/login">
                   <Button variant="primary" className=" mr-2">
                     Вход
                   </Button>
@@ -130,9 +120,19 @@ export default function Navibar() {
             </>
             <>
               {token ? (
-                <NavDropdown title={"Привет " + userName} id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.4">
-                    Личный кабинет
+                <NavDropdown
+                  title={'Привет ' + userName}
+                  id="collasible-nav-dropdown"
+                >
+                  <NavDropdown.Item>
+                    <Link to="/personalaccount" className="dropdown-link">
+                      Личный кабинет
+                    </Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to="#" className="dropdown-link" onClick={logout}>
+                      Выйти
+                    </Link>
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (

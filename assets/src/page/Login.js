@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Card, Container, Form, Button, Col, Row } from 'react-bootstrap';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 
-const LoginCard = () => {
+const Login = () => {
   const history = useHistory();
   const {
     handleChangeLogin,
@@ -69,4 +69,4 @@ const LoginCard = () => {
     </Container>
   );
 };
-export default LoginCard;
+export default Login;
