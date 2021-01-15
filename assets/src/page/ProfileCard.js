@@ -7,16 +7,13 @@ const ProfileCard = ({ match }) => {
   const { itemCard, refreshCard, editItem, handleDelete } = useContext(
     BaseContext
   );
-  // console.log(match);
   const urlId = match.params.name;
   const history = useHistory();
-  // console.log(history);
   useEffect(() => {
     refreshCard(urlId);
     // eslint-disable-next-line
   }, []);
 
-  // console.log(itemCard);
   const { description, address, photo, price } = itemCard;
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;

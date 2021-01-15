@@ -28,19 +28,17 @@ const initialState = {
 
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(itemReducer, initialState);
+  // Запрос в БД на обновление всех объектов
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
-    //console.log(response.data);
-
     dispatch({
       type: 'LIST',
       payload: response.data,
     });
   };
-
-  const refreshCard = async (name) => {
-    const response = await axios.get(ModelUrls.ITEMS + name);
-    // console.log(response.data);
+  // Запрос на обновление объекта item
+  const refreshCard = async (itemId) => {
+    const response = await axios.get(ModelUrls.ITEMS + itemId);
 
     dispatch({
       type: 'CARD',
@@ -55,9 +53,7 @@ const BaseState = ({ children }) => {
     });
   };
   const handleChangePhoto = (file) => {
-    //  console.log(file);
     const img = { ...state.activeItem, photo: file };
-    // console.log(img);
     dispatch({
       type: 'PHOTO',
       payload: img,

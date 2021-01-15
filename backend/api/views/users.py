@@ -7,6 +7,6 @@ from users.models import User
 
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
-    http_method_names = ['get', 'post', 'put', 'head']
+    http_method_names = ['get', 'put', 'patch', 'head']
     serializer_class = UserSerializer
     queryset = User.objects.all()
