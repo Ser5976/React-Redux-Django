@@ -1,6 +1,6 @@
 import '../css/navbar.css';
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
@@ -25,6 +25,41 @@ export default function Navibar() {
     receiveUserLocalStorage();
     // eslint-disable-next-line
   }, []);
+  const [showCustomer, setShowCustomer] = useState(false);
+  const [showBusiness, setShowBusiness] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
+  const showDropdown = (e)=>{
+    let dropdownId = e.target.id;
+    switch (dropdownId){
+      case 'customer-dropdown':
+        setShowCustomer(!showCustomer);
+        break;
+      case 'business-dropdown':
+        setShowBusiness(!showBusiness);
+        break;
+      case 'admin-dropdown':
+        setShowAdmin(!showAdmin);
+        break;
+      default:
+        console.log('error ', e.target)
+    }
+  }
+  const hideDropdown = e => {
+    let dropdownId = e.target.id;
+    switch (dropdownId){
+      case 'customer-dropdown':
+        setShowCustomer(false);
+        break;
+      case 'business-dropdown':
+        setShowBusiness(false);
+        break;
+      case 'admin-dropdown':
+        setShowAdmin(false);
+        break;
+      default:
+        console.log('error ', e.target)
+    }
+  }
 
   return (
     <>
@@ -39,7 +74,12 @@ export default function Navibar() {
           <Nav className="mr-auto">
             <Nav.Link></Nav.Link>
 
-            <NavDropdown title="Для частных лиц" id="collasible-nav-dropdown">
+            <NavDropdown
+              title="Для частных лиц"
+              show={showCustomer}
+              onMouseEnter={showDropdown}
+              onMouseLeave={hideDropdown}
+              id="customer-dropdown">
               <NavDropdown.Item>
                 <Link
                   to="/ListCard"
@@ -53,7 +93,12 @@ export default function Navibar() {
                 Замени на что-нибудь полезное
               </NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown title="Для бизнеса" id="collasible-nav-dropdown">
+            <NavDropdown
+              title="Для бизнеса"
+              show={showBusiness}
+              onMouseEnter={showDropdown}
+              onMouseLeave={hideDropdown}
+              id="business-dropdown">
               <NavDropdown.Item>
                 <Link
                   to="/ListCard"
@@ -75,8 +120,10 @@ export default function Navibar() {
             </NavDropdown>
             <NavDropdown
               title="Для администраторов"
-              id="collasible-nav-dropdown"
-            >
+              show={showAdmin}
+              onMouseEnter={showDropdown}
+              onMouseLeave={hideDropdown}
+              id="admin-dropdown">
               <a
                 target="_blank"
                 rel="noreferrer"
