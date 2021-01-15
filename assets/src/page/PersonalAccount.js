@@ -1,8 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { PersonalAccountContext } from '../state/personalAccountState/PersonalAccountContext';
 
 const PersonalAccount = () => {
+  const { getUser } = useContext(PersonalAccountContext);
   const inputEl = useRef(null);
+  useEffect(() => {
+    getUser();
+    // eslint-disable-next-line
+  }, []);
   return (
     <Container className="p-3">
       <Row className="justify-content-md-center">

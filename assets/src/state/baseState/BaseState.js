@@ -28,6 +28,7 @@ const initialState = {
 
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(itemReducer, initialState);
+  //запрос на сервер , получаем список домов
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
     //console.log(response.data);

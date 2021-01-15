@@ -4,18 +4,21 @@ import Navibar from './components/Navibar';
 import MyRouter from './router/MyRouter';
 import RegistrationState from './state/registrationState/RegistrationState';
 import BaseState from './state/baseState/BaseState';
+import PersonalAccountState from './state/personalAccountState/PersonalAccountState';
 
 function App() {
   return (
     <>
-      <RegistrationState>
-        <BaseState>
-          <BrowserRouter>
-            <Navibar />
-            <MyRouter />
-          </BrowserRouter>
-        </BaseState>
-      </RegistrationState>
+      <PersonalAccountState>
+        <RegistrationState>
+          <BaseState>
+            <BrowserRouter>
+              <Navibar />
+              <MyRouter />
+            </BrowserRouter>
+          </BaseState>
+        </RegistrationState>
+      </PersonalAccountState>
     </>
   );
 }
