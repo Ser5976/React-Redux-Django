@@ -2,6 +2,7 @@ import '../css/navbar.css';
 
 import React, { useContext, useEffect } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import FormModal from './FormModal';
@@ -10,6 +11,7 @@ import { RegistrationContext } from '../state/registrationState/RegistrationCont
 import { AdminUrls } from '../constants/urls';
 
 export default function Navibar() {
+  const history = useHistory();
   const {
     handleRegistrationShow,
     token,
@@ -130,7 +132,11 @@ export default function Navibar() {
                     </Link>
                   </NavDropdown.Item>
                   <NavDropdown.Item>
-                    <Link to="#" className="dropdown-link" onClick={logout}>
+                    <Link
+                      to="#"
+                      className="dropdown-link"
+                      onClick={() => logout(history)}
+                    >
                       Выйти
                     </Link>
                   </NavDropdown.Item>

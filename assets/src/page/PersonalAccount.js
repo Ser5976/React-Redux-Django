@@ -3,12 +3,13 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { PersonalAccountContext } from '../state/personalAccountState/PersonalAccountContext';
 
 const PersonalAccount = () => {
-  const { getUser } = useContext(PersonalAccountContext);
+  const { activeUser, getUser } = useContext(PersonalAccountContext);
   const inputEl = useRef(null);
   useEffect(() => {
     getUser();
     // eslint-disable-next-line
   }, []);
+  const { first_name, last_name, email, username } = activeUser;
   return (
     <Container className="p-3">
       <Row className="justify-content-md-center">
@@ -17,11 +18,11 @@ const PersonalAccount = () => {
             <Col md="4">
               <img src="#" alt="аватар" />
             </Col>
-            <Col md="8">Логин</Col>
+            <Col md="8">{username}</Col>
           </Row>
           <h5>Имя</h5>
           <h5>Фамилия</h5>
-          <h6>электронный ящик</h6>
+          <h6>{email}</h6>
         </Col>
         <Col md="6">
           <h4 className="text-center">Общий профиль</h4>

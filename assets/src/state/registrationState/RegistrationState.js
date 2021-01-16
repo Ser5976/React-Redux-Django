@@ -30,7 +30,15 @@ const RegistrationState = ({ children }) => {
   // закрытие модального окна регистрации
   const handleClose = () => dispatch({ type: 'SHOW_CLOSE' });
 
-  const { activeUsers, validated, show, token, userName, activeLogin, error } = state;
+  const {
+    activeUsers,
+    validated,
+    show,
+    token,
+    userName,
+    activeLogin,
+    error,
+  } = state;
   //открытие модального окна регистрации
   const handleRegistrationShow = () => {
     dispatch({ type: 'SHOW_CLOSE' });
@@ -68,7 +76,12 @@ const RegistrationState = ({ children }) => {
     localStorage.setItem('token', token);
     localStorage.setItem('userName', userName);
     localStorage.setItem('userId', userId);
-    dispatch({ type: 'AUTH', payload: token, userName: userName, userId: userId });
+    dispatch({
+      type: 'AUTH',
+      payload: token,
+      userName: userName,
+      userId: userId,
+    });
   };
   // отправка данных из формы регистрации
   const handleSubmitForm = async (event) => {
@@ -86,18 +99,32 @@ const RegistrationState = ({ children }) => {
     dispatch({ type: 'VALIDATED' });
   };
   // очистка LocalStorage
-  const logout = () => {
+  const logout = (history) => {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
     localStorage.removeItem('userId');
     dispatch({ type: 'LOGOUT' });
+    // очистка activeLogin
+    const emptyActiveLogin = {
+      activeLogin: {
+        username: '',
+        password: '',
+      },
+    };
+    dispatch({ type: 'EMPTY_LOGIN', payload: emptyActiveLogin });
+    history.push('/');
   };
   // Получение данных пользователя из LocalStorage
   const receiveUserLocalStorage = () => {
     let token = localStorage.getItem('token');
     let userName = localStorage.getItem('userName');
     let userId = localStorage.getItem('userId');
-    dispatch({ type: 'AUTH', payload: token, userName: userName, userId: userId });
+    dispatch({
+      type: 'AUTH',
+      payload: token,
+      userName: userName,
+      userId: userId,
+    });
     return true;
   };
   //получение значений  авторизации
