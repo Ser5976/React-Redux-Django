@@ -1,21 +1,39 @@
 import React from 'react';
 import { Col, Form, Button } from 'react-bootstrap';
 
-const AccountForm = ({ first_name, last_name, username, email, inputEl }) => {
+const AccountForm = ({
+  first_name,
+  last_name,
+  username,
+  email,
+  inputEl,
+  handleChangeAccount,
+  handleSubmitAccount,
+}) => {
   return (
     <Col md="6">
       <h4 className="text-center">Общий профиль</h4>
       <hr />
-      <Form>
+      <Form onSubmit={handleSubmitAccount}>
         <Form.Group controlId="FormGroupFirstName">
           <Form.Label>Имя </Form.Label>
 
-          <Form.Control placeholder="Имя " type="text" name="first_name" />
+          <Form.Control
+            placeholder="Имя "
+            type="text"
+            name="first_name"
+            onChange={handleChangeAccount}
+          />
         </Form.Group>
         <Form.Group controlId="FormGroupLastName">
           <Form.Label>Фамилия</Form.Label>
 
-          <Form.Control placeholder="Фамилия" type="text" name="last_name" />
+          <Form.Control
+            placeholder="Фамилия"
+            type="text"
+            name="last_name"
+            onChange={handleChangeAccount}
+          />
         </Form.Group>
         <Form.Group controlId="FormGroupUsername">
           <Form.Label>Имя пользователя</Form.Label>
@@ -24,6 +42,7 @@ const AccountForm = ({ first_name, last_name, username, email, inputEl }) => {
             placeholder="Имя пользователя"
             type="text"
             name="username"
+            onChange={handleChangeAccount}
           />
         </Form.Group>
         <Form.Group controlId="formGroupEmail">
@@ -32,6 +51,7 @@ const AccountForm = ({ first_name, last_name, username, email, inputEl }) => {
             type="email"
             placeholder="Введите адрес электронной почты"
             name="email"
+            onChange={handleChangeAccount}
           />
         </Form.Group>
 

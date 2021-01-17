@@ -5,7 +5,12 @@ import AccountForm from '../components/account/AccountForm';
 import AddAccount from '../components/account/AddAccount';
 
 const PersonalAccount = () => {
-  const { activeUser, getUser } = useContext(PersonalAccountContext);
+  const {
+    activeUser,
+    getUser,
+    handleChangeAccount,
+    handleSubmitAccount,
+  } = useContext(PersonalAccountContext);
 
   const inputEl = useRef(null);
   useEffect(() => {
@@ -28,6 +33,8 @@ const PersonalAccount = () => {
           email={email}
           username={username}
           inputEl={inputEl}
+          handleChangeAccount={handleChangeAccount}
+          handleSubmitAccount={handleSubmitAccount}
         />
       </Row>
     </Container>
