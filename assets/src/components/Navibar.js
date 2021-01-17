@@ -2,8 +2,8 @@ import '../css/navbar.css';
 
 import React, { useContext, useEffect, useState } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import FormModal from './FormModal';
 import { BaseContext } from '../state/baseState/BaseContext';
@@ -65,10 +65,7 @@ export default function Navibar() {
               onMouseLeave={toggleDropdown}
               id="customer-dropdown">
               <NavDropdown.Item>
-                <Link
-                  to="/ListCard"
-                  className="dropdown-link"
-                >
+                <Link to="/ListCard" className="dropdown-link">
                   Выбрать дом
                 </Link>
               </NavDropdown.Item>
@@ -84,10 +81,7 @@ export default function Navibar() {
               onMouseLeave={toggleDropdown}
               id="business-dropdown">
               <NavDropdown.Item>
-                <Link
-                  to="/ListCard"
-                  className="dropdown-link"
-                >
+                <Link to="/ListCard" className="dropdown-link">
                   Список объектов
                 </Link>
               </NavDropdown.Item>
@@ -149,24 +143,31 @@ export default function Navibar() {
             </NavDropdown>
           </Nav>
           <Nav>
-            <>
-              {token ? (
-                <Button variant="primary" className=" mr-2" onClick={(event) => logout(history)}>
-                  Выйти
-                </Button>
-              ) : (
-                <Link to="/loginCard">
+              {token ? null : (
+                <Link to="/login">
                   <Button variant="primary" className=" mr-2">
                     Вход
                   </Button>
                 </Link>
               )}
-            </>
-            <>
               {token ? (
-                <NavDropdown title={"Привет " + userName} id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.4">
-                    Личный кабинет
+                <NavDropdown
+                  title={'Привет ' + userName}
+                  id="collasible-nav-dropdown"
+                >
+                  <NavDropdown.Item>
+                    <Link to="/personalAccount" className="dropdown-link">
+                      Личный кабинет
+                    </Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link
+                      to="#"
+                      className="dropdown-link"
+                      onClick={() => logout(history)}
+                    >
+                      Выйти
+                    </Link>
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
@@ -178,7 +179,6 @@ export default function Navibar() {
                   Регистрация
                 </Button>
               )}
-            </>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
