@@ -28,7 +28,7 @@ const PersonalAccountState = ({ children }) => {
       },
     });
     const { first_name, last_name, email, username } = response.data;
-    // если ключ и значение совподают (email:email), можем писать email
+    // если ключ и значение совпадают (email:email), можем писать email
     const user = {
       ...activeUser,
       first_name,
@@ -39,7 +39,7 @@ const PersonalAccountState = ({ children }) => {
 
     dispatch({ type: 'USER', payload: user });
   };
-  console.log(activeUser);
+  //console.log(activeUser);
   return (
     <PersonalAccountContext.Provider value={{ activeUser, getUser }}>
       {children}

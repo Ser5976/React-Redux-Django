@@ -4,6 +4,7 @@ import { PersonalAccountContext } from '../state/personalAccountState/PersonalAc
 
 const PersonalAccount = () => {
   const { activeUser, getUser } = useContext(PersonalAccountContext);
+
   const inputEl = useRef(null);
   useEffect(() => {
     getUser();
