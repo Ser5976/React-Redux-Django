@@ -10,14 +10,16 @@ const initialState = {
     last_name: undefined,
     email: undefined,
     username: undefined,
-    // avatar: undefined,
+    avatar: undefined,
+    role: undefined,
   },
   changeUser: {
     first_name: undefined,
     last_name: undefined,
     email: undefined,
     username: undefined,
-    // avatar: undefined,
+    avatar: undefined,
+    role: undefined,
   },
 };
 
@@ -35,7 +37,14 @@ const PersonalAccountState = ({ children }) => {
         },
       });
       console.log(response);
-      const { first_name, last_name, email, username } = response.data;
+      const {
+        first_name,
+        last_name,
+        email,
+        username,
+        role,
+        avatar,
+      } = response.data;
       // если ключ и значение совпадают (email:email), можем писать email
       const user = {
         ...activeUser,
@@ -43,6 +52,8 @@ const PersonalAccountState = ({ children }) => {
         last_name,
         username,
         email,
+        role,
+        avatar,
       };
 
       dispatch({ type: 'USER', payload: user });
@@ -60,6 +71,16 @@ const PersonalAccountState = ({ children }) => {
     // console.log(inputValueAccount);
     dispatch({ type: 'CHANGE_USER', payload: inputValueAccount });
   };
+  //получение значения avatara
+  const handleChangeAvatar = (file) => {
+    const img = { ...state.changeUser, avatar: file };
+    console.log(img);
+    dispatch({
+      type: 'AVATAR',
+      payload: img,
+    });
+  };
+  console.log(changeUser);
 
   // редактирование аккаунта на сервере
   const handleSubmitAccount = async (event) => {
@@ -68,10 +89,19 @@ const PersonalAccountState = ({ children }) => {
     let userId = localStorage.getItem('userId');
     let token = localStorage.getItem('token');
     console.log(token);
+    // добавляем наш объект в new FormData при помощи append, это поможет нам отправить файл с аватаром на сервер
+    let changeUserFormData = new FormData();
+    for (let key in changeUser) {
+      changeUserFormData.append(key, changeUser[key]);
+    }
+    console.log(changeUserFormData);
+    for (let pair of changeUserFormData.entries()) {
+      console.log(pair[0] + ',' + pair[1]);
+    }
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         ModelUrls.USERS + userId + '/',
-        changeUser,
+        changeUserFormData,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -86,7 +116,14 @@ const PersonalAccountState = ({ children }) => {
   };
   return (
     <PersonalAccountContext.Provider
-      value={{ activeUser, getUser, handleChangeAccount, handleSubmitAccount }}
+      value={{
+        activeUser,
+        changeUser,
+        getUser,
+        handleChangeAccount,
+        handleSubmitAccount,
+        handleChangeAvatar,
+      }}
     >
       {children}
     </PersonalAccountContext.Provider>

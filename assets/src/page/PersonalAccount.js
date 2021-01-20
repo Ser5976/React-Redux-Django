@@ -10,6 +10,7 @@ const PersonalAccount = () => {
     getUser,
     handleChangeAccount,
     handleSubmitAccount,
+    handleChangeAvatar,
   } = useContext(PersonalAccountContext);
 
   const inputEl = useRef(null);
@@ -17,7 +18,7 @@ const PersonalAccount = () => {
     getUser();
     // eslint-disable-next-line
   }, []);
-  const { first_name, last_name, email, username } = activeUser;
+  const { first_name, last_name, email, username, role } = activeUser;
   return (
     <Container className="p-3">
       <Row className="justify-content-md-center">
@@ -32,9 +33,11 @@ const PersonalAccount = () => {
           last_name={last_name}
           email={email}
           username={username}
+          role={role}
           inputEl={inputEl}
           handleChangeAccount={handleChangeAccount}
           handleSubmitAccount={handleSubmitAccount}
+          handleChangeAvatar={handleChangeAvatar}
         />
       </Row>
     </Container>

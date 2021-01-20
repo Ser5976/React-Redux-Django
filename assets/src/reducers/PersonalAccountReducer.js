@@ -10,6 +10,11 @@ export const PersonalAccountReducer = (state, action) => {
         ...state,
         changeUser: action.payload,
       };
+    case 'AVATAR':
+      return {
+        ...state,
+        changeUser: action.payload,
+      };
     default:
       return state;
   }

@@ -28,9 +28,9 @@ export default function Navibar() {
   const [showCustomer, setShowCustomer] = useState(false);
   const [showBusiness, setShowBusiness] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
-  const toggleDropdown = (e)=>{
+  const toggleDropdown = (e) => {
     let dropdownId = e.target.id;
-    switch (dropdownId){
+    switch (dropdownId) {
       case 'customer-dropdown':
         setShowCustomer(!showCustomer);
         break;
@@ -41,9 +41,9 @@ export default function Navibar() {
         setShowAdmin(!showAdmin);
         break;
       default:
-        console.log('error ', e.target)
+      // console.log('error ', e.target);
     }
-  }
+  };
 
   return (
     <>
@@ -63,7 +63,8 @@ export default function Navibar() {
               show={showCustomer}
               onMouseEnter={toggleDropdown}
               onMouseLeave={toggleDropdown}
-              id="customer-dropdown">
+              id="customer-dropdown"
+            >
               <NavDropdown.Item>
                 <Link to="/ListCard" className="dropdown-link">
                   Выбрать дом
@@ -79,7 +80,8 @@ export default function Navibar() {
               show={showBusiness}
               onMouseEnter={toggleDropdown}
               onMouseLeave={toggleDropdown}
-              id="business-dropdown">
+              id="business-dropdown"
+            >
               <NavDropdown.Item>
                 <Link to="/ListCard" className="dropdown-link">
                   Список объектов
@@ -90,7 +92,10 @@ export default function Navibar() {
                 <Link
                   to="/addData"
                   className="dropdown-link"
-                  onClick={(event) => {rememberLastEvent(event); clearActiveItem();}}
+                  onClick={(event) => {
+                    rememberLastEvent(event);
+                    clearActiveItem();
+                  }}
                 >
                   Разместить объявление
                 </Link>
@@ -101,7 +106,8 @@ export default function Navibar() {
               show={showAdmin}
               onMouseEnter={toggleDropdown}
               onMouseLeave={toggleDropdown}
-              id="admin-dropdown">
+              id="admin-dropdown"
+            >
               <a
                 target="_blank"
                 rel="noreferrer"
@@ -143,42 +149,43 @@ export default function Navibar() {
             </NavDropdown>
           </Nav>
           <Nav>
-              {token ? null : (
-                <Link to="/login">
-                  <Button variant="primary" className=" mr-2">
-                    Вход
-                  </Button>
-                </Link>
-              )}
-              {token ? (
-                <NavDropdown
-                  title={'Привет ' + userName}
-                  id="collasible-nav-dropdown"
-                >
-                  <NavDropdown.Item>
-                    <Link to="/personalAccount" className="dropdown-link">
-                      Личный кабинет
-                    </Link>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <Link
-                      to="#"
-                      className="dropdown-link"
-                      onClick={() => logout(history)}
-                    >
-                      Выйти
-                    </Link>
-                  </NavDropdown.Item>
-                </NavDropdown>
-              ) : (
-                <Button
-                  variant="primary"
-                  className=" mr-2"
-                  onClick={handleRegistrationShow}
-                >
-                  Регистрация
+            {token ? null : (
+              <Link to="/login">
+                <Button variant="primary" className=" mr-2">
+                  Вход
                 </Button>
-              )}
+              </Link>
+            )}
+            {token ? (
+              <NavDropdown
+                title={'Привет ' + userName}
+                id="collasible-nav-dropdown"
+                className="mr-5"
+              >
+                <NavDropdown.Item>
+                  <Link to="/personalAccount" className="dropdown-link">
+                    Личный кабинет
+                  </Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link
+                    to="#"
+                    className="dropdown-link"
+                    onClick={() => logout(history)}
+                  >
+                    Выйти
+                  </Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Button
+                variant="primary"
+                className=" mr-2"
+                onClick={handleRegistrationShow}
+              >
+                Регистрация
+              </Button>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

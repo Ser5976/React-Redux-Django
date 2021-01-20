@@ -87,9 +87,9 @@ const BaseState = ({ children }) => {
     const form = e.currentTarget;
     if (form.checkValidity() === true) {
       e.stopPropagation();
-
+      // добавляем наш объект в new FormData при помощи append, это поможет нам отправить файл с фото на сервер
       let activeForm = new FormData();
-
+      // а это все ради вложенного объекта address
       for (let key in activeItem) {
         if (key === 'address') {
           let address = {};
@@ -101,6 +101,9 @@ const BaseState = ({ children }) => {
           activeForm.append(key, activeItem[key]);
         }
       }
+      /*  for (let pair of activeForm.entries()) {
+        console.log(pair[0] + ',' + pair[1]);
+      } */
       if (activeItem.id) {
         try {
           await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
