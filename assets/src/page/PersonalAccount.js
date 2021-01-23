@@ -18,7 +18,7 @@ const PersonalAccount = () => {
     getUser();
     // eslint-disable-next-line
   }, []);
-  const { first_name, last_name, email, username, role } = activeUser;
+  const { first_name, last_name, email, username, role, avatar } = activeUser;
   return (
     <Container className="p-3">
       <Row className="justify-content-md-center">
@@ -27,6 +27,7 @@ const PersonalAccount = () => {
           last_name={last_name}
           email={email}
           username={username}
+          avatar={avatar}
         />
         <AccountForm
           first_name={first_name}

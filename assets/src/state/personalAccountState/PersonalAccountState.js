@@ -13,14 +13,7 @@ const initialState = {
     avatar: undefined,
     role: undefined,
   },
-  changeUser: {
-    first_name: undefined,
-    last_name: undefined,
-    email: undefined,
-    username: undefined,
-    avatar: undefined,
-    role: undefined,
-  },
+  changeUser: {},
 };
 
 const PersonalAccountState = ({ children }) => {
@@ -90,18 +83,18 @@ const PersonalAccountState = ({ children }) => {
     let token = localStorage.getItem('token');
     console.log(token);
     // добавляем наш объект в new FormData при помощи append, это поможет нам отправить файл с аватаром на сервер
-    let changeUserFormData = new FormData();
+    let userFormData = new FormData();
     for (let key in changeUser) {
-      changeUserFormData.append(key, changeUser[key]);
+      userFormData.append(key, changeUser[key]);
     }
-    console.log(changeUserFormData);
-    for (let pair of changeUserFormData.entries()) {
+    console.log(userFormData);
+    for (let pair of userFormData.entries()) {
       console.log(pair[0] + ',' + pair[1]);
     }
     try {
       const response = await axios.patch(
         ModelUrls.USERS + userId + '/',
-        changeUserFormData,
+        userFormData,
         {
           headers: {
             Authorization: `Token ${token}`,

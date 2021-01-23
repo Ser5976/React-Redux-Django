@@ -6,7 +6,6 @@ const AccountForm = ({
   last_name,
   username,
   email,
-  avatar,
   role,
   inputEl,
   handleChangeAccount,
@@ -28,7 +27,7 @@ const AccountForm = ({
                 <Form.Check
                   type="radio"
                   label={radio.label}
-                  defaultChecked={+role === radio.value}
+                  checked={+role === radio.value}
                   name="role"
                   defaultValue={radio.value}
                   onChange={handleChangeAccount}
