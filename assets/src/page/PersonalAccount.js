@@ -8,6 +8,7 @@ const PersonalAccount = () => {
   const {
     activeUser,
     changeUser,
+    formUser,
     getUser,
     handleChangeAccount,
     handleSubmitAccount,
@@ -32,11 +33,7 @@ const PersonalAccount = () => {
           role={role}
         />
         <AccountForm
-          first_name={first_name}
-          last_name={last_name}
-          email={email}
-          username={username}
-          role={role}
+          formUser={formUser}
           inputEl={inputEl}
           handleChangeAccount={handleChangeAccount}
           handleSubmitAccount={handleSubmitAccount}

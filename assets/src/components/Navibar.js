@@ -183,7 +183,10 @@ export default function Navibar() {
                   <Link
                     to="#"
                     className="dropdown-link"
-                    onClick={() => logout(history)}
+                    onClick={() => {
+                      logout(history);
+                      setShowAccount(false);
+                    }}
                   >
                     Выйти
                   </Link>

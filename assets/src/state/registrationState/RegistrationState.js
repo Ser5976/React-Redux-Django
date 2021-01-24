@@ -92,9 +92,11 @@ const RegistrationState = ({ children }) => {
     let pathname = e.target.pathname;
     if (pathname === undefined) {
       pathname = e.target.parentElement.pathname;
+      console.log(e.target.parentElement);
     }
     dispatch({ type: 'GET_PATH', payload: pathname });
   };
+  console.log(pathname);
 
   // отправка данных из формы регистрации
   const handleSubmitForm = async (event) => {

@@ -2,13 +2,17 @@ import React from 'react';
 import { Col, Form, Button, Row } from 'react-bootstrap';
 
 const AccountForm = ({
-  changeUser,
+  formUser,
   inputEl,
   handleChangeAccount,
   handleSubmitAccount,
   handleChangeAvatar,
 }) => {
-  //const { first_name, last_name, username, email, role } = changeUser;
+  const splitAvatar = () => {
+    const photo1 = formUser.avatar.split('/');
+    const photo2 = photo1[photo1.length - 1];
+    return photo2;
+  };
   return (
     <Col md="6">
       <h4 className="text-center">Редактировать профиль</h4>
@@ -24,9 +28,7 @@ const AccountForm = ({
                 <Form.Check
                   type="radio"
                   label={radio.label}
-                  checked={
-                    changeUser.role ? +changeUser.role === radio.value : false
-                  }
+                  checked={+formUser.role === radio.value}
                   name="role"
                   value={radio.value}
                   onChange={handleChangeAccount}
@@ -42,7 +44,7 @@ const AccountForm = ({
             placeholder="Имя "
             type="text"
             name="first_name"
-            value={changeUser.first_name ? changeUser.first_name : ''}
+            value={formUser.first_name}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -53,7 +55,7 @@ const AccountForm = ({
             placeholder="Фамилия"
             type="text"
             name="last_name"
-            value={changeUser.last_name ? changeUser.last_name : ''}
+            value={formUser.last_name}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -64,7 +66,7 @@ const AccountForm = ({
             placeholder="Имя пользователя"
             type="text"
             name="username"
-            value={changeUser.username ? changeUser.username : ''}
+            value={formUser.username}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -74,13 +76,19 @@ const AccountForm = ({
             type="email"
             placeholder="Введите адрес электронной почты"
             name="email"
-            value={changeUser.email ? changeUser.email : ''}
+            value={formUser.email}
             onChange={handleChangeAccount}
           />
         </Form.Group>
 
         <Form.Group controlId="formGroupAvatar">
           <Form.Label>Аватар </Form.Label>
+          {typeof formUser.avatar == 'string' ? (
+            <div>
+              {' '}
+              <small>В настоящее время:{splitAvatar()}</small>
+            </div>
+          ) : null}
           <Form.Control
             type="file"
             name="avatar"

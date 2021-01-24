@@ -13,12 +13,20 @@ const initialState = {
     avatar: undefined,
     role: undefined,
   },
+  formUser: {
+    first_name: undefined,
+    last_name: undefined,
+    email: undefined,
+    username: undefined,
+    avatar: undefined,
+    role: undefined,
+  },
   changeUser: {},
 };
 
 const PersonalAccountState = ({ children }) => {
   const [state, dispatch] = useReducer(PersonalAccountReducer, initialState);
-  const { activeUser, changeUser } = state;
+  const { activeUser, changeUser, formUser } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
     let token = localStorage.getItem('token');
@@ -50,27 +58,40 @@ const PersonalAccountState = ({ children }) => {
       };
 
       dispatch({ type: 'USER', payload: user });
+      dispatch({ type: 'FORM_USER', payload: user });
     } catch (e) {
       console.log(e);
     }
   };
-  //console.log(activeUser);
+  console.log(formUser);
   // получение значений аккаунта
+  // для changeUser
   const handleChangeAccount = (e) => {
     const inputValueAccount = {
       ...state.changeUser,
       [e.target.name]: e.target.value,
     };
+    // для formUser
+    const inputValueFormAccount = {
+      ...state.formUser,
+      [e.target.name]: e.target.value,
+    };
     // console.log(inputValueAccount);
     dispatch({ type: 'CHANGE_USER', payload: inputValueAccount });
+    dispatch({ type: 'CHANGE_FORM_USER', payload: inputValueFormAccount });
   };
   //получение значения avatara
   const handleChangeAvatar = (file) => {
     const img = { ...state.changeUser, avatar: file };
-    console.log(img);
+    const imgForm = { ...state.formUser, avatar: file };
+    console.log(imgForm);
     dispatch({
       type: 'AVATAR',
       payload: img,
+    });
+    dispatch({
+      type: 'AVATAR_FORM',
+      payload: imgForm,
     });
   };
   console.log(changeUser);
@@ -117,6 +138,7 @@ const PersonalAccountState = ({ children }) => {
       value={{
         activeUser,
         changeUser,
+        formUser,
         getUser,
         handleChangeAccount,
         handleSubmitAccount,
