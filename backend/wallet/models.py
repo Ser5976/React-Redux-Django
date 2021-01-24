@@ -45,11 +45,15 @@ class Wallet(DateTimeMixin):
     # amount of total money in wallet
     balance = models.DecimalField(_('Balance'), max_digits=10,
                                   decimal_places=2, default=0)
+    public_key = models.CharField(_('Public Key'), max_length=255, null=True,
+                                  blank=True)
+    private_key = models.CharField(_('Private Key'), max_length=255,
+                                   null=True, blank=True)
     owner = models.ForeignKey(User, verbose_name=_('Owner'),
                               related_name='wallets',
                               on_delete=models.CASCADE)
-    currency = models.OneToOneField(Currency, verbose_name=_('Currency'),
-                                    on_delete=models.CASCADE)
+    currency = models.ForeignKey(Currency, verbose_name=_('Currency'),
+                                 on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _('Wallet')
