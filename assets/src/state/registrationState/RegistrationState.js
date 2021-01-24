@@ -72,8 +72,8 @@ const RegistrationState = ({ children }) => {
   };
   // Добавление данных пользователя в LocalStorage
   const setUserLocalStorage = (data) => {
-    let token = data['key'];
-    let userName = data['username'];
+    let token = data.key;
+    let userName = data.username;
     let userId = data['user_id'];
     localStorage.setItem('token', token);
     localStorage.setItem('userName', userName);
@@ -88,6 +88,7 @@ const RegistrationState = ({ children }) => {
 
   // Запомнить последний клик
   const rememberLastEvent = (e) => {
+    console.log(e.target.pathname);
     let pathname = e.target.pathname;
     if (pathname === undefined) {
       pathname = e.target.parentElement.pathname;
@@ -156,7 +157,7 @@ const RegistrationState = ({ children }) => {
     event.preventDefault();
     try {
       const response = await axios.post(AuthUrls.LOGIN, activeLogin);
-      // console.log(response);
+      console.log(response);
       setUserLocalStorage(response.data);
       dispatch({ type: 'NO_ERROR' });
       history.push(pathname);
@@ -165,7 +166,7 @@ const RegistrationState = ({ children }) => {
       dispatch({ type: 'ERROR', payload: e.name });
     }
   };
-  //открытие из логина окно регистрации и перенаправление нам предыдущую страницу
+  //открытие из логина окна регистрации и перенаправление на предыдущую страницу
   const registrationShow = (history) => {
     history.goBack();
     handleRegistrationShow();

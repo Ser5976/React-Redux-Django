@@ -74,7 +74,11 @@ const PersonalAccountState = ({ children }) => {
     });
   };
   console.log(changeUser);
-
+  // Очистка changeUser
+  const clearChageUser = () => {
+    let clearUser = {};
+    dispatch({ type: 'CLEAR_CHAGE_USER', payload: clearUser });
+  };
   // редактирование аккаунта на сервере
   const handleSubmitAccount = async (event) => {
     event.preventDefault();
@@ -103,6 +107,7 @@ const PersonalAccountState = ({ children }) => {
       );
       console.log(response);
       getUser();
+      clearChageUser();
     } catch (e) {
       console.log(e);
     }

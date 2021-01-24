@@ -20,6 +20,8 @@ export default function Navibar() {
     receiveUserLocalStorage,
     rememberLastEvent,
   } = useContext(RegistrationContext);
+  // console.log(history.location.state.from.pathname);
+
   const { clearActiveItem } = useContext(BaseContext);
   useEffect(() => {
     receiveUserLocalStorage();
@@ -29,6 +31,7 @@ export default function Navibar() {
   const [showBusiness, setShowBusiness] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
+  // console.log(showAccount);
   /*  const toggleDropdown = (e) => {
     let dropdownId = e.target.id;
     switch (dropdownId) {

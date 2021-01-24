@@ -2,19 +2,16 @@ import React from 'react';
 import { Col, Form, Button, Row } from 'react-bootstrap';
 
 const AccountForm = ({
-  first_name,
-  last_name,
-  username,
-  email,
-  role,
+  changeUser,
   inputEl,
   handleChangeAccount,
   handleSubmitAccount,
   handleChangeAvatar,
 }) => {
+  //const { first_name, last_name, username, email, role } = changeUser;
   return (
     <Col md="6">
-      <h4 className="text-center">Общий профиль</h4>
+      <h4 className="text-center">Редактировать профиль</h4>
       <hr />
       <Form onSubmit={handleSubmitAccount}>
         <Form.Group as={Row}>
@@ -27,9 +24,11 @@ const AccountForm = ({
                 <Form.Check
                   type="radio"
                   label={radio.label}
-                  checked={+role === radio.value}
+                  checked={
+                    changeUser.role ? +changeUser.role === radio.value : false
+                  }
                   name="role"
-                  defaultValue={radio.value}
+                  value={radio.value}
                   onChange={handleChangeAccount}
                 />
               </Col>
@@ -43,7 +42,7 @@ const AccountForm = ({
             placeholder="Имя "
             type="text"
             name="first_name"
-            defaultValue={first_name}
+            value={changeUser.first_name ? changeUser.first_name : ''}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -54,7 +53,7 @@ const AccountForm = ({
             placeholder="Фамилия"
             type="text"
             name="last_name"
-            defaultValue={last_name}
+            value={changeUser.last_name ? changeUser.last_name : ''}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -65,7 +64,7 @@ const AccountForm = ({
             placeholder="Имя пользователя"
             type="text"
             name="username"
-            defaultValue={username}
+            value={changeUser.username ? changeUser.username : ''}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -75,7 +74,7 @@ const AccountForm = ({
             type="email"
             placeholder="Введите адрес электронной почты"
             name="email"
-            defaultValue={email}
+            value={changeUser.email ? changeUser.email : ''}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -91,7 +90,7 @@ const AccountForm = ({
         </Form.Group>
 
         <Button className="float-right" type="submit">
-          Редактировать профиль
+          Сохранить
         </Button>
       </Form>
     </Col>

@@ -7,6 +7,7 @@ import AddAccount from '../components/account/AddAccount';
 const PersonalAccount = () => {
   const {
     activeUser,
+    changeUser,
     getUser,
     handleChangeAccount,
     handleSubmitAccount,
@@ -28,6 +29,7 @@ const PersonalAccount = () => {
           email={email}
           username={username}
           avatar={avatar}
+          role={role}
         />
         <AccountForm
           first_name={first_name}
@@ -39,6 +41,7 @@ const PersonalAccount = () => {
           handleChangeAccount={handleChangeAccount}
           handleSubmitAccount={handleSubmitAccount}
           handleChangeAvatar={handleChangeAvatar}
+          changeUser={changeUser}
         />
       </Row>
     </Container>
