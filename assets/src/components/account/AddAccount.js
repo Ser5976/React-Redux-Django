@@ -15,9 +15,9 @@ const AddAccount = ({
   const status = role ? role : null;
 
   return (
-    <Col md="4">
+    <Col md="8">
       <Row>
-        <Col md="4">
+        <Col md="2">
           {avatar ? (
             <img
               src={avatar}
@@ -27,8 +27,9 @@ const AddAccount = ({
             />
           ) : null}
         </Col>
-        <Col md="8">
-          <h5 className="ml-15">{username}</h5>
+        <Col md="5">
+          <h5>{firstName}</h5>
+          <div>Ваш личный кабинет</div>
         </Col>
       </Row>
       <h5>{firstName}</h5>

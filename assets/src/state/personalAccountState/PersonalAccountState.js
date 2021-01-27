@@ -14,12 +14,12 @@ const initialState = {
     role: undefined,
   },
   formUser: {
-    first_name: undefined,
-    last_name: undefined,
-    email: undefined,
-    username: undefined,
-    avatar: undefined,
-    role: undefined,
+    first_name: '',
+    last_name: '',
+    email: '',
+    username: '',
+    avatar: '',
+    role: '',
   },
   changeUser: {},
 };

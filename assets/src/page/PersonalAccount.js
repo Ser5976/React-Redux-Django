@@ -21,9 +21,10 @@ const PersonalAccount = () => {
     // eslint-disable-next-line
   }, []);
   const { first_name, last_name, email, username, role, avatar } = activeUser;
+  //className="justify-content-md-center"
   return (
-    <Container className="p-3">
-      <Row className="justify-content-md-center">
+    <Container fluid="md" className="p-5">
+      <Row>
         <AddAccount
           first_name={first_name}
           last_name={last_name}

@@ -8,13 +8,14 @@ const AccountForm = ({
   handleSubmitAccount,
   handleChangeAvatar,
 }) => {
+  const { first_name, last_name, email, role, avatar, username } = formUser;
   const splitAvatar = () => {
-    const photo1 = formUser.avatar.split('/');
+    const photo1 = avatar.split('/');
     const photo2 = photo1[photo1.length - 1];
     return photo2;
   };
   return (
-    <Col md="6">
+    <Col md="4">
       <h4 className="text-center">Редактировать профиль</h4>
       <hr />
       <Form onSubmit={handleSubmitAccount}>
@@ -28,7 +29,7 @@ const AccountForm = ({
                 <Form.Check
                   type="radio"
                   label={radio.label}
-                  checked={+formUser.role === radio.value}
+                  checked={+role === radio.value}
                   name="role"
                   value={radio.value}
                   onChange={handleChangeAccount}
@@ -44,7 +45,7 @@ const AccountForm = ({
             placeholder="Имя "
             type="text"
             name="first_name"
-            value={formUser.first_name}
+            value={first_name}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -55,7 +56,7 @@ const AccountForm = ({
             placeholder="Фамилия"
             type="text"
             name="last_name"
-            value={formUser.last_name}
+            value={last_name}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -66,7 +67,7 @@ const AccountForm = ({
             placeholder="Имя пользователя"
             type="text"
             name="username"
-            value={formUser.username}
+            value={username}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -76,16 +77,15 @@ const AccountForm = ({
             type="email"
             placeholder="Введите адрес электронной почты"
             name="email"
-            value={formUser.email}
+            value={email}
             onChange={handleChangeAccount}
           />
         </Form.Group>
 
         <Form.Group controlId="formGroupAvatar">
           <Form.Label>Аватар </Form.Label>
-          {typeof formUser.avatar == 'string' ? (
+          {typeof avatar == 'string' ? (
             <div>
-              {' '}
               <small>В настоящее время:{splitAvatar()}</small>
             </div>
           ) : null}
