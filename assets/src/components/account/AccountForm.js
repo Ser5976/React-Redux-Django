@@ -15,7 +15,7 @@ const AccountForm = ({
     return photo2;
   };
   return (
-    <Col md="4">
+    <>
       <h4 className="text-center">Редактировать профиль</h4>
       <hr />
       <Form onSubmit={handleSubmitAccount}>
@@ -101,7 +101,7 @@ const AccountForm = ({
           Сохранить
         </Button>
       </Form>
-    </Col>
+    </>
   );
 };
 

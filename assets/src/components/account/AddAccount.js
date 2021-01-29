@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 const AddAccount = ({
   first_name,
@@ -15,30 +15,21 @@ const AddAccount = ({
   const status = role ? role : null;
 
   return (
-    <Col md="8">
-      <Row>
-        <Col md="2">
-          {avatar ? (
-            <img
-              src={avatar}
-              alt="аватар"
-              style={{ width: '100px' }}
-              className="rounded-circle"
-            />
-          ) : null}
-        </Col>
-        <Col md="5">
-          <h5>{firstName}</h5>
-          <div>Ваш личный кабинет</div>
-        </Col>
-      </Row>
-      <h5>{firstName}</h5>
-      <h5>{lastName}</h5>
-      <h5>Email:</h5>
-      <h6>{mail}</h6>
-      <h5>Статус:</h5>
-      {status ? +status === 1 ? <h6>Покупатель</h6> : <h6>Продавец</h6> : null}
-    </Col>
+    <Card>
+      {avatar ? (
+        <Card.Img src={avatar} alt="фото" style={{ height: '300px' }} />
+      ) : null}
+      <Card.Body>
+        <h5>
+          {firstName} {lastName}
+        </h5>
+
+        <h5>Email: {mail}</h5>
+        <h5>
+          Статус: {status ? (+status === 1 ? 'Покупатель' : 'Продавец') : null}
+        </h5>
+      </Card.Body>
+    </Card>
   );
 };
 

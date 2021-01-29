@@ -22,11 +22,12 @@ const initialState = {
     role: '',
   },
   changeUser: {},
+  wallet: {},
 };
 
 const PersonalAccountState = ({ children }) => {
   const [state, dispatch] = useReducer(PersonalAccountReducer, initialState);
-  const { activeUser, changeUser, formUser } = state;
+  const { activeUser, changeUser, formUser, wallet } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
     let token = localStorage.getItem('token');
@@ -56,9 +57,12 @@ const PersonalAccountState = ({ children }) => {
         role,
         avatar,
       };
-
+      //получим значение wallet
+      const cash = { ...response.data.wallets[0] };
+      console.log(cash);
       dispatch({ type: 'USER', payload: user });
       dispatch({ type: 'FORM_USER', payload: user });
+      dispatch({ type: 'WALLET', payload: cash });
     } catch (e) {
       console.log(e);
     }
@@ -106,13 +110,13 @@ const PersonalAccountState = ({ children }) => {
     console.log(changeUser);
     let userId = localStorage.getItem('userId');
     let token = localStorage.getItem('token');
-    console.log(token);
+    // console.log(token);
     // добавляем наш объект в new FormData при помощи append, это поможет нам отправить файл с аватаром на сервер
     let userFormData = new FormData();
     for (let key in changeUser) {
       userFormData.append(key, changeUser[key]);
     }
-    console.log(userFormData);
+    // console.log(userFormData);
     for (let pair of userFormData.entries()) {
       console.log(pair[0] + ',' + pair[1]);
     }
@@ -133,12 +137,14 @@ const PersonalAccountState = ({ children }) => {
       console.log(e);
     }
   };
+  console.log(wallet);
   return (
     <PersonalAccountContext.Provider
       value={{
         activeUser,
         changeUser,
         formUser,
+        wallet,
         getUser,
         handleChangeAccount,
         handleSubmitAccount,

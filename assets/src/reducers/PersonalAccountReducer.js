@@ -32,6 +32,8 @@ export const PersonalAccountReducer = (state, action) => {
       };
     case 'CLEAR_CHAGE_USER':
       return { ...state, changeUser: action.payload };
+    case 'WALLET':
+      return { ...state, wallet: action.payload };
     default:
       return state;
   }
