@@ -24,6 +24,7 @@ const initialState = {
   userId: undefined,
   error: undefined,
   pathname: '/',
+  checkbox: false,
 };
 
 const RegistrationState = ({ children }) => {
@@ -40,6 +41,7 @@ const RegistrationState = ({ children }) => {
     activeLogin,
     error,
     pathname,
+    checkbox,
   } = state;
   //открытие модального окна регистрации
   const handleRegistrationShow = () => {
@@ -88,7 +90,7 @@ const RegistrationState = ({ children }) => {
 
   // Запомнить последний клик
   const rememberLastEvent = (e) => {
-    console.log(e.target.pathname);
+    // console.log(e);
     let pathname = e.target.pathname;
     if (pathname === undefined) {
       pathname = e.target.parentElement.pathname;
@@ -168,6 +170,47 @@ const RegistrationState = ({ children }) => {
       dispatch({ type: 'ERROR', payload: e.name });
     }
   };
+  //запомнить логин
+  console.log(checkbox);
+  const handleChangeCheckbox = () => {
+    dispatch({ type: 'CHECKBOX' });
+    console.log(checkbox);
+    if (!checkbox) {
+      localStorage.setItem('password', activeLogin.password);
+      localStorage.setItem('username', activeLogin.username);
+      localStorage.setItem('checkbox', checkbox);
+      let storage = {
+        ...activeLogin,
+        password: localStorage.getItem('password'),
+        username: localStorage.getItem('username'),
+      };
+      // console.log(storage);
+      dispatch({ type: 'REMEMBER_LOGIN', payload: storage });
+    } else {
+      console.log(checkbox);
+      localStorage.removeItem('password');
+      localStorage.removeItem('username');
+      localStorage.removeItem('checkbox');
+    }
+  };
+  // получение логина из Storage, запускаем через useEffect
+  const loginStorage = () => {
+    let storage = {
+      ...activeLogin,
+      password: localStorage.getItem('password'),
+      username: localStorage.getItem('username'),
+    };
+    // console.log(storage);
+    dispatch({ type: 'REMEMBER_LOGIN', payload: storage });
+    dispatch({
+      type: 'STORAGE_CHECKBOX',
+      payload: localStorage.getItem('checkbox'),
+    });
+  };
+  // console.log(activeLogin);
+  // console.log(checkbox);
+  ////////
+
   //открытие из логина окна регистрации и перенаправление на предыдущую страницу
   const registrationShow = (history) => {
     history.goBack();
@@ -184,6 +227,7 @@ const RegistrationState = ({ children }) => {
         userName,
         activeLogin,
         error,
+        checkbox,
         handleChangeInput,
         handleSubmitForm,
         handleRegistrationShow,
@@ -194,6 +238,8 @@ const RegistrationState = ({ children }) => {
         handleSubmitLogin,
         registrationShow,
         rememberLastEvent,
+        handleChangeCheckbox,
+        loginStorage,
       }}
     >
       {children}
