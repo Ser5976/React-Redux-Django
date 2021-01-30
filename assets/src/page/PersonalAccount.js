@@ -16,7 +16,6 @@ const PersonalAccount = () => {
     handleSubmitAccount,
     handleChangeAvatar,
   } = useContext(PersonalAccountContext);
-  //variant="pills"
 
   const inputEl = useRef(null);
   useEffect(() => {
@@ -25,7 +24,7 @@ const PersonalAccount = () => {
   }, []);
   const { first_name, last_name, email, username, role, avatar } = activeUser;
   const firstName = first_name ? first_name : 'Имя';
-  //className="pr-20"
+
   return (
     <>
       <Row className="m-3 justify-content-between">
@@ -40,7 +39,7 @@ const PersonalAccount = () => {
               src={avatar}
               alt="аватар"
               style={{ width: '125px' }}
-              className="rounded ml-5"
+              className="rounded-circle ml-5"
             />
           ) : null}
         </Col>
@@ -97,24 +96,6 @@ const PersonalAccount = () => {
           </Row>
         </Tab.Container>
       </Container>
-      {/*  <Row>
-        <AddAccount
-          first_name={first_name}
-          last_name={last_name}
-          email={email}
-          username={username}
-          avatar={avatar}
-          role={role}
-        />
-        <AccountForm
-          formUser={formUser}
-          inputEl={inputEl}
-          handleChangeAccount={handleChangeAccount}
-          handleSubmitAccount={handleSubmitAccount}
-          handleChangeAvatar={handleChangeAvatar}
-          changeUser={changeUser}
-        />
-      </Row> */}
     </>
   );
 };
