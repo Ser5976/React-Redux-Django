@@ -38,7 +38,7 @@ const PersonalAccountState = ({ children }) => {
           Authorization: `Token ${token}`,
         },
       });
-      console.log(response);
+      //  console.log(response);
       const {
         first_name,
         last_name,
@@ -67,7 +67,7 @@ const PersonalAccountState = ({ children }) => {
       console.log(e);
     }
   };
-  console.log(formUser);
+  //console.log(formUser);
   // получение значений аккаунта
   // для changeUser
   const handleChangeAccount = (e) => {

@@ -48,6 +48,11 @@ const Login = () => {
                 onChange={handleChangeLogin}
               />
             </Form.Group>
+
+            <Form.Group controlId="Checkbox">
+              <Form.Check type="checkbox" label="Запомнить пароль" />
+            </Form.Group>
+
             <Row>
               <Col>
                 <Button variant="primary" type="submit">

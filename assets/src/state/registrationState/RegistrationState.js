@@ -96,7 +96,7 @@ const RegistrationState = ({ children }) => {
     }
     dispatch({ type: 'GET_PATH', payload: pathname });
   };
-  console.log(pathname);
+  // console.log(pathname);
 
   // отправка данных из формы регистрации
   const handleSubmitForm = async (event) => {
