@@ -3,7 +3,6 @@ import axios from 'axios';
 import { RegistrationContext } from './RegistrationContext';
 import { authReducer } from '../../reducers/reducers';
 import { AuthUrls } from '../../constants/urls';
-// import RegistrationForm from '../../components/RegistrationForm';
 
 const initialState = {
   activeUsers: {
@@ -170,45 +169,13 @@ const RegistrationState = ({ children }) => {
       dispatch({ type: 'ERROR', payload: e.name });
     }
   };
-  //запомнить логин
+  //запомнить токин
   console.log(checkbox);
   const handleChangeCheckbox = () => {
     dispatch({ type: 'CHECKBOX' });
     console.log(checkbox);
-    if (!checkbox) {
-      localStorage.setItem('password', activeLogin.password);
-      localStorage.setItem('username', activeLogin.username);
-      localStorage.setItem('checkbox', checkbox);
-      let storage = {
-        ...activeLogin,
-        password: localStorage.getItem('password'),
-        username: localStorage.getItem('username'),
-      };
-      // console.log(storage);
-      dispatch({ type: 'REMEMBER_LOGIN', payload: storage });
-    } else {
-      console.log(checkbox);
-      localStorage.removeItem('password');
-      localStorage.removeItem('username');
-      localStorage.removeItem('checkbox');
-    }
   };
-  // получение логина из Storage, запускаем через useEffect
-  const loginStorage = () => {
-    let storage = {
-      ...activeLogin,
-      password: localStorage.getItem('password'),
-      username: localStorage.getItem('username'),
-    };
-    // console.log(storage);
-    dispatch({ type: 'REMEMBER_LOGIN', payload: storage });
-    dispatch({
-      type: 'STORAGE_CHECKBOX',
-      payload: localStorage.getItem('checkbox'),
-    });
-  };
-  // console.log(activeLogin);
-  // console.log(checkbox);
+
   ////////
 
   //открытие из логина окна регистрации и перенаправление на предыдущую страницу
@@ -239,7 +206,6 @@ const RegistrationState = ({ children }) => {
         registrationShow,
         rememberLastEvent,
         handleChangeCheckbox,
-        loginStorage,
       }}
     >
       {children}
