@@ -79,6 +79,12 @@ const RegistrationState = ({ children }) => {
     localStorage.setItem('token', token);
     localStorage.setItem('userName', userName);
     localStorage.setItem('userId', userId);
+    localStorage.setItem('checkbox', false);
+
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('userName', userName);
+    sessionStorage.setItem('userId', userId);
+
     dispatch({
       type: 'AUTH',
       payload: token,
@@ -169,11 +175,21 @@ const RegistrationState = ({ children }) => {
       dispatch({ type: 'ERROR', payload: e.name });
     }
   };
-  //запомнить токин
-  console.log(checkbox);
+  //изменить checkbox
   const handleChangeCheckbox = () => {
-    dispatch({ type: 'CHECKBOX' });
-    console.log(checkbox);
+    console.log(!localStorage.getItem('checkbox'));
+    // не работает(и с !! тоже не работает)
+    localStorage.setItem('checkbox', !localStorage.getItem('checkbox'));
+
+    // не работает
+    // let checkbox = localStorage.getItem('checkbox');
+    // if (checkbox) {
+    //   localStorage.setItem('checkbox', false);
+    // } else {
+    //   localStorage.setItem('checkbox', true);
+    // }
+
+    //dispatch({ type: 'CHECKBOX' });
   };
 
   ////////

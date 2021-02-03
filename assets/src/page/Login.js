@@ -51,7 +51,7 @@ const Login = () => {
               <Form.Check
                 type="checkbox"
                 label="Запомни меня"
-                checked
+                // checked
                 onChange={handleChangeCheckbox}
               />
             </Form.Group>
