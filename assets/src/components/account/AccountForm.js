@@ -2,20 +2,21 @@ import React from 'react';
 import { Col, Form, Button, Row } from 'react-bootstrap';
 
 const AccountForm = ({
-  first_name,
-  last_name,
-  username,
-  email,
-  avatar,
-  role,
+  formUser,
   inputEl,
   handleChangeAccount,
   handleSubmitAccount,
   handleChangeAvatar,
 }) => {
+  const { first_name, last_name, email, role, avatar, username } = formUser;
+  const splitAvatar = () => {
+    const photo1 = avatar.split('/');
+    const photo2 = photo1[photo1.length - 1];
+    return photo2;
+  };
   return (
-    <Col md="6">
-      <h4 className="text-center">Общий профиль</h4>
+    <>
+      <h4 className="text-center">Редактировать профиль</h4>
       <hr />
       <Form onSubmit={handleSubmitAccount}>
         <Form.Group as={Row}>
@@ -28,9 +29,9 @@ const AccountForm = ({
                 <Form.Check
                   type="radio"
                   label={radio.label}
-                  defaultChecked={+role === radio.value}
+                  checked={+role === radio.value}
                   name="role"
-                  defaultValue={radio.value}
+                  value={radio.value}
                   onChange={handleChangeAccount}
                 />
               </Col>
@@ -44,7 +45,7 @@ const AccountForm = ({
             placeholder="Имя "
             type="text"
             name="first_name"
-            defaultValue={first_name}
+            value={first_name}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -55,7 +56,7 @@ const AccountForm = ({
             placeholder="Фамилия"
             type="text"
             name="last_name"
-            defaultValue={last_name}
+            value={last_name}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -66,7 +67,7 @@ const AccountForm = ({
             placeholder="Имя пользователя"
             type="text"
             name="username"
-            defaultValue={username}
+            value={username}
             onChange={handleChangeAccount}
           />
         </Form.Group>
@@ -76,13 +77,18 @@ const AccountForm = ({
             type="email"
             placeholder="Введите адрес электронной почты"
             name="email"
-            defaultValue={email}
+            value={email}
             onChange={handleChangeAccount}
           />
         </Form.Group>
 
         <Form.Group controlId="formGroupAvatar">
           <Form.Label>Аватар </Form.Label>
+          {typeof avatar == 'string' ? (
+            <div>
+              <small>В настоящее время:{splitAvatar()}</small>
+            </div>
+          ) : null}
           <Form.Control
             type="file"
             name="avatar"
@@ -92,10 +98,10 @@ const AccountForm = ({
         </Form.Group>
 
         <Button className="float-right" type="submit">
-          Редактировать профиль
+          Сохранить
         </Button>
       </Form>
-    </Col>
+    </>
   );
 };
 

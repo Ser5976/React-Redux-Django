@@ -13,19 +13,21 @@ const initialState = {
     avatar: undefined,
     role: undefined,
   },
-  changeUser: {
-    first_name: undefined,
-    last_name: undefined,
-    email: undefined,
-    username: undefined,
-    avatar: undefined,
-    role: undefined,
+  formUser: {
+    first_name: '',
+    last_name: '',
+    email: '',
+    username: '',
+    avatar: '',
+    role: '',
   },
+  changeUser: {},
+  wallet: {},
 };
 
 const PersonalAccountState = ({ children }) => {
   const [state, dispatch] = useReducer(PersonalAccountReducer, initialState);
-  const { activeUser, changeUser } = state;
+  const { activeUser, changeUser, formUser, wallet } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
     let token = localStorage.getItem('token');
@@ -36,7 +38,7 @@ const PersonalAccountState = ({ children }) => {
           Authorization: `Token ${token}`,
         },
       });
-      console.log(response);
+      //  console.log(response);
       const {
         first_name,
         last_name,
@@ -55,53 +57,73 @@ const PersonalAccountState = ({ children }) => {
         role,
         avatar,
       };
-
+      //получим значение wallet
+      const cash = { ...response.data.wallets[0] };
+      console.log(cash);
       dispatch({ type: 'USER', payload: user });
+      dispatch({ type: 'FORM_USER', payload: user });
+      dispatch({ type: 'WALLET', payload: cash });
     } catch (e) {
       console.log(e);
     }
   };
-  //console.log(activeUser);
+  //console.log(formUser);
   // получение значений аккаунта
+  // для changeUser
   const handleChangeAccount = (e) => {
     const inputValueAccount = {
       ...state.changeUser,
       [e.target.name]: e.target.value,
     };
+    // для formUser
+    const inputValueFormAccount = {
+      ...state.formUser,
+      [e.target.name]: e.target.value,
+    };
     // console.log(inputValueAccount);
     dispatch({ type: 'CHANGE_USER', payload: inputValueAccount });
+    dispatch({ type: 'CHANGE_FORM_USER', payload: inputValueFormAccount });
   };
   //получение значения avatara
   const handleChangeAvatar = (file) => {
     const img = { ...state.changeUser, avatar: file };
-    console.log(img);
+    const imgForm = { ...state.formUser, avatar: file };
+    console.log(imgForm);
     dispatch({
       type: 'AVATAR',
       payload: img,
     });
+    dispatch({
+      type: 'AVATAR_FORM',
+      payload: imgForm,
+    });
   };
   console.log(changeUser);
-
+  // Очистка changeUser
+  const clearChageUser = () => {
+    let clearUser = {};
+    dispatch({ type: 'CLEAR_CHAGE_USER', payload: clearUser });
+  };
   // редактирование аккаунта на сервере
   const handleSubmitAccount = async (event) => {
     event.preventDefault();
     console.log(changeUser);
     let userId = localStorage.getItem('userId');
     let token = localStorage.getItem('token');
-    console.log(token);
+    // console.log(token);
     // добавляем наш объект в new FormData при помощи append, это поможет нам отправить файл с аватаром на сервер
-    let changeUserFormData = new FormData();
+    let userFormData = new FormData();
     for (let key in changeUser) {
-      changeUserFormData.append(key, changeUser[key]);
+      userFormData.append(key, changeUser[key]);
     }
-    console.log(changeUserFormData);
-    for (let pair of changeUserFormData.entries()) {
+    // console.log(userFormData);
+    for (let pair of userFormData.entries()) {
       console.log(pair[0] + ',' + pair[1]);
     }
     try {
       const response = await axios.patch(
         ModelUrls.USERS + userId + '/',
-        changeUserFormData,
+        userFormData,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -110,15 +132,19 @@ const PersonalAccountState = ({ children }) => {
       );
       console.log(response);
       getUser();
+      clearChageUser();
     } catch (e) {
       console.log(e);
     }
   };
+  console.log(wallet);
   return (
     <PersonalAccountContext.Provider
       value={{
         activeUser,
         changeUser,
+        formUser,
+        wallet,
         getUser,
         handleChangeAccount,
         handleSubmitAccount,

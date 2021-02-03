@@ -20,6 +20,8 @@ export default function Navibar() {
     receiveUserLocalStorage,
     rememberLastEvent,
   } = useContext(RegistrationContext);
+  // console.log(history.location.state.from.pathname);
+
   const { clearActiveItem } = useContext(BaseContext);
   useEffect(() => {
     receiveUserLocalStorage();
@@ -28,7 +30,9 @@ export default function Navibar() {
   const [showCustomer, setShowCustomer] = useState(false);
   const [showBusiness, setShowBusiness] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
-  const toggleDropdown = (e) => {
+  const [showAccount, setShowAccount] = useState(false);
+  // console.log(showAccount);
+  /*  const toggleDropdown = (e) => {
     let dropdownId = e.target.id;
     switch (dropdownId) {
       case 'customer-dropdown':
@@ -43,8 +47,10 @@ export default function Navibar() {
       default:
       // console.log('error ', e.target);
     }
+    console.log(dropdownId);
   };
-
+  console.log(showBusiness);
+ */
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -60,9 +66,10 @@ export default function Navibar() {
 
             <NavDropdown
               title="Для частных лиц"
+              className="mr-3"
               show={showCustomer}
-              onMouseEnter={toggleDropdown}
-              onMouseLeave={toggleDropdown}
+              onMouseEnter={() => setShowCustomer(!showCustomer)}
+              onMouseLeave={() => setShowCustomer(!showCustomer)}
               id="customer-dropdown"
             >
               <NavDropdown.Item>
@@ -75,11 +82,13 @@ export default function Navibar() {
                 Замени на что-нибудь полезное
               </NavDropdown.Item>
             </NavDropdown>
+
             <NavDropdown
               title="Для бизнеса"
+              className="mr-3"
               show={showBusiness}
-              onMouseEnter={toggleDropdown}
-              onMouseLeave={toggleDropdown}
+              onMouseEnter={() => setShowBusiness(!showBusiness)}
+              onMouseLeave={() => setShowBusiness(!showBusiness)}
               id="business-dropdown"
             >
               <NavDropdown.Item>
@@ -104,8 +113,8 @@ export default function Navibar() {
             <NavDropdown
               title="Для администраторов"
               show={showAdmin}
-              onMouseEnter={toggleDropdown}
-              onMouseLeave={toggleDropdown}
+              onMouseEnter={() => setShowAdmin(!showAdmin)}
+              onMouseLeave={() => setShowAdmin(!showAdmin)}
               id="admin-dropdown"
             >
               <a
@@ -161,6 +170,9 @@ export default function Navibar() {
                 title={'Привет ' + userName}
                 id="collasible-nav-dropdown"
                 className="mr-5"
+                onMouseEnter={() => setShowAccount(!showAccount)}
+                onMouseLeave={() => setShowAccount(!showAccount)}
+                show={showAccount}
               >
                 <NavDropdown.Item>
                   <Link to="/personalAccount" className="dropdown-link">
@@ -171,7 +183,10 @@ export default function Navibar() {
                   <Link
                     to="#"
                     className="dropdown-link"
-                    onClick={() => logout(history)}
+                    onClick={() => {
+                      logout(history);
+                      setShowAccount(false);
+                    }}
                   >
                     Выйти
                   </Link>

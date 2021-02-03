@@ -1,6 +1,6 @@
 import '../css/logincard.css';
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Card, Container, Form, Button, Col, Row } from 'react-bootstrap';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
@@ -12,7 +12,15 @@ const Login = () => {
     handleSubmitLogin,
     error,
     registrationShow,
+    handleChangeCheckbox,
+    loginStorage,
+    checkbox,
+    activeLogin,
   } = useContext(RegistrationContext);
+  useEffect(() => {
+    loginStorage();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Container className="p-5">
@@ -28,26 +36,69 @@ const Login = () => {
         ) : null}
         <Card.Body>
           <Form onSubmit={(event) => handleSubmitLogin(event, history)}>
-            <Form.Group controlId="FormGroupUsername">
-              <Form.Label>Имя пользователя</Form.Label>
+            {checkbox ? (
+              <>
+                {' '}
+                <Form.Group controlId="FormGroupUsername">
+                  <Form.Label>Имя пользователя</Form.Label>
+                  <Form.Control
+                    placeholder="Имя пользователя"
+                    type="text"
+                    name="username"
+                    value={activeLogin.username}
+                    onChange={handleChangeLogin}
+                  />
+                </Form.Group>
+                <Form.Group controlId="formGroupPassword1">
+                  <Form.Label>Пароль</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Пароль"
+                    name="password"
+                    value={activeLogin.password}
+                    onChange={handleChangeLogin}
+                  />
+                </Form.Group>
+                <Form.Group controlId="Checkbox">
+                  <Form.Check
+                    type="checkbox"
+                    label="Запомни меня"
+                    checked
+                    onChange={handleChangeCheckbox}
+                  />
+                </Form.Group>
+              </>
+            ) : (
+              <>
+                {' '}
+                <Form.Group controlId="FormGroupUsername">
+                  <Form.Label>Имя пользователя</Form.Label>
+                  <Form.Control
+                    placeholder="Имя пользователя"
+                    type="text"
+                    name="username"
+                    onChange={handleChangeLogin}
+                  />
+                </Form.Group>
+                <Form.Group controlId="formGroupPassword1">
+                  <Form.Label>Пароль</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Пароль"
+                    name="password"
+                    onChange={handleChangeLogin}
+                  />
+                </Form.Group>
+                <Form.Group controlId="Checkbox">
+                  <Form.Check
+                    type="checkbox"
+                    label="Запомни меня"
+                    onChange={handleChangeCheckbox}
+                  />
+                </Form.Group>
+              </>
+            )}
 
-              <Form.Control
-                placeholder="Имя пользователя"
-                type="text"
-                name="username"
-                onChange={handleChangeLogin}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formGroupPassword1">
-              <Form.Label>Пароль</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Пароль"
-                name="password"
-                onChange={handleChangeLogin}
-              />
-            </Form.Group>
             <Row>
               <Col>
                 <Button variant="primary" type="submit">

@@ -24,6 +24,7 @@ const initialState = {
   userId: undefined,
   error: undefined,
   pathname: '/',
+  checkbox: false,
 };
 
 const RegistrationState = ({ children }) => {
@@ -40,6 +41,7 @@ const RegistrationState = ({ children }) => {
     activeLogin,
     error,
     pathname,
+    checkbox,
   } = state;
   //открытие модального окна регистрации
   const handleRegistrationShow = () => {
@@ -72,8 +74,8 @@ const RegistrationState = ({ children }) => {
   };
   // Добавление данных пользователя в LocalStorage
   const setUserLocalStorage = (data) => {
-    let token = data['key'];
-    let userName = data['username'];
+    let token = data.key;
+    let userName = data.username;
     let userId = data['user_id'];
     localStorage.setItem('token', token);
     localStorage.setItem('userName', userName);
@@ -88,12 +90,15 @@ const RegistrationState = ({ children }) => {
 
   // Запомнить последний клик
   const rememberLastEvent = (e) => {
+    // console.log(e);
     let pathname = e.target.pathname;
     if (pathname === undefined) {
       pathname = e.target.parentElement.pathname;
+      console.log(e.target.parentElement);
     }
     dispatch({ type: 'GET_PATH', payload: pathname });
   };
+  // console.log(pathname);
 
   // отправка данных из формы регистрации
   const handleSubmitForm = async (event) => {
@@ -156,7 +161,7 @@ const RegistrationState = ({ children }) => {
     event.preventDefault();
     try {
       const response = await axios.post(AuthUrls.LOGIN, activeLogin);
-      // console.log(response);
+      console.log(response);
       setUserLocalStorage(response.data);
       dispatch({ type: 'NO_ERROR' });
       history.push(pathname);
@@ -165,7 +170,48 @@ const RegistrationState = ({ children }) => {
       dispatch({ type: 'ERROR', payload: e.name });
     }
   };
-  //открытие из логина окно регистрации и перенаправление нам предыдущую страницу
+  //запомнить логин
+  console.log(checkbox);
+  const handleChangeCheckbox = () => {
+    dispatch({ type: 'CHECKBOX' });
+    console.log(checkbox);
+    if (!checkbox) {
+      localStorage.setItem('password', activeLogin.password);
+      localStorage.setItem('username', activeLogin.username);
+      localStorage.setItem('checkbox', checkbox);
+      let storage = {
+        ...activeLogin,
+        password: localStorage.getItem('password'),
+        username: localStorage.getItem('username'),
+      };
+      // console.log(storage);
+      dispatch({ type: 'REMEMBER_LOGIN', payload: storage });
+    } else {
+      console.log(checkbox);
+      localStorage.removeItem('password');
+      localStorage.removeItem('username');
+      localStorage.removeItem('checkbox');
+    }
+  };
+  // получение логина из Storage, запускаем через useEffect
+  const loginStorage = () => {
+    let storage = {
+      ...activeLogin,
+      password: localStorage.getItem('password'),
+      username: localStorage.getItem('username'),
+    };
+    // console.log(storage);
+    dispatch({ type: 'REMEMBER_LOGIN', payload: storage });
+    dispatch({
+      type: 'STORAGE_CHECKBOX',
+      payload: localStorage.getItem('checkbox'),
+    });
+  };
+  // console.log(activeLogin);
+  // console.log(checkbox);
+  ////////
+
+  //открытие из логина окна регистрации и перенаправление на предыдущую страницу
   const registrationShow = (history) => {
     history.goBack();
     handleRegistrationShow();
@@ -181,6 +227,7 @@ const RegistrationState = ({ children }) => {
         userName,
         activeLogin,
         error,
+        checkbox,
         handleChangeInput,
         handleSubmitForm,
         handleRegistrationShow,
@@ -191,6 +238,8 @@ const RegistrationState = ({ children }) => {
         handleSubmitLogin,
         registrationShow,
         rememberLastEvent,
+        handleChangeCheckbox,
+        loginStorage,
       }}
     >
       {children}

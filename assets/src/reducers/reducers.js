@@ -101,6 +101,22 @@ export const authReducer = (state, action) => {
         ...state,
         pathname: action.payload,
       };
+    case 'REMEMBER_LOGIN':
+      return {
+        ...state,
+        activeLogin: action.payload,
+      };
+    case 'CHECKBOX':
+      return {
+        ...state,
+        checkbox: !state.checkbox,
+      };
+    case 'STORAGE_CHECKBOX':
+      return {
+        ...state,
+        checkbox: action.payload,
+      };
+
     default:
       return state;
   }
