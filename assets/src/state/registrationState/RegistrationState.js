@@ -72,18 +72,18 @@ const RegistrationState = ({ children }) => {
     });
   };
   // Добавление данных пользователя в LocalStorage
-  const setUserLocalStorage = (data) => {
+  const setUserStorage = (data) => {
     let token = data.key;
     let userName = data.username;
     let userId = data['user_id'];
-    localStorage.setItem('token', token);
+    // место хранение токена выбирается от значения "Запомнить меня"
+    if (state.checkbox) {
+      localStorage.setItem('token', token);
+    } else {
+      sessionStorage.setItem('token', token);
+    }
     localStorage.setItem('userName', userName);
     localStorage.setItem('userId', userId);
-    localStorage.setItem('checkbox', false);
-
-    sessionStorage.setItem('token', token);
-    sessionStorage.setItem('userName', userName);
-    sessionStorage.setItem('userId', userId);
 
     dispatch({
       type: 'AUTH',
@@ -95,7 +95,6 @@ const RegistrationState = ({ children }) => {
 
   // Запомнить последний клик
   const rememberLastEvent = (e) => {
-    // console.log(e);
     let pathname = e.target.pathname;
     if (pathname === undefined) {
       pathname = e.target.parentElement.pathname;
@@ -103,7 +102,6 @@ const RegistrationState = ({ children }) => {
     }
     dispatch({ type: 'GET_PATH', payload: pathname });
   };
-  // console.log(pathname);
 
   // отправка данных из формы регистрации
   const handleSubmitForm = async (event) => {
@@ -114,15 +112,19 @@ const RegistrationState = ({ children }) => {
       event.stopPropagation();
       const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
       // console.log(response);
-      setUserLocalStorage(response.data);
+      setUserStorage(response.data);
       dispatch({ type: 'SHOW_CLOSE' });
     }
 
     dispatch({ type: 'VALIDATED' });
   };
-  // очистка LocalStorage
+  // очистка Storage
   const logout = (history) => {
-    localStorage.removeItem('token');
+    if (state.checkbox) {
+      localStorage.removeItem('token');
+    } else {
+      sessionStorage.removeItem('token');
+    }
     localStorage.removeItem('userName');
     localStorage.removeItem('userId');
     dispatch({ type: 'LOGOUT' });
@@ -137,8 +139,13 @@ const RegistrationState = ({ children }) => {
     history.push('/');
   };
   // Получение данных пользователя из LocalStorage
-  const receiveUserLocalStorage = () => {
-    let token = localStorage.getItem('token');
+  const receiveUserStorage = () => {
+    let token;
+    if (state.checkbox) {
+      token = localStorage.getItem('token');
+    } else {
+      token = sessionStorage.getItem('token');
+    }
     let userName = localStorage.getItem('userName');
     let userId = localStorage.getItem('userId');
     dispatch({
@@ -166,8 +173,8 @@ const RegistrationState = ({ children }) => {
     event.preventDefault();
     try {
       const response = await axios.post(AuthUrls.LOGIN, activeLogin);
-      console.log(response);
-      setUserLocalStorage(response.data);
+      // console.log(response);
+      setUserStorage(response.data);
       dispatch({ type: 'NO_ERROR' });
       history.push(pathname);
     } catch (e) {
@@ -175,26 +182,18 @@ const RegistrationState = ({ children }) => {
       dispatch({ type: 'ERROR', payload: e.name });
     }
   };
-  //изменить checkbox
-  const handleChangeCheckbox = () => {
-    console.log(!localStorage.getItem('checkbox'));
-    // не работает(и с !! тоже не работает)
-    localStorage.setItem('checkbox', !localStorage.getItem('checkbox'));
-
-    // не работает
+  // изменить checkbox в state на противоположное значение
+  const handleChangeCheckbox = (e) => {
     // let checkbox = localStorage.getItem('checkbox');
-    // if (checkbox) {
-    //   localStorage.setItem('checkbox', false);
-    // } else {
-    //   localStorage.setItem('checkbox', true);
-    // }
+    // checkbox = 'true' ? checkbox === 'false' || checkbox === null: 'true';
+    // localStorage.setItem('checkbox', checkbox);
 
-    //dispatch({ type: 'CHECKBOX' });
+    let checkbox = state.checkbox;
+    checkbox = !checkbox;
+    dispatch({ type: 'CHECKBOX', checkbox: checkbox });
   };
 
-  ////////
-
-  //открытие из логина окна регистрации и перенаправление на предыдущую страницу
+  // открытие из логина окна регистрации и перенаправление на предыдущую страницу
   const registrationShow = (history) => {
     history.goBack();
     handleRegistrationShow();
@@ -216,7 +215,7 @@ const RegistrationState = ({ children }) => {
         handleRegistrationShow,
         handleClose,
         logout,
-        receiveUserLocalStorage,
+        receiveUserStorage,
         handleChangeLogin,
         handleSubmitLogin,
         registrationShow,

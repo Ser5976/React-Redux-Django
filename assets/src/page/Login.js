@@ -50,7 +50,7 @@ const Login = () => {
             <Form.Group controlId="Checkbox">
               <Form.Check
                 type="checkbox"
-                label="Запомни меня"
+                label="Запомнить меня"
                 // checked
                 onChange={handleChangeCheckbox}
               />
@@ -64,7 +64,7 @@ const Login = () => {
               </Col>
               <Col>
                 <div>
-                  Ещё нет учётной записи?
+                  <span>Ещё нет учётной записи? </span>
                   <a href="#" onClick={() => registrationShow(history)}>
                     <small>Зарегистрироваться</small>
                   </a>

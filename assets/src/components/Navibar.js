@@ -17,14 +17,14 @@ export default function Navibar() {
     token,
     userName,
     logout,
-    receiveUserLocalStorage,
+    receiveUserStorage,
     rememberLastEvent,
   } = useContext(RegistrationContext);
   // console.log(history.location.state.from.pathname);
 
   const { clearActiveItem } = useContext(BaseContext);
   useEffect(() => {
-    receiveUserLocalStorage();
+    receiveUserStorage();
     // eslint-disable-next-line
   }, []);
   const [showCustomer, setShowCustomer] = useState(false);

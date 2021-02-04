@@ -31,9 +31,10 @@ const BaseState = ({ children }) => {
   //запрос на сервер , получаем список домов
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
+    console.log(response);
     dispatch({
       type: 'LIST',
-      payload: response.data,
+      payload: response.data.results,
     });
   };
   // Запрос на обновление объекта item
