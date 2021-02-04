@@ -47,11 +47,11 @@ const Login = () => {
                 onChange={handleChangeLogin}
               />
             </Form.Group>
+
             <Form.Group controlId="Checkbox">
               <Form.Check
                 type="checkbox"
                 label="Запомнить меня"
-                // checked
                 onChange={handleChangeCheckbox}
               />
             </Form.Group>
