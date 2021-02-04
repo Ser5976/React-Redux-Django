@@ -31,26 +31,7 @@ export default function Navibar() {
   const [showBusiness, setShowBusiness] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
-  // console.log(showAccount);
-  /*  const toggleDropdown = (e) => {
-    let dropdownId = e.target.id;
-    switch (dropdownId) {
-      case 'customer-dropdown':
-        setShowCustomer(!showCustomer);
-        break;
-      case 'business-dropdown':
-        setShowBusiness(!showBusiness);
-        break;
-      case 'admin-dropdown':
-        setShowAdmin(!showAdmin);
-        break;
-      default:
-      // console.log('error ', e.target);
-    }
-    console.log(dropdownId);
-  };
-  console.log(showBusiness);
- */
+
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">

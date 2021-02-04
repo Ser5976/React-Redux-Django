@@ -29,8 +29,8 @@ const PersonalAccount = () => {
     <>
       <Row className="m-3 justify-content-between">
         <Col sm={3}>
-          <h4>{firstName}</h4>
-          <div>Ваш личный кабинет</div>
+          <h4>Здравствуйте {firstName}</h4>
+          <div>Это Ваш личный кабинет, где Вы сможете просматривать личные данные, редактировать свой профиль, а также управлять балансами своих кошельков.</div>
         </Col>
 
         <Col sm={2}>
