@@ -3,7 +3,6 @@ import axios from 'axios';
 import { RegistrationContext } from './RegistrationContext';
 import { authReducer } from '../../reducers/reducers';
 import { AuthUrls } from '../../constants/urls';
-// import RegistrationForm from '../../components/RegistrationForm';
 
 const initialState = {
   activeUsers: {
@@ -80,6 +79,12 @@ const RegistrationState = ({ children }) => {
     localStorage.setItem('token', token);
     localStorage.setItem('userName', userName);
     localStorage.setItem('userId', userId);
+    localStorage.setItem('checkbox', false);
+
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('userName', userName);
+    sessionStorage.setItem('userId', userId);
+
     dispatch({
       type: 'AUTH',
       payload: token,
@@ -170,45 +175,23 @@ const RegistrationState = ({ children }) => {
       dispatch({ type: 'ERROR', payload: e.name });
     }
   };
-  //запомнить логин
-  console.log(checkbox);
+  //изменить checkbox
   const handleChangeCheckbox = () => {
-    dispatch({ type: 'CHECKBOX' });
-    console.log(checkbox);
-    if (!checkbox) {
-      localStorage.setItem('password', activeLogin.password);
-      localStorage.setItem('username', activeLogin.username);
-      localStorage.setItem('checkbox', checkbox);
-      let storage = {
-        ...activeLogin,
-        password: localStorage.getItem('password'),
-        username: localStorage.getItem('username'),
-      };
-      // console.log(storage);
-      dispatch({ type: 'REMEMBER_LOGIN', payload: storage });
-    } else {
-      console.log(checkbox);
-      localStorage.removeItem('password');
-      localStorage.removeItem('username');
-      localStorage.removeItem('checkbox');
-    }
+    console.log(!localStorage.getItem('checkbox'));
+    // не работает(и с !! тоже не работает)
+    localStorage.setItem('checkbox', !localStorage.getItem('checkbox'));
+
+    // не работает
+    // let checkbox = localStorage.getItem('checkbox');
+    // if (checkbox) {
+    //   localStorage.setItem('checkbox', false);
+    // } else {
+    //   localStorage.setItem('checkbox', true);
+    // }
+
+    //dispatch({ type: 'CHECKBOX' });
   };
-  // получение логина из Storage, запускаем через useEffect
-  const loginStorage = () => {
-    let storage = {
-      ...activeLogin,
-      password: localStorage.getItem('password'),
-      username: localStorage.getItem('username'),
-    };
-    // console.log(storage);
-    dispatch({ type: 'REMEMBER_LOGIN', payload: storage });
-    dispatch({
-      type: 'STORAGE_CHECKBOX',
-      payload: localStorage.getItem('checkbox'),
-    });
-  };
-  // console.log(activeLogin);
-  // console.log(checkbox);
+
   ////////
 
   //открытие из логина окна регистрации и перенаправление на предыдущую страницу
@@ -239,7 +222,6 @@ const RegistrationState = ({ children }) => {
         registrationShow,
         rememberLastEvent,
         handleChangeCheckbox,
-        loginStorage,
       }}
     >
       {children}
