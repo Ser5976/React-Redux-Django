@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-import { Container, CardColumns } from 'react-bootstrap';
+import { Container, CardColumns, Row } from 'react-bootstrap';
 import MyCard from '../components/MyCard';
+import NumberingSystem from '../components/NumberingSystem';
 import { BaseContext } from '../state/baseState/BaseContext';
 
 const ListCard = (e) => {
@@ -32,6 +33,9 @@ const ListCard = (e) => {
           );
         })}
       </CardColumns>
+      <Row className="justify-content-sm-center">
+        <NumberingSystem />
+      </Row>
     </Container>
   );
 };
