@@ -73,12 +73,38 @@ const BaseState = ({ children }) => {
     });
   };
   //Подключаем ' < ' в пагинации для перехода к предыдущей страницы
-  const previousCurrentPage = async (currentPage, pages) => {
+  const previousCurrentPage = async (currentPage) => {
     if (currentPage < 2) {
       return;
     } else {
       currentPage = currentPage - 1;
     }
+    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+    console.log(currentPage);
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+  };
+  //Подключаем "в начало" в пагинации для перехода на первую страницу
+  const firstCurrentPage = async (currentPage) => {
+    currentPage = 1;
+    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+    console.log(currentPage);
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+  };
+  //Подключаем "в конец" в пагинации для перехода на последнюю страницу
+  const lastCurrentPage = async (currentPage, pages) => {
+    currentPage = pages.length;
     dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
     console.log(currentPage);
     const response = await axios.get(
@@ -244,6 +270,8 @@ const BaseState = ({ children }) => {
         handleCurrentPage,
         nextCurrentPage,
         previousCurrentPage,
+        firstCurrentPage,
+        lastCurrentPage,
       }}
     >
       {children}
