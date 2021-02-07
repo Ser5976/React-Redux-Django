@@ -45,6 +45,16 @@ export const itemReducer = (state, action) => {
         activeItem: action.payload,
         validated: false,
       };
+    case 'COUNT':
+      return {
+        ...state,
+        count: action.payload,
+      };
+    case 'CURRENT_PAGE':
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
     default:
       return state;
   }

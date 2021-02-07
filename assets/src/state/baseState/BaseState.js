@@ -24,6 +24,10 @@ const initialState = {
       zip_code: '',
     },
   },
+  // для пагинации
+  pageSize: 3,
+  count: 0,
+  currentPage: 1,
 };
 
 const BaseState = ({ children }) => {
@@ -31,6 +35,20 @@ const BaseState = ({ children }) => {
   //запрос на сервер , получаем список домов
   const refreshList = async () => {
     const response = await axios.get(ModelUrls.ITEMS);
+    console.log(response);
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+    // получение общего количества домов на сервере(count)
+    dispatch({ type: 'COUNT', payload: response.data.count });
+  };
+  // постраничный запрос на сервер(onClick на пагинации, меняем currentPage и делаем запрос)
+  const handleCurrentPage = async (page) => {
+    dispatch({ type: 'CURRENT_PAGE', payload: page });
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
     console.log(response);
     dispatch({
       type: 'LIST',
@@ -72,7 +90,18 @@ const BaseState = ({ children }) => {
     });
   };
 
-  const { itemList, itemCard, activeItem, validated, bug, image } = state;
+  const {
+    itemList,
+    itemCard,
+    activeItem,
+    validated,
+    bug,
+    image,
+    count,
+    pageSize,
+    currentPage,
+  } = state;
+  console.log(currentPage);
   // console.log(activeItem);
 
   const editItem = (item) => {
@@ -165,6 +194,9 @@ const BaseState = ({ children }) => {
         validated,
         bug,
         image,
+        count,
+        pageSize,
+        currentPage,
         refreshList,
         handleChange,
         handleSubmit,
@@ -174,6 +206,7 @@ const BaseState = ({ children }) => {
         handleChangeAddress,
         handleChangePhoto,
         clearActiveItem,
+        handleCurrentPage,
       }}
     >
       {children}

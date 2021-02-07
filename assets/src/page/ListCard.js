@@ -11,6 +11,10 @@ const ListCard = (e) => {
     handleDelete,
     handleShow,
     editItem,
+    count,
+    pageSize,
+    currentPage,
+    handleCurrentPage,
   } = useContext(BaseContext);
   useEffect(() => {
     refreshList();
@@ -34,7 +38,12 @@ const ListCard = (e) => {
         })}
       </CardColumns>
       <Row className="justify-content-sm-center">
-        <NumberingSystem />
+        <NumberingSystem
+          count={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          handleCurrentPage={handleCurrentPage}
+        />
       </Row>
     </Container>
   );

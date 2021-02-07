@@ -1,16 +1,33 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 
-const NumberingSystem = () => {
+const NumberingSystem = ({
+  count,
+  pageSize,
+  currentPage,
+  handleCurrentPage,
+}) => {
+  const active = currentPage;
+  const pagesCount = Math.ceil(count / pageSize);
+  const pages = [];
+  for (let i = 1; i <= pagesCount; i++) {
+    pages.push(i);
+  }
   return (
     <Pagination>
       <Pagination.First />
       <Pagination.Prev />
-
-      <Pagination.Item>{1}</Pagination.Item>
-      <Pagination.Item>{2}</Pagination.Item>
-      <Pagination.Item active>{3}</Pagination.Item>
-      <Pagination.Ellipsis />
+      {pages.map((page, index) => {
+        return (
+          <Pagination.Item
+            key={index}
+            active={page === active}
+            onClick={() => handleCurrentPage(page)}
+          >
+            {page}
+          </Pagination.Item>
+        );
+      })}
 
       <Pagination.Next />
       <Pagination.Last />
