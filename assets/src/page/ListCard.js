@@ -15,6 +15,8 @@ const ListCard = (e) => {
     pageSize,
     currentPage,
     handleCurrentPage,
+    nextCurrentPage,
+    previousCurrentPage,
   } = useContext(BaseContext);
   useEffect(() => {
     refreshList();
@@ -43,6 +45,8 @@ const ListCard = (e) => {
           pageSize={pageSize}
           currentPage={currentPage}
           handleCurrentPage={handleCurrentPage}
+          nextCurrentPage={nextCurrentPage}
+          previousCurrentPage={previousCurrentPage}
         />
       </Row>
     </Container>

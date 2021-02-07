@@ -55,6 +55,41 @@ const BaseState = ({ children }) => {
       payload: response.data.results,
     });
   };
+  //Подключаем ' > ' в пагинации для перехода к следующуй страницы
+  const nextCurrentPage = async (currentPage, pages) => {
+    if (currentPage > pages.length - 1) {
+      return;
+    } else {
+      currentPage = currentPage + 1;
+    }
+    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+  };
+  //Подключаем ' < ' в пагинации для перехода к предыдущей страницы
+  const previousCurrentPage = async (currentPage, pages) => {
+    if (currentPage < 2) {
+      return;
+    } else {
+      currentPage = currentPage - 1;
+    }
+    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+    console.log(currentPage);
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+  };
+
   // Запрос на обновление объекта item
   const refreshCard = async (itemId) => {
     const response = await axios.get(ModelUrls.ITEMS + itemId);
@@ -101,7 +136,7 @@ const BaseState = ({ children }) => {
     pageSize,
     currentPage,
   } = state;
-  console.log(currentPage);
+
   // console.log(activeItem);
 
   const editItem = (item) => {
@@ -207,6 +242,8 @@ const BaseState = ({ children }) => {
         handleChangePhoto,
         clearActiveItem,
         handleCurrentPage,
+        nextCurrentPage,
+        previousCurrentPage,
       }}
     >
       {children}

@@ -6,6 +6,8 @@ const NumberingSystem = ({
   pageSize,
   currentPage,
   handleCurrentPage,
+  nextCurrentPage,
+  previousCurrentPage,
 }) => {
   const active = currentPage;
   const pagesCount = Math.ceil(count / pageSize);
@@ -16,7 +18,9 @@ const NumberingSystem = ({
   return (
     <Pagination>
       <Pagination.First />
-      <Pagination.Prev />
+      <Pagination.Prev
+        onClick={() => previousCurrentPage(currentPage, pages)}
+      />
       {pages.map((page, index) => {
         return (
           <Pagination.Item
@@ -29,7 +33,7 @@ const NumberingSystem = ({
         );
       })}
 
-      <Pagination.Next />
+      <Pagination.Next onClick={() => nextCurrentPage(currentPage, pages)} />
       <Pagination.Last />
     </Pagination>
   );
