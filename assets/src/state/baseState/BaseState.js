@@ -24,6 +24,10 @@ const initialState = {
       zip_code: '',
     },
   },
+  // для пагинации
+  pageSize: 3,
+  count: 0,
+  currentPage: 1,
 };
 
 const BaseState = ({ children }) => {
@@ -36,7 +40,82 @@ const BaseState = ({ children }) => {
       type: 'LIST',
       payload: response.data.results,
     });
+    // получение общего количества домов на сервере(count)
+    dispatch({ type: 'COUNT', payload: response.data.count });
   };
+  // постраничный запрос на сервер(onClick на пагинации, меняем currentPage и делаем запрос)
+  const handleCurrentPage = async (page) => {
+    dispatch({ type: 'CURRENT_PAGE', payload: page });
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
+    console.log(response);
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+  };
+  //Подключаем ' > ' в пагинации для перехода к следующуй страницы
+  const nextCurrentPage = async (currentPage, pages) => {
+    if (currentPage > pages.length - 1) {
+      return;
+    } else {
+      currentPage = currentPage + 1;
+    }
+    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+  };
+  //Подключаем ' < ' в пагинации для перехода к предыдущей страницы
+  const previousCurrentPage = async (currentPage) => {
+    if (currentPage < 2) {
+      return;
+    } else {
+      currentPage = currentPage - 1;
+    }
+    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+    console.log(currentPage);
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+  };
+  //Подключаем "в начало" в пагинации для перехода на первую страницу
+  const firstCurrentPage = async (currentPage) => {
+    currentPage = 1;
+    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+    console.log(currentPage);
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+  };
+  //Подключаем "в конец" в пагинации для перехода на последнюю страницу
+  const lastCurrentPage = async (currentPage, pages) => {
+    currentPage = pages.length;
+    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+    console.log(currentPage);
+    const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    );
+    dispatch({
+      type: 'LIST',
+      payload: response.data.results,
+    });
+  };
+
   // Запрос на обновление объекта item
   const refreshCard = async (itemId) => {
     const response = await axios.get(ModelUrls.ITEMS + itemId);
@@ -72,7 +151,18 @@ const BaseState = ({ children }) => {
     });
   };
 
-  const { itemList, itemCard, activeItem, validated, bug, image } = state;
+  const {
+    itemList,
+    itemCard,
+    activeItem,
+    validated,
+    bug,
+    image,
+    count,
+    pageSize,
+    currentPage,
+  } = state;
+
   // console.log(activeItem);
 
   const editItem = (item) => {
@@ -165,6 +255,9 @@ const BaseState = ({ children }) => {
         validated,
         bug,
         image,
+        count,
+        pageSize,
+        currentPage,
         refreshList,
         handleChange,
         handleSubmit,
@@ -174,6 +267,11 @@ const BaseState = ({ children }) => {
         handleChangeAddress,
         handleChangePhoto,
         clearActiveItem,
+        handleCurrentPage,
+        nextCurrentPage,
+        previousCurrentPage,
+        firstCurrentPage,
+        lastCurrentPage,
       }}
     >
       {children}

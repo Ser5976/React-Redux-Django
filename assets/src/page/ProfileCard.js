@@ -22,7 +22,12 @@ const ProfileCard = ({ match }) => {
     <Container style={{ marginTop: '50px' }}>
       <Card>
         <NavLink to="/ListCard" className="nav-link">
-          <Card.Img variant="left" src={photo} alt="фото" />
+          <Card.Img
+            variant="left"
+            src={photo}
+            alt="фото"
+            style={{ width: '254px', height: '170px' }}
+          />
         </NavLink>
         <Card.Body>
           <b>Адрес</b>

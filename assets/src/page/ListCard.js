@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-import { Container, CardColumns } from 'react-bootstrap';
+import { Container, CardColumns, Row } from 'react-bootstrap';
 import MyCard from '../components/MyCard';
+import NumberingSystem from '../components/NumberingSystem';
 import { BaseContext } from '../state/baseState/BaseContext';
 
 const ListCard = (e) => {
@@ -10,6 +11,14 @@ const ListCard = (e) => {
     handleDelete,
     handleShow,
     editItem,
+    count,
+    pageSize,
+    currentPage,
+    handleCurrentPage,
+    nextCurrentPage,
+    previousCurrentPage,
+    firstCurrentPage,
+    lastCurrentPage,
   } = useContext(BaseContext);
   useEffect(() => {
     refreshList();
@@ -32,6 +41,18 @@ const ListCard = (e) => {
           );
         })}
       </CardColumns>
+      <Row className="justify-content-sm-center">
+        <NumberingSystem
+          count={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          handleCurrentPage={handleCurrentPage}
+          nextCurrentPage={nextCurrentPage}
+          previousCurrentPage={previousCurrentPage}
+          firstCurrentPage={firstCurrentPage}
+          lastCurrentPage={lastCurrentPage}
+        />
+      </Row>
     </Container>
   );
 };

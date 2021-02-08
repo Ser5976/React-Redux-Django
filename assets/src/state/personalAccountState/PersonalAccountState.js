@@ -22,7 +22,7 @@ const initialState = {
     role: '',
   },
   changeUser: {},
-  wallet: {},
+  wallet: [],
 };
 
 const PersonalAccountState = ({ children }) => {
@@ -38,7 +38,7 @@ const PersonalAccountState = ({ children }) => {
           Authorization: `Token ${token}`,
         },
       });
-      //  console.log(response);
+      // console.log(response);
       const {
         first_name,
         last_name,
@@ -58,8 +58,8 @@ const PersonalAccountState = ({ children }) => {
         avatar,
       };
       //получим значение wallet
-      const cash = { ...response.data.wallets[0] };
-      console.log(cash);
+      const cash = [...response.data.wallets];
+      // console.log(cash);
       dispatch({ type: 'USER', payload: user });
       dispatch({ type: 'FORM_USER', payload: user });
       dispatch({ type: 'WALLET', payload: cash });
@@ -67,7 +67,7 @@ const PersonalAccountState = ({ children }) => {
       console.log(e);
     }
   };
-  //console.log(formUser);
+
   // получение значений аккаунта
   // для changeUser
   const handleChangeAccount = (e) => {
@@ -88,7 +88,7 @@ const PersonalAccountState = ({ children }) => {
   const handleChangeAvatar = (file) => {
     const img = { ...state.changeUser, avatar: file };
     const imgForm = { ...state.formUser, avatar: file };
-    console.log(imgForm);
+    //console.log(imgForm);
     dispatch({
       type: 'AVATAR',
       payload: img,
@@ -98,7 +98,7 @@ const PersonalAccountState = ({ children }) => {
       payload: imgForm,
     });
   };
-  console.log(changeUser);
+  //console.log(changeUser);
   // Очистка changeUser
   const clearChageUser = () => {
     let clearUser = {};
@@ -117,9 +117,9 @@ const PersonalAccountState = ({ children }) => {
       userFormData.append(key, changeUser[key]);
     }
     // console.log(userFormData);
-    for (let pair of userFormData.entries()) {
+    /* for (let pair of userFormData.entries()) {
       console.log(pair[0] + ',' + pair[1]);
-    }
+    } */
     try {
       const response = await axios.patch(
         ModelUrls.USERS + userId + '/',
@@ -137,7 +137,7 @@ const PersonalAccountState = ({ children }) => {
       console.log(e);
     }
   };
-  console.log(wallet);
+
   return (
     <PersonalAccountContext.Provider
       value={{
