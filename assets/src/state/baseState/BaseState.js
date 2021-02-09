@@ -33,8 +33,8 @@ const initialState = {
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(itemReducer, initialState);
   //запрос на сервер , получаем список домов
-  const refreshList = async () => {
-    const response = await axios.get(ModelUrls.ITEMS);
+  const refreshList = async (url) => {
+    const response = await axios.get(url);
     console.log(response);
     dispatch({
       type: 'LIST',
@@ -46,14 +46,17 @@ const BaseState = ({ children }) => {
   // постраничный запрос на сервер(onClick на пагинации, меняем currentPage и делаем запрос)
   const handleCurrentPage = async (page) => {
     dispatch({ type: 'CURRENT_PAGE', payload: page });
-    const response = await axios.get(
-      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
+    const offset = (page - 1) * pageSize;
+    const urlPage = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+    refreshList(urlPage);
+    /* const response = await axios.get(
+      `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`
     );
     console.log(response);
     dispatch({
       type: 'LIST',
       payload: response.data.results,
-    });
+    }); */
   };
   //Подключаем ' > ' в пагинации для перехода к следующуй страницы
   const nextCurrentPage = async (currentPage, pages) => {

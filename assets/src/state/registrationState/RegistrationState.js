@@ -124,6 +124,7 @@ const RegistrationState = ({ children }) => {
     let checkbox = localStorage.getItem('checkbox');
     if (checkbox === 'true') {
       localStorage.removeItem('token');
+      localStorage.removeItem('checkbox');
     } else {
       sessionStorage.removeItem('token');
     }
@@ -188,9 +189,10 @@ const RegistrationState = ({ children }) => {
   };
   // изменить checkbox в state на противоположное значение
   const handleChangeCheckbox = (e) => {
-    let checkbox = localStorage.getItem('checkbox');
-    checkbox = 'true' ? checkbox === 'false' || checkbox === null : 'false';
-    localStorage.setItem('checkbox', checkbox);
+    console.log(e);
+    // let checkbox = localStorage.getItem('checkbox');
+    // checkbox = 'true' ? checkbox === 'false' || checkbox === null : 'false';
+    localStorage.setItem('checkbox', e.target.checked);
 
     /* let checkbox = state.checkbox;
     checkbox = !checkbox;
