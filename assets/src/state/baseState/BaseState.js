@@ -49,14 +49,6 @@ const BaseState = ({ children }) => {
     const offset = (page - 1) * pageSize;
     const urlPage = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
     refreshList(urlPage);
-    /* const response = await axios.get(
-      `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`
-    );
-    console.log(response);
-    dispatch({
-      type: 'LIST',
-      payload: response.data.results,
-    }); */
   };
   //Подключаем ' > ' в пагинации для перехода к следующуй страницы
   const nextCurrentPage = async (currentPage, pages) => {
@@ -64,8 +56,13 @@ const BaseState = ({ children }) => {
       return;
     } else {
       currentPage = currentPage + 1;
+      dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+      console.log(currentPage);
+      const offset = (currentPage - 1) * pageSize;
+      const urlNext = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      refreshList(urlNext);
     }
-    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+    /* dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
 
     const response = await axios.get(
       `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
@@ -73,7 +70,7 @@ const BaseState = ({ children }) => {
     dispatch({
       type: 'LIST',
       payload: response.data.results,
-    });
+    }); */
   };
   //Подключаем ' < ' в пагинации для перехода к предыдущей страницы
   const previousCurrentPage = async (currentPage) => {
