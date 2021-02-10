@@ -43,7 +43,9 @@ const BaseState = ({ children }) => {
     // получение общего количества домов на сервере(count)
     dispatch({ type: 'COUNT', payload: response.data.count });
   };
-  // постраничный запрос на сервер(onClick на пагинации, меняем currentPage и делаем запрос)
+  // постраничный запрос на сервер(onClick на пагинации, меняем currentPage, вычисляем offset и делаем запрос)
+  //offset(смещение на лимит), нужен для вычисления страницы. (1 стр.offset =0, 2стр - offset=лимит,  3 стр- offset=2 лимита и т.д )
+  // лимит -кол. домов на странице. offset=(номер страниц-1)*лимит
   const handleCurrentPage = async (page) => {
     dispatch({ type: 'CURRENT_PAGE', payload: page });
     const offset = (page - 1) * pageSize;
@@ -62,15 +64,6 @@ const BaseState = ({ children }) => {
       const urlNext = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
       refreshList(urlNext);
     }
-    /* dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
-
-    const response = await axios.get(
-      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
-    );
-    dispatch({
-      type: 'LIST',
-      payload: response.data.results,
-    }); */
   };
   //Подключаем ' < ' в пагинации для перехода к предыдущей страницы
   const previousCurrentPage = async (currentPage) => {
@@ -78,42 +71,35 @@ const BaseState = ({ children }) => {
       return;
     } else {
       currentPage = currentPage - 1;
+      dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+      const offset = (currentPage - 1) * pageSize;
+      const urlPrevious = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      refreshList(urlPrevious);
     }
-    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
-    console.log(currentPage);
-    const response = await axios.get(
-      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
-    );
-    dispatch({
-      type: 'LIST',
-      payload: response.data.results,
-    });
   };
   //Подключаем "в начало" в пагинации для перехода на первую страницу
   const firstCurrentPage = async (currentPage) => {
-    currentPage = 1;
-    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
-    console.log(currentPage);
-    const response = await axios.get(
-      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
-    );
-    dispatch({
-      type: 'LIST',
-      payload: response.data.results,
-    });
+    if (currentPage === 1) {
+      return;
+    } else {
+      currentPage = 1;
+      dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+      const offset = (currentPage - 1) * pageSize;
+      const urlFirst = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      refreshList(urlFirst);
+    }
   };
   //Подключаем "в конец" в пагинации для перехода на последнюю страницу
   const lastCurrentPage = async (currentPage, pages) => {
-    currentPage = pages.length;
-    dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
-    console.log(currentPage);
-    const response = await axios.get(
-      `${ModelUrls.ITEMS}?offset=${state.currentPage}&limit=${pageSize}`
-    );
-    dispatch({
-      type: 'LIST',
-      payload: response.data.results,
-    });
+    if (currentPage === pages.length) {
+      return;
+    } else {
+      currentPage = pages.length;
+      dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
+      const offset = (currentPage - 1) * pageSize;
+      const urlLast = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      refreshList(urlLast);
+    }
   };
 
   // Запрос на обновление объекта item
