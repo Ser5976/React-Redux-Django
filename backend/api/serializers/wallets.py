@@ -15,4 +15,4 @@ class WalletSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Wallet
-        fields = ('id', 'balance', 'currency')
+        fields = ('id', 'balance', 'public_key', 'owner', 'currency')
