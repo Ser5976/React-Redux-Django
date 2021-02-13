@@ -111,6 +111,7 @@ const BaseState = ({ children }) => {
       payload: { ...response.data },
     });
   };
+
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
     dispatch({

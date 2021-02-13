@@ -6,8 +6,6 @@ import { BaseContext } from '../state/baseState/BaseContext';
 import { ModelUrls } from '../constants/urls';
 
 const ListCard = (e) => {
-  //div className="footer-copyright  py-5"
-  //navbar-fixed-bottom row-fluid
   const {
     itemList,
     refreshList,

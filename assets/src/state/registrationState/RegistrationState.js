@@ -159,7 +159,7 @@ const RegistrationState = ({ children }) => {
       userName: userName,
       userId: userId,
     });
-    return true;
+    // return true;
   };
   //получение значений  авторизации
   const handleChangeLogin = (e) => {
