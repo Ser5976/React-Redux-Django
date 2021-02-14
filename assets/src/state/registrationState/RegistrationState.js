@@ -5,6 +5,7 @@ import { authReducer } from '../../reducers/reducers';
 import { AuthUrls } from '../../constants/urls';
 import { receiveDataStorage } from '../../utilities/receiveDataStorage';
 import { setDataStorage } from '../../utilities/setDataStorage';
+import { removeDataStorage } from '../../utilities/removeDataStorage';
 
 const initialState = {
   activeUsers: {
@@ -87,6 +88,7 @@ const RegistrationState = ({ children }) => {
     }
     localStorage.setItem('userName', userName);
     localStorage.setItem('userId', userId); */
+    //эта функция лежит в utilities, она добавляет данные в localStorage или sessionStorage
     setDataStorage('token', token);
     setDataStorage('userName', userName);
     setDataStorage('userId', userId);
@@ -125,7 +127,7 @@ const RegistrationState = ({ children }) => {
   };
   // очистка Storage
   const logout = (history) => {
-    let checkbox = localStorage.getItem('checkbox');
+    /*  let checkbox = localStorage.getItem('checkbox');
     if (checkbox === 'true') {
       localStorage.removeItem('token');
       localStorage.removeItem('checkbox');
@@ -133,9 +135,14 @@ const RegistrationState = ({ children }) => {
       sessionStorage.removeItem('token');
     }
     localStorage.removeItem('userName');
-    localStorage.removeItem('userId');
-
+    localStorage.removeItem('userId'); */
+    removeDataStorage('token');
+    removeDataStorage('userName');
+    removeDataStorage('userId');
+    removeDataStorage('urlPage');
+    localStorage.removeItem('checkbox');
     dispatch({ type: 'LOGOUT' });
+
     // очистка activeLogin
     const emptyActiveLogin = {
       activeLogin: {
@@ -157,6 +164,7 @@ const RegistrationState = ({ children }) => {
     }
     let userName = localStorage.getItem('userName');
     let userId = localStorage.getItem('userId'); */
+    //эта функция лежит в utilities, она берёт данные из localStorage или sessionStorage
     const token = receiveDataStorage('token');
     const userName = receiveDataStorage('userName');
     const userId = receiveDataStorage('userId');

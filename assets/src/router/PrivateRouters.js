@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
-// localStorage.getItem('token') !== null ||
-//sessionStorage.getItem('token') !== null
+import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
 function PrivateRoute({ component: Component, ...rest }) {
   const { token } = useContext(RegistrationContext);
@@ -12,9 +11,7 @@ function PrivateRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        token ||
-        localStorage.getItem('token') !== null ||
-        sessionStorage.getItem('token') !== null ? (
+        token || receiveDataStorage('token') ? (
           <Component {...props} />
         ) : (
           <Redirect

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BaseContext } from './BaseContext';
 import { ModelUrls } from '../../constants/urls';
 import { itemReducer } from '../../reducers/reducers';
+import { setDataStorage } from '../../utilities/setDataStorage';
 
 const initialState = {
   itemCard: {},
@@ -50,6 +51,8 @@ const BaseState = ({ children }) => {
     dispatch({ type: 'CURRENT_PAGE', payload: page });
     const offset = (page - 1) * pageSize;
     const urlPage = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+
+    setDataStorage('urlPage', urlPage); //записываем в local или sessionStorage
     refreshList(urlPage);
   };
   //Подключаем ' > ' в пагинации для перехода к следующуй страницы
@@ -62,6 +65,7 @@ const BaseState = ({ children }) => {
       console.log(currentPage);
       const offset = (currentPage - 1) * pageSize;
       const urlNext = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      setDataStorage('urlPage', urlNext); //записываем в local или sessionStorage
       refreshList(urlNext);
     }
   };
@@ -74,6 +78,7 @@ const BaseState = ({ children }) => {
       dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
       const offset = (currentPage - 1) * pageSize;
       const urlPrevious = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      setDataStorage('urlPage', urlPrevious); //записываем в local или sessionStorage
       refreshList(urlPrevious);
     }
   };
@@ -86,6 +91,7 @@ const BaseState = ({ children }) => {
       dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
       const offset = (currentPage - 1) * pageSize;
       const urlFirst = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      setDataStorage('urlPage', urlFirst); //записываем в local или sessionStorage
       refreshList(urlFirst);
     }
   };
@@ -98,6 +104,7 @@ const BaseState = ({ children }) => {
       dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
       const offset = (currentPage - 1) * pageSize;
       const urlLast = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      setDataStorage('urlPage', urlLast); //записываем в local или sessionStorage
       refreshList(urlLast);
     }
   };
