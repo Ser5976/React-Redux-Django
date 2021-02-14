@@ -20,7 +20,6 @@ export const itemReducer = (state, action) => {
       return {
         ...state,
         activeItem: action.payload,
-        photoFile: action.photoFile,
       };
     case 'PHOTO':
       return {

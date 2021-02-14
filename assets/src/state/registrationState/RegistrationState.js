@@ -43,7 +43,6 @@ const RegistrationState = ({ children }) => {
     activeLogin,
     error,
     pathname,
-    checkbox,
   } = state;
   //открытие модального окна регистрации
   const handleRegistrationShow = () => {
@@ -80,14 +79,6 @@ const RegistrationState = ({ children }) => {
     let userName = data.username;
     let userId = data['user_id'];
     // место хранение токена выбирается от значения "Запомнить меня"
-    /* let checkbox = localStorage.getItem('checkbox');
-    if (checkbox === 'true') {
-      localStorage.setItem('token', token);
-    } else {
-      sessionStorage.setItem('token', token);
-    }
-    localStorage.setItem('userName', userName);
-    localStorage.setItem('userId', userId); */
     //эта функция лежит в utilities, она добавляет данные в localStorage или sessionStorage
     setDataStorage('token', token);
     setDataStorage('userName', userName);
@@ -127,15 +118,6 @@ const RegistrationState = ({ children }) => {
   };
   // очистка Storage
   const logout = (history) => {
-    /*  let checkbox = localStorage.getItem('checkbox');
-    if (checkbox === 'true') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('checkbox');
-    } else {
-      sessionStorage.removeItem('token');
-    }
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userId'); */
     removeDataStorage('token');
     removeDataStorage('userName');
     removeDataStorage('userId');
@@ -155,15 +137,6 @@ const RegistrationState = ({ children }) => {
   };
   // Получение данных пользователя из LocalStorage
   const receiveUserStorage = () => {
-    /* let token;
-    let checkbox = localStorage.getItem('checkbox');
-    if (checkbox === 'true') {
-      token = localStorage.getItem('token');
-    } else {
-      token = sessionStorage.getItem('token');
-    }
-    let userName = localStorage.getItem('userName');
-    let userId = localStorage.getItem('userId'); */
     //эта функция лежит в utilities, она берёт данные из localStorage или sessionStorage
     const token = receiveDataStorage('token');
     const userName = receiveDataStorage('userName');
@@ -174,7 +147,6 @@ const RegistrationState = ({ children }) => {
       userName: userName,
       userId: userId,
     });
-    // return true;
   };
   //получение значений  авторизации
   const handleChangeLogin = (e) => {
@@ -205,13 +177,8 @@ const RegistrationState = ({ children }) => {
   // изменить checkbox в state на противоположное значение
   const handleChangeCheckbox = (e) => {
     console.log(e);
-    // let checkbox = localStorage.getItem('checkbox');
-    // checkbox = 'true' ? checkbox === 'false' || checkbox === null : 'false';
-    localStorage.setItem('checkbox', e.target.checked);
 
-    /* let checkbox = state.checkbox;
-    checkbox = !checkbox;
-    dispatch({ type: 'CHECKBOX', checkbox: checkbox }); */
+    localStorage.setItem('checkbox', e.target.checked);
   };
 
   // открытие из логина окна регистрации и перенаправление на предыдущую страницу
@@ -230,7 +197,6 @@ const RegistrationState = ({ children }) => {
         userName,
         activeLogin,
         error,
-        checkbox,
         handleChangeInput,
         handleSubmitForm,
         handleRegistrationShow,

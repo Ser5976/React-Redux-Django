@@ -6,7 +6,6 @@ import { receiveDataStorage } from '../utilities/receiveDataStorage';
 function PrivateRoute({ component: Component, ...rest }) {
   const { token } = useContext(RegistrationContext);
 
-  console.log(token);
   return (
     <Route
       {...rest}

@@ -4,7 +4,6 @@ import MyCard from '../components/MyCard';
 import NumberingSystem from '../components/NumberingSystem';
 import { BaseContext } from '../state/baseState/BaseContext';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
-//import { ModelUrls } from '../constants/urls';
 
 const ListCard = (e) => {
   const {
@@ -24,7 +23,7 @@ const ListCard = (e) => {
   } = useContext(BaseContext);
   useEffect(() => {
     // const url = ModelUrls.ITEMS;
-    receiveDataStorage('urlPage') !== null
+    currentPage !== 1 && receiveDataStorage('urlPage') !== null
       ? refreshList(receiveDataStorage('urlPage'))
       : refreshList();
 
