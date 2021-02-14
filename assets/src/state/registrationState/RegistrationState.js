@@ -3,6 +3,8 @@ import axios from 'axios';
 import { RegistrationContext } from './RegistrationContext';
 import { authReducer } from '../../reducers/reducers';
 import { AuthUrls } from '../../constants/urls';
+import { receiveDataStorage } from '../../utilities/receiveDataStorage';
+import { setDataStorage } from '../../utilities/setDataStorage';
 
 const initialState = {
   activeUsers: {
@@ -71,21 +73,23 @@ const RegistrationState = ({ children }) => {
       payload: inputValue,
     });
   };
-  // Добавление данных пользователя в LocalStorage
+  // Добавление данных пользователя в LocalStorage и в стейт
   const setUserStorage = (data) => {
     let token = data.key;
     let userName = data.username;
     let userId = data['user_id'];
     // место хранение токена выбирается от значения "Запомнить меня"
-    let checkbox = localStorage.getItem('checkbox');
+    /* let checkbox = localStorage.getItem('checkbox');
     if (checkbox === 'true') {
       localStorage.setItem('token', token);
     } else {
       sessionStorage.setItem('token', token);
     }
     localStorage.setItem('userName', userName);
-    localStorage.setItem('userId', userId);
-
+    localStorage.setItem('userId', userId); */
+    setDataStorage('token', token);
+    setDataStorage('userName', userName);
+    setDataStorage('userId', userId);
     dispatch({
       type: 'AUTH',
       payload: token,
@@ -144,7 +148,7 @@ const RegistrationState = ({ children }) => {
   };
   // Получение данных пользователя из LocalStorage
   const receiveUserStorage = () => {
-    let token;
+    /* let token;
     let checkbox = localStorage.getItem('checkbox');
     if (checkbox === 'true') {
       token = localStorage.getItem('token');
@@ -152,7 +156,10 @@ const RegistrationState = ({ children }) => {
       token = sessionStorage.getItem('token');
     }
     let userName = localStorage.getItem('userName');
-    let userId = localStorage.getItem('userId');
+    let userId = localStorage.getItem('userId'); */
+    const token = receiveDataStorage('token');
+    const userName = receiveDataStorage('userName');
+    const userId = receiveDataStorage('userId');
     dispatch({
       type: 'AUTH',
       payload: token,

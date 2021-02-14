@@ -3,7 +3,7 @@ import { Container, CardColumns, Row } from 'react-bootstrap';
 import MyCard from '../components/MyCard';
 import NumberingSystem from '../components/NumberingSystem';
 import { BaseContext } from '../state/baseState/BaseContext';
-import { ModelUrls } from '../constants/urls';
+//import { ModelUrls } from '../constants/urls';
 
 const ListCard = (e) => {
   const {
@@ -22,8 +22,8 @@ const ListCard = (e) => {
     lastCurrentPage,
   } = useContext(BaseContext);
   useEffect(() => {
-    const url = ModelUrls.ITEMS;
-    refreshList(url);
+    // const url = ModelUrls.ITEMS;
+    refreshList();
     // eslint-disable-next-line
   }, []);
   return (

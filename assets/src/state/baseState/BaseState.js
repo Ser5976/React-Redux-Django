@@ -33,7 +33,7 @@ const initialState = {
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(itemReducer, initialState);
   //запрос на сервер , получаем список домов
-  const refreshList = async (url) => {
+  const refreshList = async (url = ModelUrls.ITEMS) => {
     const response = await axios.get(url);
     console.log(response);
     dispatch({
@@ -111,7 +111,7 @@ const BaseState = ({ children }) => {
       payload: { ...response.data },
     });
   };
-
+  // получение данных из формы AddData, для создания нового объекта
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
     dispatch({
@@ -119,6 +119,7 @@ const BaseState = ({ children }) => {
       payload: item,
     });
   };
+  // отдельное получение фото с помощью useRef
   const handleChangePhoto = (file) => {
     const img = { ...state.activeItem, photo: file };
     dispatch({
@@ -126,6 +127,7 @@ const BaseState = ({ children }) => {
       payload: img,
     });
   };
+  // отдельное получение адреса из-за вложенности
   const handleChangeAddress = (e) => {
     const itemAddress = {
       ...state.activeItem.address,
@@ -159,7 +161,7 @@ const BaseState = ({ children }) => {
       payload: item,
     });
   };
-
+  // отправка данных на сервер
   const handleSubmit = async (e, history) => {
     e.preventDefault();
     const form = e.currentTarget;
