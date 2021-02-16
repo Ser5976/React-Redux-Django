@@ -41,25 +41,19 @@ class UserSerializer(serializers.ModelSerializer):
         ret = OrderedDict()
         errors = OrderedDict()
         fields = self._writable_fields
-        # print('data ', data)
 
         for field in fields:
             validate_method = getattr(self, 'validate_' + field.field_name, None)
             primitive_value = field.get_value(data)
-            # print('primitive_value ', primitive_value)
             try:
                 validated_value = field.run_validation(primitive_value)
-                # print('validated_value ', validated_value)
                 if validate_method is not None:
                     validated_value = validate_method(validated_value)
             except ValidationError as exc:
-                # print('ValidationError ', exc)
                 errors[field.field_name] = exc.detail
             except DjangoValidationError as exc:
-                # print('DjangoValidationError ', exc)
                 errors[field.field_name] = get_error_detail(exc)
             except SkipField:
-                # print('SkipField')
                 pass
             else:
                 set_value(ret, field.source_attrs, validated_value)

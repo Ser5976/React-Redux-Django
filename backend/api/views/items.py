@@ -10,7 +10,7 @@ from todo.models import Item, Comment, Address
 class ItemViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
     serializer_class = ItemSerializer
-    queryset = Item.objects.all()
+    queryset = Item.objects.order_by('-created_at')
 
     # def create(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
