@@ -40,6 +40,7 @@ const RegistrationState = ({ children }) => {
     show,
     token,
     userName,
+    userId,
     activeLogin,
     error,
     pathname,
@@ -93,10 +94,10 @@ const RegistrationState = ({ children }) => {
 
   // Запомнить последний клик
   const rememberLastEvent = (e) => {
+    console.log(e);
     let pathname = e.target.pathname;
     if (pathname === undefined) {
       pathname = e.target.parentElement.pathname;
-      console.log(e.target.parentElement);
     }
     dispatch({ type: 'GET_PATH', payload: pathname });
   };
@@ -195,6 +196,7 @@ const RegistrationState = ({ children }) => {
         show,
         token,
         userName,
+        userId,
         activeLogin,
         error,
         handleChangeInput,

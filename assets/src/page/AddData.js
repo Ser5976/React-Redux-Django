@@ -1,7 +1,8 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { BaseContext } from '../state/baseState/BaseContext';
+import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
 const AddData = () => {
   const history = useHistory();
@@ -14,7 +15,13 @@ const AddData = () => {
     validated,
     bug,
     image,
+    addUserId,
   } = useContext(BaseContext);
+  useEffect(() => {
+    addUserId(receiveDataStorage('userId'));
+
+    // eslint-disable-next-line
+  }, [activeItem.photo]);
   const inputEl = useRef(null);
   const { description, price, address, status, house_type, photo } = activeItem;
   const { country, city, street, house_number, zip_code } = address;

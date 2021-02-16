@@ -12,6 +12,7 @@ const initialState = {
   bug: null,
   image: false,
   activeItem: {
+    owner: null,
     description: '',
     photo: undefined,
     price: '',
@@ -33,6 +34,7 @@ const initialState = {
 
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(itemReducer, initialState);
+
   //запрос на сервер , получаем список домов
   const refreshList = async (url = ModelUrls.ITEMS) => {
     const response = await axios.get(url);
@@ -118,6 +120,12 @@ const BaseState = ({ children }) => {
       payload: { ...response.data },
     });
   };
+  //Добавляем в owner userId
+  const addUserId = (userId) => {
+    console.log(userId);
+    dispatch({ type: 'ADD_USER_ID', payload: userId });
+    console.log(activeItem);
+  };
   // получение данных из формы AddData, для создания нового объекта
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
@@ -171,6 +179,7 @@ const BaseState = ({ children }) => {
   // отправка данных на сервер
   const handleSubmit = async (e, history) => {
     e.preventDefault();
+
     const form = e.currentTarget;
     if (form.checkValidity() === true) {
       e.stopPropagation();
@@ -222,6 +231,7 @@ const BaseState = ({ children }) => {
   const clearActiveItem = () => {
     const emptyActiveItem = {
       activeItem: {
+        owner: null,
         description: '',
         photo: undefined,
         price: '',
@@ -268,6 +278,7 @@ const BaseState = ({ children }) => {
         previousCurrentPage,
         firstCurrentPage,
         lastCurrentPage,
+        addUserId,
       }}
     >
       {children}

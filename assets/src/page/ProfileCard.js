@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { Card, Container, Button } from 'react-bootstrap';
 import { BaseContext } from '../state/baseState/BaseContext';
+import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
 const ProfileCard = ({ match }) => {
   const { itemCard, refreshCard, editItem, handleDelete } = useContext(
@@ -14,10 +15,10 @@ const ProfileCard = ({ match }) => {
     // eslint-disable-next-line
   }, []);
 
-  const { description, address, photo, price } = itemCard;
+  const { description, address, photo, price, owner } = itemCard;
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
-
+  console.log(typeof +receiveDataStorage('userId'));
   return (
     <Container style={{ marginTop: '50px' }}>
       <Card>
@@ -45,18 +46,24 @@ const ProfileCard = ({ match }) => {
           <b>Описание</b>
           <div>{description}</div>
           <h3>Цена: {price} руб.</h3>
-          <NavLink to="/addData" className="btn-primary" role="button">
-            <Button variant="primary" onClick={() => editItem(itemCard)}>
-              Edit
-            </Button>
-          </NavLink>
-          <span> </span>
-          <Button
-            variant="danger"
-            onClick={() => handleDelete(itemCard, history)}
-          >
-            Delete
-          </Button>
+          {owner === +receiveDataStorage('userId') ? (
+            <>
+              <NavLink to="/addData" className="btn-primary" role="button">
+                <Button variant="primary" onClick={() => editItem(itemCard)}>
+                  Edit
+                </Button>
+              </NavLink>
+              <span> </span>
+              <Button
+                variant="danger"
+                onClick={() => handleDelete(itemCard, history)}
+              >
+                Delete
+              </Button>
+            </>
+          ) : (
+            <Button variant="danger">Купить</Button>
+          )}
         </Card.Body>
       </Card>
     </Container>

@@ -31,6 +31,11 @@ export const itemReducer = (state, action) => {
         ...state,
         activeItem: { ...state.activeItem, address: action.payload },
       };
+    case 'ADD_USER_ID':
+      return {
+        ...state,
+        activeItem: { ...state.activeItem, owner: action.payload },
+      };
 
     case 'EDIT_ITEM':
       return {

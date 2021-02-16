@@ -5,7 +5,7 @@ import NumberingSystem from '../components/NumberingSystem';
 import { BaseContext } from '../state/baseState/BaseContext';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
-const ListCard = (e) => {
+const ListCard = () => {
   const {
     itemList,
     refreshList,
@@ -34,6 +34,7 @@ const ListCard = (e) => {
       <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
         <CardColumns style={{ columnCount: 'auto' }}>
           {itemList.map((item) => {
+            console.log(item);
             return (
               <MyCard
                 key={item.id}
