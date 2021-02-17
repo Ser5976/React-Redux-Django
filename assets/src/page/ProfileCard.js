@@ -18,7 +18,7 @@ const ProfileCard = ({ match }) => {
   const { description, address, photo, price, owner } = itemCard;
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
-  console.log(typeof +receiveDataStorage('userId'));
+
   return (
     <Container style={{ marginTop: '50px' }}>
       <Card>

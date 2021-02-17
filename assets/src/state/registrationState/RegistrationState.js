@@ -94,7 +94,7 @@ const RegistrationState = ({ children }) => {
 
   // Запомнить последний клик
   const rememberLastEvent = (e) => {
-    console.log(e);
+    // console.log(e);
     let pathname = e.target.pathname;
     if (pathname === undefined) {
       pathname = e.target.parentElement.pathname;
@@ -110,7 +110,7 @@ const RegistrationState = ({ children }) => {
     if (form.checkValidity() === true) {
       event.stopPropagation();
       const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
-      // console.log(response);
+      console.log(response);
       setUserStorage(response.data);
       dispatch({ type: 'SHOW_CLOSE' });
     }

@@ -38,7 +38,7 @@ const PersonalAccountState = ({ children }) => {
           Authorization: `Token ${token}`,
         },
       });
-      //console.log(response);
+      console.log(response);
       const {
         first_name,
         last_name,

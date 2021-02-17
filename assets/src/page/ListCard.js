@@ -34,7 +34,6 @@ const ListCard = () => {
       <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
         <CardColumns style={{ columnCount: 'auto' }}>
           {itemList.map((item) => {
-            console.log(item);
             return (
               <MyCard
                 key={item.id}
