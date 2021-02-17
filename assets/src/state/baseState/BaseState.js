@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BaseContext } from './BaseContext';
 import { ModelUrls } from '../../constants/urls';
 import { itemReducer } from '../../reducers/reducers';
+import { setDataStorage } from '../../utilities/setDataStorage';
 
 const initialState = {
   itemCard: {},
@@ -11,6 +12,7 @@ const initialState = {
   bug: null,
   image: false,
   activeItem: {
+    owner: null,
     description: '',
     photo: undefined,
     price: '',
@@ -32,8 +34,9 @@ const initialState = {
 
 const BaseState = ({ children }) => {
   const [state, dispatch] = useReducer(itemReducer, initialState);
+
   //запрос на сервер , получаем список домов
-  const refreshList = async (url) => {
+  const refreshList = async (url = ModelUrls.ITEMS) => {
     const response = await axios.get(url);
     console.log(response);
     dispatch({
@@ -50,6 +53,8 @@ const BaseState = ({ children }) => {
     dispatch({ type: 'CURRENT_PAGE', payload: page });
     const offset = (page - 1) * pageSize;
     const urlPage = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+
+    setDataStorage('urlPage', urlPage); //записываем в local или sessionStorage
     refreshList(urlPage);
   };
   //Подключаем ' > ' в пагинации для перехода к следующуй страницы
@@ -62,6 +67,7 @@ const BaseState = ({ children }) => {
       console.log(currentPage);
       const offset = (currentPage - 1) * pageSize;
       const urlNext = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      setDataStorage('urlPage', urlNext); //записываем в local или sessionStorage
       refreshList(urlNext);
     }
   };
@@ -74,6 +80,7 @@ const BaseState = ({ children }) => {
       dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
       const offset = (currentPage - 1) * pageSize;
       const urlPrevious = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      setDataStorage('urlPage', urlPrevious); //записываем в local или sessionStorage
       refreshList(urlPrevious);
     }
   };
@@ -86,6 +93,7 @@ const BaseState = ({ children }) => {
       dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
       const offset = (currentPage - 1) * pageSize;
       const urlFirst = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      setDataStorage('urlPage', urlFirst); //записываем в local или sessionStorage
       refreshList(urlFirst);
     }
   };
@@ -98,6 +106,7 @@ const BaseState = ({ children }) => {
       dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
       const offset = (currentPage - 1) * pageSize;
       const urlLast = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
+      setDataStorage('urlPage', urlLast); //записываем в local или sessionStorage
       refreshList(urlLast);
     }
   };
@@ -111,6 +120,13 @@ const BaseState = ({ children }) => {
       payload: { ...response.data },
     });
   };
+  //Добавляем в owner userId
+  const addUserId = (userId) => {
+    console.log(userId);
+    dispatch({ type: 'ADD_USER_ID', payload: userId });
+    console.log(activeItem);
+  };
+  // получение данных из формы AddData, для создания нового объекта
   const handleChange = (e) => {
     const item = { ...state.activeItem, [e.target.name]: e.target.value };
     dispatch({
@@ -118,6 +134,7 @@ const BaseState = ({ children }) => {
       payload: item,
     });
   };
+  // отдельное получение фото с помощью useRef
   const handleChangePhoto = (file) => {
     const img = { ...state.activeItem, photo: file };
     dispatch({
@@ -125,6 +142,7 @@ const BaseState = ({ children }) => {
       payload: img,
     });
   };
+  // отдельное получение адреса из-за вложенности
   const handleChangeAddress = (e) => {
     const itemAddress = {
       ...state.activeItem.address,
@@ -158,9 +176,10 @@ const BaseState = ({ children }) => {
       payload: item,
     });
   };
-
+  // отправка данных на сервер
   const handleSubmit = async (e, history) => {
     e.preventDefault();
+
     const form = e.currentTarget;
     if (form.checkValidity() === true) {
       e.stopPropagation();
@@ -212,6 +231,7 @@ const BaseState = ({ children }) => {
   const clearActiveItem = () => {
     const emptyActiveItem = {
       activeItem: {
+        owner: null,
         description: '',
         photo: undefined,
         price: '',
@@ -258,6 +278,7 @@ const BaseState = ({ children }) => {
         previousCurrentPage,
         firstCurrentPage,
         lastCurrentPage,
+        addUserId,
       }}
     >
       {children}

@@ -20,7 +20,6 @@ export const itemReducer = (state, action) => {
       return {
         ...state,
         activeItem: action.payload,
-        photoFile: action.photoFile,
       };
     case 'PHOTO':
       return {
@@ -31,6 +30,11 @@ export const itemReducer = (state, action) => {
       return {
         ...state,
         activeItem: { ...state.activeItem, address: action.payload },
+      };
+    case 'ADD_USER_ID':
+      return {
+        ...state,
+        activeItem: { ...state.activeItem, owner: action.payload },
       };
 
     case 'EDIT_ITEM':

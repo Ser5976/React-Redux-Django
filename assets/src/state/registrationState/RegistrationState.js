@@ -3,6 +3,9 @@ import axios from 'axios';
 import { RegistrationContext } from './RegistrationContext';
 import { authReducer } from '../../reducers/reducers';
 import { AuthUrls } from '../../constants/urls';
+import { receiveDataStorage } from '../../utilities/receiveDataStorage';
+import { setDataStorage } from '../../utilities/setDataStorage';
+import { removeDataStorage } from '../../utilities/removeDataStorage';
 
 const initialState = {
   activeUsers: {
@@ -37,10 +40,10 @@ const RegistrationState = ({ children }) => {
     show,
     token,
     userName,
+    userId,
     activeLogin,
     error,
     pathname,
-    checkbox,
   } = state;
   //открытие модального окна регистрации
   const handleRegistrationShow = () => {
@@ -71,21 +74,16 @@ const RegistrationState = ({ children }) => {
       payload: inputValue,
     });
   };
-  // Добавление данных пользователя в LocalStorage
+  // Добавление данных пользователя в LocalStorage и в стейт
   const setUserStorage = (data) => {
     let token = data.key;
     let userName = data.username;
     let userId = data['user_id'];
     // место хранение токена выбирается от значения "Запомнить меня"
-    let checkbox = localStorage.getItem('checkbox');
-    if (checkbox === 'true') {
-      localStorage.setItem('token', token);
-    } else {
-      sessionStorage.setItem('token', token);
-    }
-    localStorage.setItem('userName', userName);
-    localStorage.setItem('userId', userId);
-
+    //эта функция лежит в utilities, она добавляет данные в localStorage или sessionStorage
+    setDataStorage('token', token);
+    setDataStorage('userName', userName);
+    setDataStorage('userId', userId);
     dispatch({
       type: 'AUTH',
       payload: token,
@@ -96,10 +94,10 @@ const RegistrationState = ({ children }) => {
 
   // Запомнить последний клик
   const rememberLastEvent = (e) => {
+    console.log(e);
     let pathname = e.target.pathname;
     if (pathname === undefined) {
       pathname = e.target.parentElement.pathname;
-      console.log(e.target.parentElement);
     }
     dispatch({ type: 'GET_PATH', payload: pathname });
   };
@@ -121,17 +119,13 @@ const RegistrationState = ({ children }) => {
   };
   // очистка Storage
   const logout = (history) => {
-    let checkbox = localStorage.getItem('checkbox');
-    if (checkbox === 'true') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('checkbox');
-    } else {
-      sessionStorage.removeItem('token');
-    }
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userId');
-
+    removeDataStorage('token');
+    removeDataStorage('userName');
+    removeDataStorage('userId');
+    removeDataStorage('urlPage');
+    localStorage.removeItem('checkbox');
     dispatch({ type: 'LOGOUT' });
+
     // очистка activeLogin
     const emptyActiveLogin = {
       activeLogin: {
@@ -144,22 +138,16 @@ const RegistrationState = ({ children }) => {
   };
   // Получение данных пользователя из LocalStorage
   const receiveUserStorage = () => {
-    let token;
-    let checkbox = localStorage.getItem('checkbox');
-    if (checkbox === 'true') {
-      token = localStorage.getItem('token');
-    } else {
-      token = sessionStorage.getItem('token');
-    }
-    let userName = localStorage.getItem('userName');
-    let userId = localStorage.getItem('userId');
+    //эта функция лежит в utilities, она берёт данные из localStorage или sessionStorage
+    const token = receiveDataStorage('token');
+    const userName = receiveDataStorage('userName');
+    const userId = receiveDataStorage('userId');
     dispatch({
       type: 'AUTH',
       payload: token,
       userName: userName,
       userId: userId,
     });
-    return true;
   };
   //получение значений  авторизации
   const handleChangeLogin = (e) => {
@@ -190,13 +178,8 @@ const RegistrationState = ({ children }) => {
   // изменить checkbox в state на противоположное значение
   const handleChangeCheckbox = (e) => {
     console.log(e);
-    // let checkbox = localStorage.getItem('checkbox');
-    // checkbox = 'true' ? checkbox === 'false' || checkbox === null : 'false';
-    localStorage.setItem('checkbox', e.target.checked);
 
-    /* let checkbox = state.checkbox;
-    checkbox = !checkbox;
-    dispatch({ type: 'CHECKBOX', checkbox: checkbox }); */
+    localStorage.setItem('checkbox', e.target.checked);
   };
 
   // открытие из логина окна регистрации и перенаправление на предыдущую страницу
@@ -213,9 +196,9 @@ const RegistrationState = ({ children }) => {
         show,
         token,
         userName,
+        userId,
         activeLogin,
         error,
-        checkbox,
         handleChangeInput,
         handleSubmitForm,
         handleRegistrationShow,

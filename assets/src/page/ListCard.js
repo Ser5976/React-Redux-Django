@@ -3,11 +3,9 @@ import { Container, CardColumns, Row } from 'react-bootstrap';
 import MyCard from '../components/MyCard';
 import NumberingSystem from '../components/NumberingSystem';
 import { BaseContext } from '../state/baseState/BaseContext';
-import { ModelUrls } from '../constants/urls';
+import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
-const ListCard = (e) => {
-  //div className="footer-copyright  py-5"
-  //navbar-fixed-bottom row-fluid
+const ListCard = () => {
   const {
     itemList,
     refreshList,
@@ -24,8 +22,11 @@ const ListCard = (e) => {
     lastCurrentPage,
   } = useContext(BaseContext);
   useEffect(() => {
-    const url = ModelUrls.ITEMS;
-    refreshList(url);
+    // const url = ModelUrls.ITEMS;
+    currentPage !== 1 && receiveDataStorage('urlPage') !== null
+      ? refreshList(receiveDataStorage('urlPage'))
+      : refreshList();
+
     // eslint-disable-next-line
   }, []);
   return (
@@ -33,6 +34,7 @@ const ListCard = (e) => {
       <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
         <CardColumns style={{ columnCount: 'auto' }}>
           {itemList.map((item) => {
+            console.log(item);
             return (
               <MyCard
                 key={item.id}
