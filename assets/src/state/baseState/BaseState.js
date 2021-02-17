@@ -47,7 +47,7 @@ const BaseState = ({ children }) => {
     dispatch({ type: 'COUNT', payload: response.data.count });
   };
   // постраничный запрос на сервер(onClick на пагинации, меняем currentPage, вычисляем offset и делаем запрос)
-  //offset(смещение на лимит), нужен для вычисления страницы. (1 стр.offset =0, 2стр - offset=лимит,  3 стр- offset=2 лимита и т.д )
+  // offset(смещение на лимит), нужен для вычисления страницы. (1 стр.offset =0, 2стр - offset=лимит,  3 стр- offset=2 лимита и т.д )
   // лимит -кол. домов на странице. offset=(номер страниц-1)*лимит
   const handleCurrentPage = async (page) => {
     dispatch({ type: 'CURRENT_PAGE', payload: page });
@@ -57,7 +57,7 @@ const BaseState = ({ children }) => {
     setDataStorage('urlPage', urlPage); //записываем в local или sessionStorage
     refreshList(urlPage);
   };
-  //Подключаем ' > ' в пагинации для перехода к следующуй страницы
+  // Подключаем ' > ' в пагинации для перехода к следующуй страницы
   const nextCurrentPage = async (currentPage, pages) => {
     if (currentPage > pages.length - 1) {
       return;
@@ -71,7 +71,7 @@ const BaseState = ({ children }) => {
       refreshList(urlNext);
     }
   };
-  //Подключаем ' < ' в пагинации для перехода к предыдущей страницы
+  // Подключаем ' < ' в пагинации для перехода к предыдущей страницы
   const previousCurrentPage = async (currentPage) => {
     if (currentPage < 2) {
       return;
@@ -84,7 +84,7 @@ const BaseState = ({ children }) => {
       refreshList(urlPrevious);
     }
   };
-  //Подключаем "в начало" в пагинации для перехода на первую страницу
+  // Подключаем "в начало" в пагинации для перехода на первую страницу
   const firstCurrentPage = async (currentPage) => {
     if (currentPage === 1) {
       return;
@@ -97,7 +97,7 @@ const BaseState = ({ children }) => {
       refreshList(urlFirst);
     }
   };
-  //Подключаем "в конец" в пагинации для перехода на последнюю страницу
+  // Подключаем "в конец" в пагинации для перехода на последнюю страницу
   const lastCurrentPage = async (currentPage, pages) => {
     if (currentPage === pages.length) {
       return;
@@ -120,7 +120,7 @@ const BaseState = ({ children }) => {
       payload: { ...response.data },
     });
   };
-  //Добавляем в owner userId
+  // Добавляем в owner userId
   const addUserId = (userId) => {
     console.log(userId);
     dispatch({ type: 'ADD_USER_ID', payload: userId });
