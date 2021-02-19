@@ -130,6 +130,25 @@ export const authReducer = (state, action) => {
         ...state,
         checkbox: action.payload,
       };
+    case 'REGISTRATION_ERROR':
+      return {
+        ...state,
+        registrationError: {
+          ...state.registrationError,
+          ...action.payload,
+        },
+      };
+    case 'REGISTRATION_MISTAKE':
+      return {
+        ...state,
+        registrationMistake: true,
+      };
+    case 'EMPTY_REGISTRATION_ERROR':
+      return {
+        ...state,
+        registrationMistake: false,
+        registrationError: action.payload,
+      };
 
     default:
       return state;
