@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Navibar from './components/Navibar';
+import NavbarContainer from './components/navbar/NavbarContainer';
 import MyRouter from './router/MyRouter';
 import RegistrationState from './state/registrationState/RegistrationState';
 import BaseState from './state/baseState/BaseState';
@@ -13,7 +13,7 @@ function App() {
         <RegistrationState>
           <BaseState>
             <BrowserRouter>
-              <Navibar />
+              <NavbarContainer />
               <MyRouter />
             </BrowserRouter>
           </BaseState>

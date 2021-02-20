@@ -1,7 +1,7 @@
 import '../css/logincard.css';
 
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Card, Container, Form, Button, Col, Row } from 'react-bootstrap';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 
@@ -65,9 +65,9 @@ const Login = () => {
               <Col>
                 <div>
                   <span>Ещё нет учётной записи? </span>
-                  <a href="#" onClick={() => registrationShow(history)}>
+                  <Link to="#" onClick={() => registrationShow(history)}>
                     <small>Зарегистрироваться</small>
-                  </a>
+                  </Link>
                 </div>
               </Col>
             </Row>
