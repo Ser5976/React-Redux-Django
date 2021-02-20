@@ -1,6 +1,6 @@
 import '../css/navbar.css';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -21,6 +21,7 @@ export default function Navibar() {
     rememberLastEvent,
   } = useContext(RegistrationContext);
   // console.log(history.location.state.from.pathname);
+  const wrapper = useRef(null);
 
   const { clearActiveItem } = useContext(BaseContext);
   useEffect(() => {
@@ -31,12 +32,12 @@ export default function Navibar() {
   const [showBusiness, setShowBusiness] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
-
+  //style={{ textDecoration: 'none', color: '#fff' }}
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand>
-          <Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>
+          <Link to="/" className="brand">
             Django React
           </Link>
         </Navbar.Brand>
@@ -53,15 +54,14 @@ export default function Navibar() {
               onMouseLeave={() => setShowCustomer(!showCustomer)}
               id="customer-dropdown"
             >
-              <NavDropdown.Item>
-                <Link to="/ListCard" className="dropdown-link">
-                  Выбрать дом
-                </Link>
-              </NavDropdown.Item>
+              <Link to="/ListCard" className="dropdown-item">
+                Выбрать дом
+              </Link>
+
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4" className="dropdown-link">
+              <Link to="/ListCard" className="dropdown-item">
                 Замени на что-нибудь полезное
-              </NavDropdown.Item>
+              </Link>
             </NavDropdown>
 
             <NavDropdown
@@ -72,24 +72,24 @@ export default function Navibar() {
               onMouseLeave={() => setShowBusiness(!showBusiness)}
               id="business-dropdown"
             >
-              <NavDropdown.Item>
-                <Link to="/ListCard" className="dropdown-link">
-                  Список объектов
-                </Link>
-              </NavDropdown.Item>
+              <Link to="/ListCard" className="dropdown-item">
+                Список объектов
+              </Link>
+
               <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <Link
-                  to="/addData"
-                  className="dropdown-link"
-                  onClick={(event) => {
-                    rememberLastEvent(event);
-                    clearActiveItem();
-                  }}
-                >
-                  Разместить объявление
-                </Link>
-              </NavDropdown.Item>
+
+              <Link
+                to="/addData"
+                className="dropdown-item"
+                // role="button"
+
+                onClick={(event) => {
+                  rememberLastEvent(event);
+                  clearActiveItem();
+                }}
+              >
+                Разместить объявление
+              </Link>
             </NavDropdown>
             <NavDropdown
               title="Для администраторов"
@@ -102,11 +102,7 @@ export default function Navibar() {
                 target="_blank"
                 rel="noreferrer"
                 href={AdminUrls.ADMIN}
-                style={{
-                  textDecoration: 'none',
-                  color: '#212529',
-                  marginLeft: '20px',
-                }}
+                className="dropdown-item"
               >
                 Django admin
               </a>
@@ -115,11 +111,7 @@ export default function Navibar() {
                 target="_blank"
                 rel="noreferrer"
                 href={AdminUrls.SWAGGER}
-                style={{
-                  textDecoration: 'none',
-                  color: '#212529',
-                  marginLeft: '20px',
-                }}
+                className="dropdown-item"
               >
                 Swagger
               </a>
@@ -128,11 +120,7 @@ export default function Navibar() {
                 target="_blank"
                 rel="noreferrer"
                 href={AdminUrls.SILK}
-                style={{
-                  textDecoration: 'none',
-                  color: '#212529',
-                  marginLeft: '20px',
-                }}
+                className="dropdown-item"
               >
                 Silk
               </a>
@@ -155,23 +143,20 @@ export default function Navibar() {
                 onMouseLeave={() => setShowAccount(!showAccount)}
                 show={showAccount}
               >
-                <NavDropdown.Item>
-                  <Link to="/personalAccount" className="dropdown-link">
-                    Личный кабинет
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link
-                    to="#"
-                    className="dropdown-link"
-                    onClick={() => {
-                      logout(history);
-                      setShowAccount(false);
-                    }}
-                  >
-                    Выйти
-                  </Link>
-                </NavDropdown.Item>
+                <Link to="/personalAccount" className="dropdown-item">
+                  Личный кабинет
+                </Link>
+                <NavDropdown.Divider />
+                <Link
+                  className="dropdown-item"
+                  to="#"
+                  onClick={() => {
+                    logout(history);
+                    setShowAccount(false);
+                  }}
+                >
+                  Выйти
+                </Link>
               </NavDropdown>
             ) : (
               <Button
@@ -185,6 +170,7 @@ export default function Navibar() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+
       <FormModal />
     </>
   );
