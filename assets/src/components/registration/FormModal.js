@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
-import { RegistrationContext } from '../state/registrationState/RegistrationContext';
+import { RegistrationContext } from '../../state/registrationState/RegistrationContext';
 import RegistrationError from './RegistrationError';
 import RegistrationForm from './RegistrationForm';
 

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Navibar from './Navibar';
-import FormModal from '../FormModal';
+import FormModal from '../registration/FormModal';
 import { BaseContext } from '../../state/baseState/BaseContext';
 import { RegistrationContext } from '../../state/registrationState/RegistrationContext';
 

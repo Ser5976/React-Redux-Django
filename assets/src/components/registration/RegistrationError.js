@@ -5,7 +5,7 @@ const RegistrationError = ({ registrationError }) => {
     <>
       {registrationError.email && registrationError.username ? (
         <h8 className="text-center text-danger pt-3">
-          Пользователь и email уже сусществует
+          Пользователь и email уже существует
         </h8>
       ) : registrationError.username ? (
         <h8 className="text-center text-danger pt-3">
@@ -13,7 +13,7 @@ const RegistrationError = ({ registrationError }) => {
         </h8>
       ) : registrationError.email ? (
         <h8 className="text-center text-danger pt-3">
-          Данный email уже сусществует
+          Данный email уже существует
         </h8>
       ) : (
         <h8 className="text-center text-danger pt-3">Что-то пошло не так</h8>
