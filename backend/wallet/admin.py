@@ -8,7 +8,7 @@ class WalletInline(admin.TabularInline):
 
 
 class WalletAdmin(admin.ModelAdmin):
-    list_display = ('id', 'owner', 'balance', 'currency')
+    list_display = ('id', 'owner', 'balance', 'is_default', 'currency')
     list_display_links = ('owner', 'balance',)
 
 
