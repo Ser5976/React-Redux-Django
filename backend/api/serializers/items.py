@@ -24,11 +24,13 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class ItemSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
+    owner_username = serializers.CharField(source='owner.username')
 
     class Meta:
         model = Item
-        fields = ('id', 'owner', 'house_type', 'description', 'status',
-                  'address', 'photo', 'price', 'created_at', 'updated_at')
+        fields = ('id', 'owner', 'owner_username', 'house_type', 'description',
+                  'status', 'address', 'photo', 'price', 'created_at',
+                  'updated_at')
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
