@@ -5,7 +5,7 @@ import ListCard from '../page/ListCard';
 import ProfileCard from '../page/ProfileCard';
 import AddData from '../page/AddData';
 import LoginContainer from '../page/LoginContainer';
-import PersonalAccount from '../page/PersonalAccount';
+import PersonalAccountContainer from '../page/PersonalAccountContainer';
 
 import PrivateRoute from './PrivateRouters';
 
@@ -16,7 +16,10 @@ function MyRouter() {
       <PrivateRoute path="/profile/:name" component={ProfileCard} />
       <PrivateRoute path="/addData" component={AddData} />
       <Route path="/login" component={LoginContainer} />
-      <PrivateRoute path="/personalAccount" component={PersonalAccount} />
+      <PrivateRoute
+        path="/personalAccount"
+        component={PersonalAccountContainer}
+      />
       <Redirect to="/" />
     </Switch>
   );

@@ -1,27 +1,19 @@
-import React, { useRef, useEffect, useContext } from 'react';
 import { Container, Row, Col, Tab, Nav } from 'react-bootstrap';
-import { PersonalAccountContext } from '../state/personalAccountState/PersonalAccountContext';
-import AccountForm from '../components/account/AccountForm';
-import AddAccount from '../components/account/AddAccount';
-import Wallet from '../components/account/Wallet';
 
-const PersonalAccount = () => {
-  const {
-    activeUser,
-    changeUser,
-    formUser,
-    getUser,
-    wallet,
-    handleChangeAccount,
-    handleSubmitAccount,
-    handleChangeAvatar,
-  } = useContext(PersonalAccountContext);
+import AccountForm from './AccountForm';
+import AddAccount from './AddAccount';
+import Wallet from './Wallet';
 
-  const inputEl = useRef(null);
-  useEffect(() => {
-    getUser();
-    // eslint-disable-next-line
-  }, []);
+const PersonalAccount = ({
+  activeUser,
+  changeUser,
+  formUser,
+  wallet,
+  handleChangeAccount,
+  handleSubmitAccount,
+  handleChangeAvatar,
+  inputEl,
+}) => {
   const { first_name, last_name, email, username, role, avatar } = activeUser;
   const firstName = first_name ? first_name : 'Имя';
 
