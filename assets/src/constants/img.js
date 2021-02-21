@@ -1,0 +1,6 @@
+export const firstHouse =
+  'https://lh3.googleusercontent.com/proxy/6BbSZ6-dm64sBXOYx0yVc_7zX2lYNgqHghG4jv2-dQHzRmhF4nStwYI58aB5U353ccN5leOEwhqiW5IeqwVcFPWzsNRyjLqj9xAZPr3t3lwggplVE85TWbMsphf88jjHS5M';
+export const secondHouse =
+  'https://lh3.googleusercontent.com/proxy/ELOtI9P_FOB7Y5Px9qvQ_7FaVZTC9c2dw7hmmRTiPUSbXBlB9_ZNP1KoymG16pM7LeOf2SQaS3VJVcoLqPFyLBMhmSFS_RUPSEJgFDaDH3P3phQcsN-IT3M1ZP-J0l7QCK7a';
+export const thirdHouse =
+  'https://lh3.googleusercontent.com/proxy/rf0W2tbQk52P_iFeMX-rSGYmJGp3F_dCuuaAnURVrR8OsMKiQx4AREb0EsSSPE1PLx2RA1y6B2iynPXPaA0IB5Wn2qE9icreOVixoVyf76Y3TRqYHlkoC7oxFW29GLCayWzA';

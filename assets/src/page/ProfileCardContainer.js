@@ -13,6 +13,7 @@ const ProfileCardContainer = ({ match }) => {
     refreshCard(urlId);
     // eslint-disable-next-line
   }, []);
+  console.log(match);
 
   return (
     <ProfileCard
