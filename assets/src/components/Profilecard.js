@@ -1,33 +1,22 @@
-import React, { useContext, useEffect } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { Card, Container, Button } from 'react-bootstrap';
-import { BaseContext } from '../state/baseState/BaseContext';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
-const ProfileCard = ({ match }) => {
-  const { itemCard, refreshCard, editItem, handleDelete } = useContext(
-    BaseContext
-  );
-  const urlId = match.params.name;
-  const history = useHistory();
-  useEffect(() => {
-    refreshCard(urlId);
-    // eslint-disable-next-line
-  }, []);
-
+const ProfileCard = ({ itemCard, editItem, handleDelete, history }) => {
   const { description, address, photo, price, owner } = itemCard;
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
-
+  //  style={{ width: '254px', height: '170px' }}
   return (
-    <Container style={{ marginTop: '50px' }}>
+    <Container className="mt-5">
       <Card>
         <NavLink to="/ListCard" className="nav-link">
           <Card.Img
             variant="left"
             src={photo}
             alt="фото"
-            style={{ width: '254px', height: '170px' }}
+            className="w-25 h-auto"
           />
         </NavLink>
         <Card.Body>
