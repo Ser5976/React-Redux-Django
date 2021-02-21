@@ -3,6 +3,7 @@ import { Container, CardColumns, Row } from 'react-bootstrap';
 import MyCard from '../components/MyCard';
 import NumberingSystem from '../components/NumberingSystem';
 import { BaseContext } from '../state/baseState/BaseContext';
+import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
 const ListCard = () => {
@@ -21,6 +22,7 @@ const ListCard = () => {
     firstCurrentPage,
     lastCurrentPage,
   } = useContext(BaseContext);
+  const { rememberLastEvent } = useContext(RegistrationContext);
   useEffect(() => {
     // const url = ModelUrls.ITEMS;
     currentPage !== 1 && receiveDataStorage('urlPage') !== null
@@ -43,6 +45,7 @@ const ListCard = () => {
                 item={item}
                 handleShow={handleShow}
                 editItem={editItem}
+                rememberLastEvent={rememberLastEvent}
               />
             );
           })}
