@@ -3,7 +3,6 @@ import { Card } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 const MyCard = ({ price, photo, item, rememberLastEvent }) => {
-  console.log(item);
   return (
     <Card style={{ width: '18rem', margin: '.75rem' }}>
       <NavLink

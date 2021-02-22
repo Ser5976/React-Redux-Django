@@ -31,6 +31,7 @@ const ListCard = () => {
 
     // eslint-disable-next-line
   }, []);
+  console.log(itemList);
   return (
     <>
       <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>

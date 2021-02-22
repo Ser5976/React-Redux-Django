@@ -110,16 +110,24 @@ const BaseState = ({ children }) => {
       refreshList(urlLast);
     }
   };
-
-  // Запрос на обновление объекта item
-  const refreshCard = async (itemId) => {
-    const response = await axios.get(ModelUrls.ITEMS + itemId);
+  //берём из itemList при помощи id конкретный объект дома для профайла
+  const refreshCard = (itemId) => {
+    const card = {};
+    for (let i = 0; i < itemList.length; i++) {
+      if (itemList[i].id === +itemId) {
+        for (let key in itemList[i]) {
+          card[key] = itemList[i][key];
+        }
+        console.log(card);
+      }
+    }
 
     dispatch({
       type: 'CARD',
-      payload: { ...response.data },
+      payload: { ...card },
     });
   };
+
   // Добавляем в owner userId
   const addUserId = (userId) => {
     console.log(userId);
