@@ -16,11 +16,7 @@ const ListCard = () => {
     count,
     pageSize,
     currentPage,
-    handleCurrentPage,
-    nextCurrentPage,
-    previousCurrentPage,
-    firstCurrentPage,
-    lastCurrentPage,
+    pagination,
   } = useContext(BaseContext);
   const { rememberLastEvent } = useContext(RegistrationContext);
   useEffect(() => {
@@ -31,7 +27,7 @@ const ListCard = () => {
 
     // eslint-disable-next-line
   }, []);
-  console.log(itemList);
+
   return (
     <>
       <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
@@ -58,12 +54,8 @@ const ListCard = () => {
           <NumberingSystem
             count={count}
             pageSize={pageSize}
+            pagination={pagination}
             currentPage={currentPage}
-            handleCurrentPage={handleCurrentPage}
-            nextCurrentPage={nextCurrentPage}
-            previousCurrentPage={previousCurrentPage}
-            firstCurrentPage={firstCurrentPage}
-            lastCurrentPage={lastCurrentPage}
           />
         </Row>
       </div>

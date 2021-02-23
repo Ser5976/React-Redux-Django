@@ -5,14 +5,22 @@ const Slider = () => {
   return (
     <Carousel>
       <Carousel.Item>
-        <img className="d-block w-100" src={firstHouse} alt="First slide" />
+        <img
+          className="d-block w-100 h-50"
+          src={firstHouse}
+          alt="First slide"
+        />
         <Carousel.Caption>
           <h3>First slide label</h3>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-        <img className="d-block w-100" src={secondHouse} alt="Second slide" />
+        <img
+          className="d-block w-100 h-50"
+          src={secondHouse}
+          alt="Second slide"
+        />
 
         <Carousel.Caption>
           <h3>Second slide label</h3>
@@ -20,7 +28,11 @@ const Slider = () => {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-        <img className="d-block w-100" src={thirdHouse} alt="Third slide" />
+        <img
+          className="d-block w-100  h-50"
+          src={thirdHouse}
+          alt="Third slide"
+        />
 
         <Carousel.Caption>
           <h3>Third slide label</h3>
