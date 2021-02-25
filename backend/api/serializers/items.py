@@ -77,6 +77,8 @@ class ItemSerializer(serializers.ModelSerializer):
                 continue
             elif field_name == 'owner' and field_data is None:
                 primitive_value = User.objects.get(is_admin=True).id
+            elif field_name == 'owner_username':
+                continue
             else:
                 primitive_value = field.get_value(data)
             try:
@@ -84,7 +86,6 @@ class ItemSerializer(serializers.ModelSerializer):
                 if validate_method is not None:
                     validated_value = validate_method(validated_value)
             except ValidationError as exc:
-                print('ValidationError')
                 errors[field_name] = exc.detail
             except DjangoValidationError as exc:
                 errors[field_name] = get_error_detail(exc)
@@ -95,7 +96,6 @@ class ItemSerializer(serializers.ModelSerializer):
 
         if errors:
             raise ValidationError(errors)
-
         return ret
 
 
