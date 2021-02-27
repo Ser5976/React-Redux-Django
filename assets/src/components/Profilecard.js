@@ -4,7 +4,14 @@ import { Card, Container, Button } from 'react-bootstrap';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
 const ProfileCard = ({ itemCard, editItem, handleDelete, history }) => {
-  const { description, address, photo, price, owner } = itemCard;
+  const {
+    description,
+    address,
+    photo,
+    price,
+    owner,
+    owner_username,
+  } = itemCard;
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
   //  style={{ width: '254px', height: '170px' }}
@@ -34,6 +41,8 @@ const ProfileCard = ({ itemCard, editItem, handleDelete, history }) => {
           </p>
           <b>Описание</b>
           <div>{description}</div>
+          <b>Владелец</b>
+          <div>{owner_username}</div>
           <h3>Цена: {price} руб.</h3>
           {owner === +receiveDataStorage('userId') ? (
             <>

@@ -20,9 +20,8 @@ const AddData = () => {
   } = useContext(BaseContext);
   useEffect(() => {
     addUserId(receiveDataStorage('userId'));
-
     // eslint-disable-next-line
-  }, [activeItem.photo]);
+  }, [activeItem.owner]);
   const inputEl = useRef(null);
   const { description, price, address, status, house_type, photo } = activeItem;
   const { country, city, street, house_number, zip_code } = address;

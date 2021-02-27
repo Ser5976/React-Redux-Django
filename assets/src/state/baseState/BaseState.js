@@ -89,9 +89,10 @@ const BaseState = ({ children }) => {
     setDataStorage('urlPage', urlPage); //записываем в local или sessionStorage
     refreshList(urlPage);
   };
-  //берём из itemList при помощи id конкретный объект дома для профайла
-  const refreshCard = (itemId) => {
-    const card = {};
+  //Запрос на сервер,  при помощи id, для получения  объект дома для профайла
+  const refreshCard = async (itemId) => {
+    const response = await axios.get(ModelUrls.ITEMS + itemId);
+    /* const card = {};
     for (let i = 0; i < itemList.length; i++) {
       if (itemList[i].id === +itemId) {
         for (let key in itemList[i]) {
@@ -99,19 +100,20 @@ const BaseState = ({ children }) => {
         }
         //console.log(card);
       }
-    }
+    } */
+    console.log(response.data);
 
     dispatch({
       type: 'CARD',
-      payload: { ...card },
+      payload: { ...response.data },
     });
   };
 
-  // Добавляем в owner userId
+  // Добавляем в owner userId.Функцию вызываем в AddData с помощью useEffecta(во 2-ой параметр кладём owner,это поможет нам вызвать функцию дважды,чтобы owner смог записаться в стэйт)
   const addUserId = (userId) => {
-    // console.log(userId);
+    //console.log(userId);
     dispatch({ type: 'ADD_USER_ID', payload: userId });
-    // console.log(activeItem);
+    //console.log(activeItem);
   };
   // получение данных из формы AddData, для создания нового объекта
   const handleChange = (e) => {
