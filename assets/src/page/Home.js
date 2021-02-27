@@ -1,30 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Jumbot from '../components/home/Jumbot';
-import Slider from '../components/Slider';
+import Slider from '../components/home/Slider';
 import Futer from '../components/home/Futer';
-import { BaseContext } from '../state/baseState/BaseContext';
-import styled from 'styled-components';
-const Styles = styled.div`
-  .container {
-    margin-bottom: 0;
-  }
-`;
+import { house1, house2, house3, house4, house5 } from '../constants/img';
+import styles from '../css/home.module.css';
+
+const imgHouse = [house1, house2, house3, house4, house5];
 
 const Home = () => {
-  const { itemList, refreshList } = useContext(BaseContext);
-  useEffect(() => {
-    refreshList();
-    // eslint-disable-next-line
-  }, []);
-
   return (
-    <Styles>
+    <>
       <Jumbot />
-      <Container className="container">
+      <Container className={styles.container}>
         <Row>
           <Col md={7}>
-            <Slider itemList={itemList} />
+            <Slider imgHouse={imgHouse} />
           </Col>
           <Col md={5}>
             <h2>Django react</h2>
@@ -45,7 +36,7 @@ const Home = () => {
       </Container>
 
       <Futer />
-    </Styles>
+    </>
   );
 };
 export default Home;

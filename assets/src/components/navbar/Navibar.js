@@ -1,5 +1,3 @@
-import '../../css/navbar.css';
-
 import React from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -22,11 +20,10 @@ export default function Navibar({
   showAccount,
   setShowAccount,
 }) {
-  //style={{ textDecoration: 'none', color: '#fff' }}
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Navbar.Brand>
-        <Link to="/" className="brand">
+        <Link to="/" className="navbar-brand">
           Django React
         </Link>
       </Navbar.Brand>
