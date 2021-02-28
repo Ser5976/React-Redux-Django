@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Row, Col, Accordion, Button } from 'react-bootstrap';
 
 const Wallet = ({ wallet }) => {
-  //console.log(wallet);
+  console.log(wallet);
   const wallets = wallet.map((money) => {
     return (
       <Accordion key={money.id}>

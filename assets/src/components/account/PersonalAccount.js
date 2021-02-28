@@ -34,8 +34,8 @@ const PersonalAccount = ({
             <img
               src={avatar}
               alt="аватар"
-              style={{ width: '125px' }}
-              className="rounded-circle ml-5"
+              style={{ width: '125px', height: '100px' }}
+              className="rounded-circle ml-5 "
             />
           ) : null}
         </Col>

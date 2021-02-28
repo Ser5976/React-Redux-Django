@@ -91,6 +91,7 @@ const BaseState = ({ children }) => {
   };
   //Запрос на сервер,  при помощи id, для получения  объект дома для профайла
   const refreshCard = async (itemId) => {
+    console.log(itemList);
     const response = await axios.get(ModelUrls.ITEMS + itemId);
     /* const card = {};
     for (let i = 0; i < itemList.length; i++) {

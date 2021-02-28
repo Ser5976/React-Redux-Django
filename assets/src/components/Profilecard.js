@@ -3,7 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { Card, Container, Button } from 'react-bootstrap';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
-const ProfileCard = ({ itemCard, editItem, handleDelete, history }) => {
+const ProfileCard = ({
+  itemCard,
+  editItem,
+  handleDelete,
+  history,
+  openWallet,
+}) => {
   const {
     description,
     address,
@@ -12,6 +18,7 @@ const ProfileCard = ({ itemCard, editItem, handleDelete, history }) => {
     owner,
     owner_username,
   } = itemCard;
+  console.log(itemCard);
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
   //  style={{ width: '254px', height: '170px' }}
@@ -60,7 +67,9 @@ const ProfileCard = ({ itemCard, editItem, handleDelete, history }) => {
               </Button>
             </>
           ) : (
-            <Button variant="danger">Купить</Button>
+            <Button variant="danger" onClick={openWallet}>
+              Купить
+            </Button>
           )}
         </Card.Body>
       </Card>
