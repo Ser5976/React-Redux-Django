@@ -12,11 +12,15 @@ class CurrencySerializer(serializers.ModelSerializer):
 
 class WalletSerializer(serializers.ModelSerializer):
     currency = CurrencySerializer()
+    updated = serializers.SerializerMethodField()
 
     class Meta:
         model = Wallet
         fields = ('id', 'balance', 'is_default', 'public_key', 'owner',
-                  'currency')
+                  'currency', 'updated')
+
+    def get_updated(self, obj):
+        return obj.updated_at.strftime('%l:%M:%S %d/%m/%y')
 
 
 class TransactionSerializer(serializers.ModelSerializer):

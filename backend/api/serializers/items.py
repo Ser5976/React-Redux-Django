@@ -24,7 +24,9 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class ItemSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
-    owner_username = serializers.CharField(source='owner.username')
+    # owner_username = serializers.CharField(source='owner.username')
+    owner_username = serializers.CharField(source='owner.username',
+                                           read_only=True)
 
     class Meta:
         model = Item
@@ -77,8 +79,8 @@ class ItemSerializer(serializers.ModelSerializer):
                 continue
             elif field_name == 'owner' and field_data is None:
                 primitive_value = User.objects.get(is_admin=True).id
-            elif field_name == 'owner_username':
-                continue
+            # elif field_name == 'owner_username':
+                # continue
             else:
                 primitive_value = field.get_value(data)
             try:

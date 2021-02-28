@@ -40,7 +40,7 @@ const ProfileModalWallet = ({ closeWalet, show, wallet }) => {
                   </Row>
                 </Card.Body>
                 <Card.Footer>
-                  <small className="text-muted">Last updated 3 mins ago</small>
+                  <small className="text-muted">Обновлено {money.updated}</small>
                 </Card.Footer>
               </Card>
             );
