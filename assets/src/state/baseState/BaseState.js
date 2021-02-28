@@ -193,6 +193,7 @@ const BaseState = ({ children }) => {
       if (activeItem.id) {
         try {
           await axios.put(ModelUrls.ITEMS + activeItem.id + '/', activeForm);
+          clearBug();
           refreshList();
           history.goBack();
         } catch (e) {
@@ -203,6 +204,7 @@ const BaseState = ({ children }) => {
 
       try {
         await axios.post(ModelUrls.ITEMS, activeForm);
+        clearBug();
         refreshList();
         history.push('/ListCard');
       } catch (e) {
@@ -216,6 +218,10 @@ const BaseState = ({ children }) => {
     await axios.delete(ModelUrls.ITEMS + item.id);
     refreshList();
     history.push('/ListCard');
+  };
+  //очистка ошибки
+  const clearBug = () => {
+    dispatch({ type: 'BUG', payload: null });
   };
   //Очистка стейта
   const clearActiveItem = () => {

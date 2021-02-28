@@ -12,7 +12,7 @@ const ProfileModalWallet = ({ closeWalet, show, wallet }) => {
       setGreen(id);
     }
   };
-
+  console.log(wallet);
   return (
     <Modal show={show} onHide={closeWalet} size="lg">
       <Modal.Header closeButton>
@@ -40,7 +40,9 @@ const ProfileModalWallet = ({ closeWalet, show, wallet }) => {
                   </Row>
                 </Card.Body>
                 <Card.Footer>
-                  <small className="text-muted">Обновлено {money.updated}</small>
+                  <small className="text-muted">
+                    Обновлено {money.updated}
+                  </small>
                 </Card.Footer>
               </Card>
             );
