@@ -2,20 +2,24 @@ import React from 'react';
 import { Card, Row, Col, Accordion, Button } from 'react-bootstrap';
 
 const Wallet = ({ wallet }) => {
-  //console.log(wallet);
+  console.log(wallet);
   const wallets = wallet.map((money) => {
     return (
       <Accordion key={money.id}>
         <Card>
           <Card.Header>
-            <Accordion.Toggle
-              as={Button}
-              variant="link"
-              eventKey={money.id}
-              className="text-center"
-            >
-              {money.currency.name}
-            </Accordion.Toggle>
+            <Row className="justify-content-between">
+              <Col sm={7}>
+                <Accordion.Toggle
+                  as={Button}
+                  variant="link"
+                  eventKey={money.id}
+                >
+                  {money.currency.name}
+                </Accordion.Toggle>
+              </Col>
+              <Col sm={4}> № {money.public_key}</Col>
+            </Row>
           </Card.Header>
           <Accordion.Collapse eventKey={money.id}>
             <Card.Body>

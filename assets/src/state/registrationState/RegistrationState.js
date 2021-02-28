@@ -27,6 +27,8 @@ const initialState = {
   error: undefined,
   pathname: '/',
   checkbox: false,
+  registrationError: {},
+  registrationMistake: false,
 };
 
 const RegistrationState = ({ children }) => {
@@ -44,6 +46,8 @@ const RegistrationState = ({ children }) => {
     activeLogin,
     error,
     pathname,
+    registrationError,
+    registrationMistake,
   } = state;
   //открытие модального окна регистрации
   const handleRegistrationShow = () => {
@@ -61,6 +65,12 @@ const RegistrationState = ({ children }) => {
     dispatch({
       type: 'AUTH_CLEAR',
       payload: { ...emptyActiveUsers.activeUsers },
+    });
+    //очистка ошибки при регистрации
+    const emptyRigistrationError = {};
+    dispatch({
+      type: 'EMPTY_REGISTRATION_ERROR',
+      payload: emptyRigistrationError,
     });
   };
   // получение значений из формы регистрации
@@ -94,7 +104,7 @@ const RegistrationState = ({ children }) => {
 
   // Запомнить последний клик
   const rememberLastEvent = (e) => {
-    console.log(e);
+    // console.log(e);
     let pathname = e.target.pathname;
     if (pathname === undefined) {
       pathname = e.target.parentElement.pathname;
@@ -105,14 +115,23 @@ const RegistrationState = ({ children }) => {
   // отправка данных из формы регистрации
   const handleSubmitForm = async (event) => {
     event.preventDefault();
-
     const form = event.currentTarget;
     if (form.checkValidity() === true) {
       event.stopPropagation();
-      const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
-      // console.log(response);
-      setUserStorage(response.data);
-      dispatch({ type: 'SHOW_CLOSE' });
+      try {
+        const response = await axios.post(AuthUrls.REGISTRATION, activeUsers);
+        console.log(response);
+        setUserStorage(response.data);
+        dispatch({ type: 'SHOW_CLOSE' });
+      } catch (e) {
+        let err = e.response.data;
+        console.log(err);
+
+        dispatch({ type: 'REGISTRATION_MISTAKE' });
+        dispatch({ type: 'REGISTRATION_ERROR', payload: err });
+        //  console.log(registrationError);
+        // console.log(registrationMistake);
+      }
     }
 
     dispatch({ type: 'VALIDATED' });
@@ -177,7 +196,7 @@ const RegistrationState = ({ children }) => {
   };
   // изменить checkbox в state на противоположное значение
   const handleChangeCheckbox = (e) => {
-    console.log(e);
+    // console.log(e);
 
     localStorage.setItem('checkbox', e.target.checked);
   };
@@ -199,6 +218,8 @@ const RegistrationState = ({ children }) => {
         userId,
         activeLogin,
         error,
+        registrationError,
+        registrationMistake,
         handleChangeInput,
         handleSubmitForm,
         handleRegistrationShow,

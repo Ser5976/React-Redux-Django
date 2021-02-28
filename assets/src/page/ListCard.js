@@ -3,6 +3,7 @@ import { Container, CardColumns, Row } from 'react-bootstrap';
 import MyCard from '../components/MyCard';
 import NumberingSystem from '../components/NumberingSystem';
 import { BaseContext } from '../state/baseState/BaseContext';
+import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
 const ListCard = () => {
@@ -15,12 +16,9 @@ const ListCard = () => {
     count,
     pageSize,
     currentPage,
-    handleCurrentPage,
-    nextCurrentPage,
-    previousCurrentPage,
-    firstCurrentPage,
-    lastCurrentPage,
+    pagination,
   } = useContext(BaseContext);
+  const { rememberLastEvent } = useContext(RegistrationContext);
   useEffect(() => {
     // const url = ModelUrls.ITEMS;
     currentPage !== 1 && receiveDataStorage('urlPage') !== null
@@ -29,12 +27,12 @@ const ListCard = () => {
 
     // eslint-disable-next-line
   }, []);
+
   return (
     <>
       <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
         <CardColumns style={{ columnCount: 'auto' }}>
           {itemList.map((item) => {
-            console.log(item);
             return (
               <MyCard
                 key={item.id}
@@ -44,6 +42,7 @@ const ListCard = () => {
                 item={item}
                 handleShow={handleShow}
                 editItem={editItem}
+                rememberLastEvent={rememberLastEvent}
               />
             );
           })}
@@ -55,12 +54,8 @@ const ListCard = () => {
           <NumberingSystem
             count={count}
             pageSize={pageSize}
+            pagination={pagination}
             currentPage={currentPage}
-            handleCurrentPage={handleCurrentPage}
-            nextCurrentPage={nextCurrentPage}
-            previousCurrentPage={previousCurrentPage}
-            firstCurrentPage={firstCurrentPage}
-            lastCurrentPage={lastCurrentPage}
           />
         </Row>
       </div>

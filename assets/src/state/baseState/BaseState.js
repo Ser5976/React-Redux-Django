@@ -49,82 +49,72 @@ const BaseState = ({ children }) => {
   // постраничный запрос на сервер(onClick на пагинации, меняем currentPage, вычисляем offset и делаем запрос)
   // offset(смещение на лимит), нужен для вычисления страницы. (1 стр.offset =0, 2стр - offset=лимит,  3 стр- offset=2 лимита и т.д )
   // лимит -кол. домов на странице. offset=(номер страниц-1)*лимит
-  const handleCurrentPage = async (page) => {
-    dispatch({ type: 'CURRENT_PAGE', payload: page });
-    const offset = (page - 1) * pageSize;
-    const urlPage = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
 
+  const pagination = (flag, currentPage, pages) => {
+    let value;
+    if (flag === 1) {
+      value = currentPage;
+    } else if (flag === 2) {
+      value = currentPage;
+      if (value > pages.length - 1) {
+        return;
+      } else {
+        value = value + 1;
+      } // Подключаем ' > ' в пагинации для перехода к следующуй страницы
+    } else if (flag === 3) {
+      value = currentPage;
+      if (value < 2) {
+        return;
+      } else {
+        value = value - 1;
+      } // Подключаем ' < ' в пагинации для перехода к предыдущей страницы
+    } else if (flag === 4) {
+      value = currentPage;
+      if (value === 1) {
+        return;
+      } else {
+        value = 1;
+      } // Подключаем "в начало" в пагинации для перехода на первую страницу
+    } else if (flag === 5) {
+      value = currentPage;
+      if (value === pages.length) {
+        return;
+      } else {
+        value = pages.length;
+      }
+    } // Подключаем "в конец" в пагинации для перехода на последнюю страницу
+    dispatch({ type: 'CURRENT_PAGE', payload: value });
+    const offset = (value - 1) * pageSize;
+    const urlPage = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
     setDataStorage('urlPage', urlPage); //записываем в local или sessionStorage
     refreshList(urlPage);
   };
-  // Подключаем ' > ' в пагинации для перехода к следующуй страницы
-  const nextCurrentPage = async (currentPage, pages) => {
-    if (currentPage > pages.length - 1) {
-      return;
-    } else {
-      currentPage = currentPage + 1;
-      dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
-      console.log(currentPage);
-      const offset = (currentPage - 1) * pageSize;
-      const urlNext = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
-      setDataStorage('urlPage', urlNext); //записываем в local или sessionStorage
-      refreshList(urlNext);
-    }
-  };
-  // Подключаем ' < ' в пагинации для перехода к предыдущей страницы
-  const previousCurrentPage = async (currentPage) => {
-    if (currentPage < 2) {
-      return;
-    } else {
-      currentPage = currentPage - 1;
-      dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
-      const offset = (currentPage - 1) * pageSize;
-      const urlPrevious = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
-      setDataStorage('urlPage', urlPrevious); //записываем в local или sessionStorage
-      refreshList(urlPrevious);
-    }
-  };
-  // Подключаем "в начало" в пагинации для перехода на первую страницу
-  const firstCurrentPage = async (currentPage) => {
-    if (currentPage === 1) {
-      return;
-    } else {
-      currentPage = 1;
-      dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
-      const offset = (currentPage - 1) * pageSize;
-      const urlFirst = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
-      setDataStorage('urlPage', urlFirst); //записываем в local или sessionStorage
-      refreshList(urlFirst);
-    }
-  };
-  // Подключаем "в конец" в пагинации для перехода на последнюю страницу
-  const lastCurrentPage = async (currentPage, pages) => {
-    if (currentPage === pages.length) {
-      return;
-    } else {
-      currentPage = pages.length;
-      dispatch({ type: 'CURRENT_PAGE', payload: currentPage });
-      const offset = (currentPage - 1) * pageSize;
-      const urlLast = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
-      setDataStorage('urlPage', urlLast); //записываем в local или sessionStorage
-      refreshList(urlLast);
-    }
-  };
-
-  // Запрос на обновление объекта item
+  //Запрос на сервер,  при помощи id, для получения  объект дома для профайла
   const refreshCard = async (itemId) => {
+    console.log(itemList);
     const response = await axios.get(ModelUrls.ITEMS + itemId);
+    /* const card = {};
+    for (let i = 0; i < itemList.length; i++) {
+      if (itemList[i].id === +itemId) {
+        for (let key in itemList[i]) {
+          card[key] = itemList[i][key];
+        }
+        //console.log(card);
+      }
+    } */
+    console.log(response.data);
 
     dispatch({
       type: 'CARD',
       payload: { ...response.data },
     });
   };
-  // Добавляем в owner userId
+
+  // Добавляем в owner userId.Функцию вызываем в AddData с помощью useEffecta(во 2-ой параметр кладём owner,это поможет нам вызвать функцию дважды,чтобы owner смог записаться в стэйт)
   const addUserId = (userId) => {
-    console.log(userId);
+    //console.log(userId);
     dispatch({ type: 'ADD_USER_ID', payload: userId });
-    console.log(activeItem);
+    //console.log(activeItem);
   };
   // получение данных из формы AddData, для создания нового объекта
   const handleChange = (e) => {
@@ -273,12 +263,8 @@ const BaseState = ({ children }) => {
         handleChangeAddress,
         handleChangePhoto,
         clearActiveItem,
-        handleCurrentPage,
-        nextCurrentPage,
-        previousCurrentPage,
-        firstCurrentPage,
-        lastCurrentPage,
         addUserId,
+        pagination,
       }}
     >
       {children}

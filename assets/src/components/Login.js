@@ -1,25 +1,20 @@
-import '../css/logincard.css';
-
-import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, Container, Form, Button, Col, Row } from 'react-bootstrap';
-import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 
-const Login = () => {
-  const history = useHistory();
-  const {
-    handleChangeLogin,
-    handleSubmitLogin,
-    error,
-    registrationShow,
-    handleChangeCheckbox,
-  } = useContext(RegistrationContext);
-
+const Login = ({
+  history,
+  handleChangeLogin,
+  handleSubmitLogin,
+  error,
+  registrationShow,
+  handleChangeCheckbox,
+}) => {
   return (
     <Container className="p-5">
       <Card
-        style={{ width: '50rem', margin: ' 100px auto' }}
-        className="rounded"
+        /* style={{ width: '50rem', margin: ' 100px auto' }} */
+        className="mx-auto w-50 mt-5"
       >
         <Card.Title className="text-center bg-dark text-white">
           <h3>Авторизация</h3>
@@ -65,9 +60,9 @@ const Login = () => {
               <Col>
                 <div>
                   <span>Ещё нет учётной записи? </span>
-                  <a href="#" onClick={() => registrationShow(history)}>
+                  <Link to="#" onClick={() => registrationShow(history)}>
                     <small>Зарегистрироваться</small>
-                  </a>
+                  </Link>
                 </div>
               </Col>
             </Row>

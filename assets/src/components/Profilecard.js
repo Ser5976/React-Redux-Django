@@ -1,33 +1,36 @@
-import React, { useContext, useEffect } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { Card, Container, Button } from 'react-bootstrap';
-import { BaseContext } from '../state/baseState/BaseContext';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
-const ProfileCard = ({ match }) => {
-  const { itemCard, refreshCard, editItem, handleDelete } = useContext(
-    BaseContext
-  );
-  const urlId = match.params.name;
-  const history = useHistory();
-  useEffect(() => {
-    refreshCard(urlId);
-    // eslint-disable-next-line
-  }, []);
-
-  const { description, address, photo, price, owner } = itemCard;
+const ProfileCard = ({
+  itemCard,
+  editItem,
+  handleDelete,
+  history,
+  openWallet,
+}) => {
+  const {
+    description,
+    address,
+    photo,
+    price,
+    owner,
+    owner_username,
+  } = itemCard;
+  console.log(itemCard);
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
-  console.log(typeof +receiveDataStorage('userId'));
+  //  style={{ width: '254px', height: '170px' }}
   return (
-    <Container style={{ marginTop: '50px' }}>
+    <Container className="mt-5">
       <Card>
         <NavLink to="/ListCard" className="nav-link">
           <Card.Img
             variant="left"
             src={photo}
             alt="фото"
-            style={{ width: '254px', height: '170px' }}
+            className="w-25 h-auto"
           />
         </NavLink>
         <Card.Body>
@@ -45,6 +48,8 @@ const ProfileCard = ({ match }) => {
           </p>
           <b>Описание</b>
           <div>{description}</div>
+          <b>Владелец</b>
+          <div>{owner_username}</div>
           <h3>Цена: {price} руб.</h3>
           {owner === +receiveDataStorage('userId') ? (
             <>
@@ -62,7 +67,9 @@ const ProfileCard = ({ match }) => {
               </Button>
             </>
           ) : (
-            <Button variant="danger">Купить</Button>
+            <Button variant="danger" onClick={openWallet}>
+              Купить
+            </Button>
           )}
         </Card.Body>
       </Card>

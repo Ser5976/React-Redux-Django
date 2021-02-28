@@ -3,6 +3,7 @@ import axios from 'axios';
 import { PersonalAccountReducer } from '../../reducers/PersonalAccountReducer';
 import { PersonalAccountContext } from './PersonalAccountContext';
 import { ModelUrls } from '../../constants/urls';
+import { receiveDataStorage } from '../../utilities/receiveDataStorage';
 
 const initialState = {
   activeUser: {
@@ -30,15 +31,15 @@ const PersonalAccountState = ({ children }) => {
   const { activeUser, changeUser, formUser, wallet } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
-    let token = localStorage.getItem('token');
-    let userId = localStorage.getItem('userId');
+    let token = receiveDataStorage('token');
+    let userId = receiveDataStorage('userId');
     try {
       const response = await axios.get(ModelUrls.USERS + userId, {
         headers: {
           Authorization: `Token ${token}`,
         },
       });
-      //console.log(response);
+      console.log(response);
       const {
         first_name,
         last_name,

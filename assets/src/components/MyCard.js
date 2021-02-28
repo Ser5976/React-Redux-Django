@@ -1,15 +1,15 @@
-import { React, useContext } from 'react';
+import { React } from 'react';
 import { Card } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-import { RegistrationContext } from '../state/registrationState/RegistrationContext';
-
-
-const MyCard = ({ price, photo, item }) => {
-  const {rememberLastEvent} = useContext(RegistrationContext);
+const MyCard = ({ price, photo, item, rememberLastEvent }) => {
   return (
     <Card style={{ width: '18rem', margin: '.75rem' }}>
-      <NavLink to={'/profile/' + item.id} className="nav-link" onClick={rememberLastEvent}>
+      <NavLink
+        to={'/profile/' + item.id}
+        className="nav-link"
+        onClick={rememberLastEvent}
+      >
         <Card.Img
           variant="top"
           src={photo}
