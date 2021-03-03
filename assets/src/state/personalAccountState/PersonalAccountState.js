@@ -24,11 +24,14 @@ const initialState = {
   },
   changeUser: {},
   wallet: [],
+  date: '',
+  eur: '',
+  usd: '',
 };
 
 const PersonalAccountState = ({ children }) => {
   const [state, dispatch] = useReducer(PersonalAccountReducer, initialState);
-  const { activeUser, changeUser, formUser, wallet } = state;
+  const { activeUser, changeUser, formUser, wallet, date, eur, usd } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
     let token = receiveDataStorage('token');
@@ -137,6 +140,15 @@ const PersonalAccountState = ({ children }) => {
       console.log(e);
     }
   };
+  // получение курса валют
+  const currencyRate = async (EUR, USD) => {
+    const responseUsd = await axios.get(USD);
+    const responseEur = await axios.get(EUR);
+    const date = responseUsd.data.date;
+    const usd = responseUsd.data.rates.RUB.toFixed(2);
+    const eur = responseEur.data.rates.RUB.toFixed(2);
+    dispatch({ type: 'CURRENCY_RATE', date, usd, eur });
+  };
 
   return (
     <PersonalAccountContext.Provider
@@ -145,10 +157,14 @@ const PersonalAccountState = ({ children }) => {
         changeUser,
         formUser,
         wallet,
+        date,
+        eur,
+        usd,
         getUser,
         handleChangeAccount,
         handleSubmitAccount,
         handleChangeAvatar,
+        currencyRate,
       }}
     >
       {children}

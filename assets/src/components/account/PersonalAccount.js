@@ -1,4 +1,12 @@
-import { Container, Row, Col, Tab, Nav } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Tab,
+  Nav,
+  Card,
+  ListGroup,
+} from 'react-bootstrap';
 
 import AccountForm from './AccountForm';
 import AddAccount from './AddAccount';
@@ -9,6 +17,9 @@ const PersonalAccount = ({
   changeUser,
   formUser,
   wallet,
+  date,
+  eur,
+  usd,
   handleChangeAccount,
   handleSubmitAccount,
   handleChangeAvatar,
@@ -16,7 +27,7 @@ const PersonalAccount = ({
 }) => {
   const { first_name, last_name, email, username, role, avatar } = activeUser;
   const firstName = first_name ? first_name : 'Имя';
-
+  //background-color: rgba(0,0,0,.03);
   return (
     <>
       <Row className="m-3 justify-content-between">
@@ -62,30 +73,63 @@ const PersonalAccount = ({
                 </Nav.Item>
               </Nav>
             </Col>
-            <Col sm={7}>
+            <Col sm={9}>
               <Tab.Content className="pl-5">
                 <Tab.Pane eventKey="first">
-                  <AccountForm
-                    formUser={formUser}
-                    inputEl={inputEl}
-                    handleChangeAccount={handleChangeAccount}
-                    handleSubmitAccount={handleSubmitAccount}
-                    handleChangeAvatar={handleChangeAvatar}
-                    changeUser={changeUser}
-                  />
+                  <Row>
+                    <Col sm={8}>
+                      <AccountForm
+                        formUser={formUser}
+                        inputEl={inputEl}
+                        handleChangeAccount={handleChangeAccount}
+                        handleSubmitAccount={handleSubmitAccount}
+                        handleChangeAvatar={handleChangeAvatar}
+                        changeUser={changeUser}
+                      />
+                    </Col>
+                  </Row>
                 </Tab.Pane>
                 <Tab.Pane eventKey="second">
-                  <AddAccount
-                    first_name={first_name}
-                    last_name={last_name}
-                    email={email}
-                    username={username}
-                    avatar={avatar}
-                    role={role}
-                  />
+                  <Row>
+                    <Col sm={8}>
+                      <AddAccount
+                        first_name={first_name}
+                        last_name={last_name}
+                        email={email}
+                        username={username}
+                        avatar={avatar}
+                        role={role}
+                      />
+                    </Col>
+                  </Row>
                 </Tab.Pane>
                 <Tab.Pane eventKey="third">
-                  <Wallet wallet={wallet} />
+                  <Row>
+                    <Col sm={7}>
+                      <Wallet wallet={wallet} />
+                    </Col>
+                    <Col>
+                      <Card style={{ width: '18rem' }}>
+                        <Card.Header>
+                          Курсы валют к российскому рублю на {date}
+                        </Card.Header>
+                        <ListGroup variant="flush">
+                          <ListGroup.Item>
+                            <Row className="justify-content-between">
+                              <Col sm={7}>EUR</Col>
+                              <Col sm={4}>{eur}</Col>
+                            </Row>
+                          </ListGroup.Item>
+                          <ListGroup.Item>
+                            <Row className="justify-content-between">
+                              <Col sm={7}>USD</Col>
+                              <Col sm={4}>{usd}</Col>
+                            </Row>
+                          </ListGroup.Item>
+                        </ListGroup>
+                      </Card>
+                    </Col>
+                  </Row>
                 </Tab.Pane>
               </Tab.Content>
             </Col>
