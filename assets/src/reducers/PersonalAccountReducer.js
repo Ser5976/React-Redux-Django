@@ -35,7 +35,14 @@ export const PersonalAccountReducer = (state, action) => {
     case 'WALLET':
       return { ...state, wallet: action.payload };
     case 'CURRENCY_RATE':
-      return { ...state, date: action.date, eur: action.eur, usd: action.usd };
+      return {
+        ...state,
+        date: action.date,
+        eurUsd: action.eurUsd,
+        usdEur: action.usdEur,
+        eurRub: action.eurRub,
+        usdRub: action.usdRub,
+      };
 
     default:
       return state;

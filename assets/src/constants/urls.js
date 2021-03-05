@@ -20,5 +20,5 @@ export const AdminUrls = {
   SILK: `${ROOT_URL}/silk/`,
 };
 export const USD =
-  'https://api.exchangeratesapi.io/latest?symbols=RUB&base=USD';
-export const EUR = 'https://api.exchangeratesapi.io/latest?symbols=RUB';
+  'https://api.exchangeratesapi.io/latest?symbols=RUB,EUR&base=USD';
+export const EUR = 'https://api.exchangeratesapi.io/latest?symbols=RUB,USD';

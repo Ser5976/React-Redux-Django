@@ -1,16 +1,9 @@
-import {
-  Container,
-  Row,
-  Col,
-  Tab,
-  Nav,
-  Card,
-  ListGroup,
-} from 'react-bootstrap';
-
+import React from 'react';
+import { Container, Row, Col, Tab, Nav } from 'react-bootstrap';
 import AccountForm from './AccountForm';
 import AddAccount from './AddAccount';
 import Wallet from './Wallet';
+import RateCurrensy from './RateCurrensy';
 
 const PersonalAccount = ({
   activeUser,
@@ -18,8 +11,10 @@ const PersonalAccount = ({
   formUser,
   wallet,
   date,
-  eur,
-  usd,
+  usdEur,
+  eurRub,
+  eurUsd,
+  usdRub,
   handleChangeAccount,
   handleSubmitAccount,
   handleChangeAvatar,
@@ -109,25 +104,13 @@ const PersonalAccount = ({
                       <Wallet wallet={wallet} />
                     </Col>
                     <Col>
-                      <Card style={{ width: '18rem' }}>
-                        <Card.Header>
-                          Курсы валют к российскому рублю на {date}
-                        </Card.Header>
-                        <ListGroup variant="flush">
-                          <ListGroup.Item>
-                            <Row className="justify-content-between">
-                              <Col sm={7}>EUR</Col>
-                              <Col sm={4}>{eur}</Col>
-                            </Row>
-                          </ListGroup.Item>
-                          <ListGroup.Item>
-                            <Row className="justify-content-between">
-                              <Col sm={7}>USD</Col>
-                              <Col sm={4}>{usd}</Col>
-                            </Row>
-                          </ListGroup.Item>
-                        </ListGroup>
-                      </Card>
+                      <RateCurrensy
+                        usdEur={usdEur}
+                        eurRub={eurRub}
+                        eurUsd={eurUsd}
+                        usdRub={usdRub}
+                        date={date}
+                      />
                     </Col>
                   </Row>
                 </Tab.Pane>
