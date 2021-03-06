@@ -38,10 +38,7 @@ export const PersonalAccountReducer = (state, action) => {
       return {
         ...state,
         date: action.date,
-        eurUsd: action.eurUsd,
-        usdEur: action.usdEur,
-        eurRub: action.eurRub,
-        usdRub: action.usdRub,
+        rate: action.payload,
       };
 
     default:
