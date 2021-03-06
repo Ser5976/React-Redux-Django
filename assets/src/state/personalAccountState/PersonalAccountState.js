@@ -24,11 +24,26 @@ const initialState = {
   },
   changeUser: {},
   wallet: [],
+  date: '',
+  usdEur: '',
+  eurRub: '',
+  eurUsd: '',
+  usdRub: '',
 };
 
 const PersonalAccountState = ({ children }) => {
   const [state, dispatch] = useReducer(PersonalAccountReducer, initialState);
-  const { activeUser, changeUser, formUser, wallet } = state;
+  const {
+    activeUser,
+    changeUser,
+    formUser,
+    wallet,
+    date,
+    usdEur,
+    eurRub,
+    eurUsd,
+    usdRub,
+  } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
     let token = receiveDataStorage('token');
@@ -137,7 +152,29 @@ const PersonalAccountState = ({ children }) => {
       console.log(e);
     }
   };
+  // получение курса валют
+  const currencyRate = async (EUR, USD) => {
+    const responseUsd = await axios.get(USD);
+    const responseEur = await axios.get(EUR);
+    const date = responseUsd.data.date;
+    console.log(responseUsd.data.rates);
+    console.log(responseEur.data.rates);
+    const usdEur = responseUsd.data.rates.EUR.toFixed(2);
+    const usdRub = responseUsd.data.rates.RUB.toFixed(2);
+    const eurUsd = responseEur.data.rates.USD.toFixed(2);
+    const eurRub = responseEur.data.rates.RUB.toFixed(2);
+    console.log(usdEur);
 
+    dispatch({
+      type: 'CURRENCY_RATE',
+      date,
+      usdEur,
+      eurRub,
+      eurUsd,
+      usdRub,
+    });
+  };
+  console.log(usdEur);
   return (
     <PersonalAccountContext.Provider
       value={{
@@ -145,10 +182,16 @@ const PersonalAccountState = ({ children }) => {
         changeUser,
         formUser,
         wallet,
+        date,
+        usdEur,
+        eurRub,
+        eurUsd,
+        usdRub,
         getUser,
         handleChangeAccount,
         handleSubmitAccount,
         handleChangeAvatar,
+        currencyRate,
       }}
     >
       {children}
