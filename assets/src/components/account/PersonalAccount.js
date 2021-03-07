@@ -15,6 +15,7 @@ const PersonalAccount = ({
   eurRub,
   eurUsd,
   usdRub,
+  rate,
   handleChangeAccount,
   handleSubmitAccount,
   handleChangeAvatar,
@@ -104,13 +105,7 @@ const PersonalAccount = ({
                       <Wallet wallet={wallet} />
                     </Col>
                     <Col>
-                      <RateCurrensy
-                        usdEur={usdEur}
-                        eurRub={eurRub}
-                        eurUsd={eurUsd}
-                        usdRub={usdRub}
-                        date={date}
-                      />
+                      <RateCurrensy date={date} rate={rate} />
                     </Col>
                   </Row>
                 </Tab.Pane>
