@@ -2,6 +2,8 @@ import React from 'react';
 import { Modal, Button, Card, Row, Col } from 'react-bootstrap';
 
 const Transaction = ({ open, closeTransaction, selectedWallet }) => {
+  const { currency } = selectedWallet;
+  const valuta = { ...currency };
   return (
     <Modal show={open} onHide={closeTransaction} size="lg">
       <Modal.Header closeButton>
@@ -17,7 +19,7 @@ const Transaction = ({ open, closeTransaction, selectedWallet }) => {
               </Col>
               <Col sm={7}>
                 {selectedWallet.balance} <span></span>
-                {selectedWallet.currency.symbol}
+                {valuta.symbol}
               </Col>
             </Row>
           </Card.Body>
