@@ -11,10 +11,6 @@ const PersonalAccount = ({
   formUser,
   wallet,
   date,
-  usdEur,
-  eurRub,
-  eurUsd,
-  usdRub,
   rate,
   handleChangeAccount,
   handleSubmitAccount,
@@ -100,11 +96,11 @@ const PersonalAccount = ({
                   </Row>
                 </Tab.Pane>
                 <Tab.Pane eventKey="third">
-                  <Row>
+                  <Row className="justify-content-between">
                     <Col sm={7}>
                       <Wallet wallet={wallet} />
                     </Col>
-                    <Col>
+                    <Col sm={3}>
                       <RateCurrensy date={date} rate={rate} />
                     </Col>
                   </Row>
