@@ -5,14 +5,15 @@ const RateCurrensy = ({ date, rate }) => {
   let obj = {};
   for (var i = 0; i < rate.length; i++) {
     obj[i] = true;
+    console.log(obj);
   }
   const [mark, setMark] = useState(obj);
 
   const handleToggle = (index) => {
     mark[index] = !mark[index];
-    setMark({...mark});
+    setMark({ ...mark });
   };
-
+  console.log(mark);
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Header>Курсы валют на {date}</Card.Header>

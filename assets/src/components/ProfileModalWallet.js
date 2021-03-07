@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
-import { Modal, Card, CardDeck, Row, Col } from 'react-bootstrap';
+import { Modal, Card, CardDeck, Row, Col, Button } from 'react-bootstrap';
 import styles from '../css/profileModalWallet.module.css';
 
-const ProfileModalWallet = ({ closeWalet, show, wallet }) => {
-  const [green, setGreen] = useState(false);
+const ProfileModalWallet = ({
+  closeWalet,
+  show,
+  wallet,
+  showTransaction,
+  chooseWallet,
+}) => {
+  const [flag, setFlag] = useState({ green: false, disabled: true });
 
   const changeBorder = (id) => {
-    if (green === id) {
-      setGreen(false);
+    if (flag.green === id) {
+      setFlag({ ...flag, green: false, disabled: true });
     } else {
-      setGreen(id);
+      setFlag({ ...flag, green: id, disabled: false });
     }
   };
-  console.log(wallet);
+
+  //console.log(wallet);
   return (
     <Modal show={show} onHide={closeWalet} size="lg">
       <Modal.Header closeButton>
@@ -24,8 +31,11 @@ const ProfileModalWallet = ({ closeWalet, show, wallet }) => {
             return (
               <Card
                 key={money.id}
-                className={green === index ? styles.card : styles.card1}
-                onClick={() => changeBorder(index)}
+                className={flag.green === index ? styles.card : styles.card1}
+                onClick={() => {
+                  changeBorder(index);
+                  chooseWallet(money);
+                }}
               >
                 <Card.Body>
                   <h5>№ {money.public_key}</h5>
@@ -49,6 +59,18 @@ const ProfileModalWallet = ({ closeWalet, show, wallet }) => {
           })}
         </CardDeck>
       </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          disabled={flag.disabled}
+          onClick={() => {
+            closeWalet();
+            showTransaction();
+          }}
+        >
+          Далее
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 };

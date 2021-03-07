@@ -40,7 +40,11 @@ export const PersonalAccountReducer = (state, action) => {
         date: action.date,
         rate: action.payload,
       };
-
+    case 'SELECTED_WALLET':
+      return {
+        ...state,
+        selectedWallet: action.payload,
+      };
     default:
       return state;
   }

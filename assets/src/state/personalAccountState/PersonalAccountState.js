@@ -24,6 +24,7 @@ const initialState = {
   },
   changeUser: {},
   wallet: [],
+  selectedWallet: {},
   date: '',
 
   rate: [
@@ -50,7 +51,15 @@ const initialState = {
 
 const PersonalAccountState = ({ children }) => {
   const [state, dispatch] = useReducer(PersonalAccountReducer, initialState);
-  const { activeUser, changeUser, formUser, wallet, date, rate } = state;
+  const {
+    activeUser,
+    changeUser,
+    formUser,
+    wallet,
+    date,
+    rate,
+    selectedWallet,
+  } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
     let token = receiveDataStorage('token');
@@ -198,13 +207,18 @@ const PersonalAccountState = ({ children }) => {
         couple2: rubUsd,
       },
     ];
-    console.log(copiRate);
+
     dispatch({
       type: 'CURRENCY_RATE',
       date,
       payload: copiRate,
     });
   };
+  // вибираем кошелёк(ProfileModalWallet)
+  const chooseWallet = (money) => {
+    dispatch({ type: 'SELECTED_WALLET', payload: money });
+  };
+  // console.log(selectedWallet);
   return (
     <PersonalAccountContext.Provider
       value={{
@@ -214,11 +228,13 @@ const PersonalAccountState = ({ children }) => {
         wallet,
         date,
         rate,
+        selectedWallet,
         getUser,
         handleChangeAccount,
         handleSubmitAccount,
         handleChangeAvatar,
         currencyRate,
+        chooseWallet,
       }}
     >
       {children}
