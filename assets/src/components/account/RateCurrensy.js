@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap';
 
 const RateCurrensy = ({ date, rate }) => {
-  // console.log(rate);
-  const [mark, setMark] = useState(false);
+  let obj = {};
+  for (var i = 0; i < rate.length; i++) {
+    obj[i] = true;
+  }
+  const [mark, setMark] = useState(obj);
 
   const handleToggle = (index) => {
-    if (mark === index) {
-      setMark(false);
-    } else {
-      setMark(index);
-    }
+    mark[index] = !mark[index];
+    setMark({...mark});
   };
 
   return (
@@ -28,11 +28,11 @@ const RateCurrensy = ({ date, rate }) => {
                       handleToggle(index);
                     }}
                   >
-                    {mark === index ? element.nameCouple2 : element.nameCouple1}
+                    {mark[index] ? element.nameCouple2 : element.nameCouple1}
                   </Button>
                 </Col>
                 <Col sm={4}>
-                  {mark === index ? element.couple2 : element.couple1}
+                  {mark[index] ? element.couple2 : element.couple1}
                 </Col>
               </Row>
             </ListGroup.Item>
