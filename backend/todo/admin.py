@@ -27,7 +27,7 @@ class CommentInline(admin.TabularInline):
 
 
 class ItemAdmin(ReverseModelAdmin):
-    list_display = ('house_type', 'description', 'owner', 'status',
+    list_display = ('id', 'house_type', 'description', 'owner', 'status',
                     'created_at')
     list_display_links = ('house_type', 'description',)
     search_fields = ('house_type', 'owner', 'status',)

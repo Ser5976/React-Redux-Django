@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from wallet.models import Wallet, Currency
+from wallet.models import Wallet, Currency, Transaction
 
 
 class WalletInline(admin.TabularInline):
@@ -13,9 +13,17 @@ class WalletAdmin(admin.ModelAdmin):
 
 
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'symbol' 'name', 'bid_usd', 'is_crypto', 'is_active')
-    list_display = ('symbol', 'name',)
+    list_display = ('id', 'symbol', 'name', 'bid_usd', 'is_crypto',
+                    'is_active')
+    list_display_links = ('symbol', 'name',)
+
+
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'amount', 'currency', 'from_wallet', 'to_wallet',
+                    'item', 'status',)
+    list_display_links = ('amount', 'status',)
 
 
 admin.site.register(Wallet, WalletAdmin)
 admin.site.register(Currency, CurrencyAdmin)
+admin.site.register(Transaction, TransactionAdmin)
