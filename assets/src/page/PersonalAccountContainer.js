@@ -11,10 +11,7 @@ const PersonalAccountContainer = () => {
     getUser,
     wallet,
     date,
-    usdEur,
-    eurRub,
-    eurUsd,
-    usdRub,
+    rate,
     handleChangeAccount,
     handleSubmitAccount,
     handleChangeAvatar,
@@ -39,10 +36,7 @@ const PersonalAccountContainer = () => {
       handleSubmitAccount={handleSubmitAccount}
       handleChangeAvatar={handleChangeAvatar}
       inputEl={inputEl}
-      usdEur={usdEur}
-      eurRub={eurRub}
-      eurUsd={eurUsd}
-      usdRub={usdRub}
+      rate={rate}
     />
   );
 };

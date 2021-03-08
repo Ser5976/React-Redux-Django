@@ -20,7 +20,7 @@ class WalletSerializer(serializers.ModelSerializer):
                   'currency', 'updated')
 
     def get_updated(self, obj):
-        return obj.updated_at.strftime('%l:%M:%S %d-%m-%y')
+        return obj.updated_at.strftime('%H:%M:%S %d-%m-%y')
 
 
 class TransactionSerializer(serializers.ModelSerializer):

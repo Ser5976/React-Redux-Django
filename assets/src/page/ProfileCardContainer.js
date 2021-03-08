@@ -4,12 +4,15 @@ import ProfileCard from '../components/Profilecard';
 import ProfileModalWallet from '../components/ProfileModalWallet';
 import { BaseContext } from '../state/baseState/BaseContext';
 import { PersonalAccountContext } from '../state/personalAccountState/PersonalAccountContext';
+import Transaction from '../components/Transaction';
 
 const ProfileCardContainer = ({ match }) => {
   const { itemCard, refreshCard, editItem, handleDelete } = useContext(
     BaseContext
   );
-  const { wallet, getUser } = useContext(PersonalAccountContext);
+  const { wallet, getUser, chooseWallet, selectedWallet } = useContext(
+    PersonalAccountContext
+  );
   const urlId = match.params.name;
   const history = useHistory();
   useEffect(() => {
@@ -20,12 +23,18 @@ const ProfileCardContainer = ({ match }) => {
 
   // console.log(match);
   const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
   const openWallet = () => {
-    console.log(3);
     setShow(!show);
   };
   const closeWalet = () => {
     setShow(!show);
+  };
+  const showTransaction = () => {
+    setOpen(!open);
+  };
+  const closeTransaction = () => {
+    setOpen(!open);
   };
 
   return (
@@ -37,7 +46,19 @@ const ProfileCardContainer = ({ match }) => {
         itemCard={itemCard}
         openWallet={openWallet}
       />
-      <ProfileModalWallet closeWalet={closeWalet} show={show} wallet={wallet} />
+      <ProfileModalWallet
+        closeWalet={closeWalet}
+        show={show}
+        wallet={wallet}
+        showTransaction={showTransaction}
+        chooseWallet={chooseWallet}
+      />
+      <Transaction
+        open={open}
+        closeTransaction={closeTransaction}
+        selectedWallet={selectedWallet}
+        itemCard={itemCard}
+      />
     </>
   );
 };

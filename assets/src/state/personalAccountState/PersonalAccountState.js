@@ -24,11 +24,29 @@ const initialState = {
   },
   changeUser: {},
   wallet: [],
+  selectedWallet: {},
   date: '',
-  usdEur: '',
-  eurRub: '',
-  eurUsd: '',
-  usdRub: '',
+
+  rate: [
+    {
+      nameCouple1: 'EUR/USD',
+      nameCouple2: 'USD/EUR',
+      couple1: null,
+      couple2: null,
+    },
+    {
+      nameCouple1: 'EUR/RUB',
+      nameCouple2: 'RUB/EUR',
+      couple1: null,
+      couple2: null,
+    },
+    {
+      nameCouple1: 'USD/RUB',
+      nameCouple2: 'RUB/USD',
+      couple1: null,
+      couple2: null,
+    },
+  ],
 };
 
 const PersonalAccountState = ({ children }) => {
@@ -39,10 +57,8 @@ const PersonalAccountState = ({ children }) => {
     formUser,
     wallet,
     date,
-    usdEur,
-    eurRub,
-    eurUsd,
-    usdRub,
+    rate,
+    selectedWallet,
   } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
@@ -157,24 +173,52 @@ const PersonalAccountState = ({ children }) => {
     const responseUsd = await axios.get(USD);
     const responseEur = await axios.get(EUR);
     const date = responseUsd.data.date;
-    console.log(responseUsd.data.rates);
-    console.log(responseEur.data.rates);
+    //  console.log(responseUsd.data.rates);
+    // console.log(responseEur.data.rates);
     const usdEur = responseUsd.data.rates.EUR.toFixed(2);
     const usdRub = responseUsd.data.rates.RUB.toFixed(2);
     const eurUsd = responseEur.data.rates.USD.toFixed(2);
     const eurRub = responseEur.data.rates.RUB.toFixed(2);
-    console.log(usdEur);
+
+    const rubUsd = (1 / usdRub).toFixed(4);
+    const rubEur = (1 / eurRub).toFixed(4);
+
+    const copiRate = [
+      {
+        ...rate[0],
+        nameCouple1: 'EUR/USD',
+        nameCouple2: 'USD/EUR',
+        couple1: eurUsd,
+        couple2: usdEur,
+      },
+
+      {
+        ...rate[1],
+        nameCouple1: 'EUR/RUB',
+        nameCouple2: 'RUB/EUR',
+        couple1: eurRub,
+        couple2: rubEur,
+      },
+      {
+        ...rate[2],
+        nameCouple1: 'USD/RUB',
+        nameCouple2: 'RUB/USD',
+        couple1: usdRub,
+        couple2: rubUsd,
+      },
+    ];
 
     dispatch({
       type: 'CURRENCY_RATE',
       date,
-      usdEur,
-      eurRub,
-      eurUsd,
-      usdRub,
+      payload: copiRate,
     });
   };
-  console.log(usdEur);
+  // вибираем кошелёк(ProfileModalWallet)
+  const chooseWallet = (money) => {
+    dispatch({ type: 'SELECTED_WALLET', payload: money });
+  };
+  // console.log(selectedWallet);
   return (
     <PersonalAccountContext.Provider
       value={{
@@ -183,15 +227,14 @@ const PersonalAccountState = ({ children }) => {
         formUser,
         wallet,
         date,
-        usdEur,
-        eurRub,
-        eurUsd,
-        usdRub,
+        rate,
+        selectedWallet,
         getUser,
         handleChangeAccount,
         handleSubmitAccount,
         handleChangeAvatar,
         currencyRate,
+        chooseWallet,
       }}
     >
       {children}

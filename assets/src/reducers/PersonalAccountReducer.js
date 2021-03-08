@@ -38,12 +38,13 @@ export const PersonalAccountReducer = (state, action) => {
       return {
         ...state,
         date: action.date,
-        eurUsd: action.eurUsd,
-        usdEur: action.usdEur,
-        eurRub: action.eurRub,
-        usdRub: action.usdRub,
+        rate: action.payload,
       };
-
+    case 'SELECTED_WALLET':
+      return {
+        ...state,
+        selectedWallet: action.payload,
+      };
     default:
       return state;
   }
