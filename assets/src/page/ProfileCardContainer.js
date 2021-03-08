@@ -57,6 +57,7 @@ const ProfileCardContainer = ({ match }) => {
         open={open}
         closeTransaction={closeTransaction}
         selectedWallet={selectedWallet}
+        itemCard={itemCard}
       />
     </>
   );
