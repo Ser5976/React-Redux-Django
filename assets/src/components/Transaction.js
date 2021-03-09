@@ -53,7 +53,7 @@ const Transaction = ({ open, closeTransaction, selectedWallet, itemCard }) => {
             </Card.Body>
             <Card.Footer>
               <h6>
-                С вашего стёта будет списано:<span> </span>
+                С вашего счёта будет списано:<span> </span>
                 {price} руб.
               </h6>
             </Card.Footer>
