@@ -31,8 +31,8 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ('id', 'owner', 'owner_username', 'house_type', 'description',
-                  'status', 'address', 'photo', 'price', 'created_at',
-                  'updated_at')
+                  'status', 'address', 'photo', 'price', 'currency',
+                  'created_at', 'updated_at')
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
@@ -74,6 +74,7 @@ class ItemSerializer(serializers.ModelSerializer):
             field_name = field.field_name
             field_data = data.get(field_name)
             if field_name == 'address':
+                print('field_data ', field_data)
                 primitive_value = json.loads(field_data)
             elif field_name == 'photo' and isinstance(field_data, str):
                 continue

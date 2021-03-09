@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 # local Django
 from backend.mixins import DateTimeMixin
 from users.models import User
+from todo.models import Item
 
 
 def currency_icon_path(self, filename):
@@ -29,7 +30,7 @@ class Currency(DateTimeMixin):
 
     is_crypto = models.BooleanField(_('Is crypto'), default=False)
 
-    is_active = models.BooleanField(_('Is active(can create active wallet)'),
+    is_active = models.BooleanField(_('Is active (can create active wallet)'),
                                     default=True)
 
     class Meta:
@@ -61,7 +62,8 @@ class Wallet(DateTimeMixin):
         verbose_name_plural = _('Wallets')
 
     def __str__(self):
-        return '{}: {}'.format(self.currency.symbol, str(self.balance))
+        return '{}: ({}-{})'.format(self.id, self.currency.symbol,
+                                    str(self.balance))
 
 
 class Transaction(DateTimeMixin):
@@ -85,22 +87,42 @@ class Transaction(DateTimeMixin):
             (CANCELLED, 'CANCELLED'),
         )
 
+    def get_default_currency():
+        try:
+            currency = Currency.objects.get(symbol='USD')
+        except Currency.DoesNotExists:
+            return 1
+        return currency.id
+
     amount = models.DecimalField(_('Amount'), max_digits=12, decimal_places=2)
+    currency = models.ForeignKey(Currency, verbose_name=_('Currency'),
+                                 on_delete=models.SET_NULL, null=True,
+                                 default=get_default_currency())
+    item = models.ForeignKey(Item, verbose_name=_('Item'), null=True,
+                             on_delete=models.SET_NULL)
     from_wallet = models.ForeignKey(Wallet, verbose_name=_('From Wallet'),
                                     related_name='transactions_send',
                                     on_delete=models.CASCADE)
     to_wallet = models.ForeignKey(Wallet, verbose_name=_('To wallet'),
                                   related_name='transactions_received',
-                                  on_delete=models.CASCADE)
+                                  on_delete=models.CASCADE, null=True)
     status = models.CharField(_('Status'), max_length=25,
                               choices=Status.CHOICES,
                               default=Status.INITIAL)
 
     class Meta:
-        verbose_name = ('Transaction',)
-        verbose_name_plural = ('Transactions',)
+        verbose_name = ('Transaction')
+        verbose_name_plural = ('Transactions')
 
     def __str__(self):
-        return 'From {} to {}: {} {}'.format(self.from_wallet.id,
-                                             self.to_wallet.id, self.amount,
-                                             self.to_wallet.symbol)
+        return 'From {} {}'.format(self.from_wallet.id, self.amount)
+
+    def save(self, *args, **kwargs):
+        paid_wallet = self.from_wallet
+        owner_wallet = self.item.owner.wallets.get(currency=self.currency)
+        self.to_wallet = owner_wallet
+        paid_wallet.balance -= self.amount
+        paid_wallet.save()
+        owner_wallet.balance += self.amount
+        owner_wallet.save()
+        super().save(*args, **kwargs)

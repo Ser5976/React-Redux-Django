@@ -21,6 +21,6 @@ class WalletViewSet(viewsets.ModelViewSet):
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     serializer_class = TransactionSerializer
     queryset = Transaction.objects.all()
