@@ -12,6 +12,7 @@ from django.conf import settings
 # local Django
 from backend.mixins import DateTimeMixin
 from users.models import User
+# from wallet.models import Currency
 
 
 def house_photo_path(self, filename):
@@ -81,8 +82,10 @@ class Item(DateTimeMixin):
                                    blank=True, null=True, related_name='item')
     photo = models.ImageField(_('Photo'), upload_to=house_photo_path,
                               default='', blank=True)
-    price = models.DecimalField(_('Price'), max_digits=6, decimal_places=2,
+    price = models.DecimalField(_('Price'), max_digits=15, decimal_places=2,
                                 blank=True, default=0)
+    currency = models.ForeignKey('wallet.Currency', on_delete=models.CASCADE,
+                                 null=True, verbose_name=_('Currency'))
 
     class Meta:
         verbose_name = _('Item')
