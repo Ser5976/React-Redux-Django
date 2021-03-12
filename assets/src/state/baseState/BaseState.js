@@ -4,6 +4,7 @@ import { BaseContext } from './BaseContext';
 import { ModelUrls } from '../../constants/urls';
 import { itemReducer } from '../../reducers/reducers';
 import { setDataStorage } from '../../utilities/setDataStorage';
+import { receiveDataStorage } from '../../utilities/receiveDataStorage';
 
 const initialState = {
   itemCard: {},
@@ -15,6 +16,7 @@ const initialState = {
     owner: null,
     description: '',
     photo: undefined,
+    currency: undefined,
     price: '',
     status: undefined,
     house_type: undefined,
@@ -30,6 +32,8 @@ const initialState = {
   pageSize: 3,
   count: 0,
   currentPage: 1,
+  //для валюты
+  currencies: [],
 };
 
 const BaseState = ({ children }) => {
@@ -102,7 +106,7 @@ const BaseState = ({ children }) => {
         //console.log(card);
       }
     } */
-    console.log(response.data);
+    // console.log(response.data);
 
     dispatch({
       type: 'CARD',
@@ -155,17 +159,19 @@ const BaseState = ({ children }) => {
     count,
     pageSize,
     currentPage,
+    currencies,
   } = state;
 
   // console.log(activeItem);
 
   const editItem = (item) => {
-    //  console.log(item);
+    // console.log(item);
     dispatch({
       type: 'EDIT_ITEM',
       payload: item,
     });
   };
+
   // отправка данных на сервер
   const handleSubmit = async (e, history) => {
     e.preventDefault();
@@ -230,6 +236,7 @@ const BaseState = ({ children }) => {
         owner: null,
         description: '',
         photo: undefined,
+        currency: undefined,
         price: '',
         status: undefined,
         house_type: undefined,
@@ -247,6 +254,22 @@ const BaseState = ({ children }) => {
       payload: { ...emptyActiveItem.activeItem },
     });
   };
+  //запрос для валюты
+  const addCurrencies = async () => {
+    let token = receiveDataStorage('token');
+    try {
+      const response = await axios.get(ModelUrls.CURRENCIES, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      dispatch({ type: 'ADD_CURRENCIES', payload: [...response.data.results] });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  // console.log(activeItem.currency);
 
   return (
     <BaseContext.Provider
@@ -260,6 +283,7 @@ const BaseState = ({ children }) => {
         count,
         pageSize,
         currentPage,
+        currencies,
         refreshList,
         handleChange,
         handleSubmit,
@@ -271,6 +295,7 @@ const BaseState = ({ children }) => {
         clearActiveItem,
         addUserId,
         pagination,
+        addCurrencies,
       }}
     >
       {children}

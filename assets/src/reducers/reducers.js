@@ -59,6 +59,11 @@ export const itemReducer = (state, action) => {
         ...state,
         currentPage: action.payload,
       };
+    case 'ADD_CURRENCIES':
+      return {
+        ...state,
+        currencies: action.payload,
+      };
     default:
       return state;
   }

@@ -5,7 +5,7 @@ const Transaction = ({ open, closeTransaction, selectedWallet, itemCard }) => {
   const { currency } = selectedWallet;
   const valuta = { ...currency };
   const { address, price, owner_username } = itemCard;
-  console.log(itemCard);
+  // console.log(itemCard);
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
   return (

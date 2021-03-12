@@ -18,7 +18,7 @@ const ProfileCard = ({
     owner,
     owner_username,
   } = itemCard;
-  console.log(itemCard);
+  // console.log(itemCard);
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
   //  style={{ width: '254px', height: '170px' }}

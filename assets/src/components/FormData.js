@@ -22,7 +22,10 @@ const FormData = ({
   zip_code,
   inputEl,
   splitPhoto,
+  currencies,
+  currency,
 }) => {
+  // console.log(currencies);
   const radioStatus = [
     { label: 'Продаётся', value: 1 },
     { label: 'В продаже', value: 2 },
@@ -100,23 +103,54 @@ const FormData = ({
           </Col>
         </Form.Group>
         <hr />
-        <Form.Group as={Row} controlId="formGroupPrice">
-          <Form.Label column sm="2">
-            <h5>Цена:</h5>
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              required
-              type="number"
-              name="price"
-              value={price}
-              onChange={handleChange}
-            />
-            <Form.Control.Feedback type="invalid">
-              Обязательно для заполнения
-            </Form.Control.Feedback>
+        <Row>
+          <Col>
+            <Form.Group as={Row} controlId="formGroupPrice">
+              <Form.Label column sm="2">
+                <h5>Цена:</h5>
+              </Form.Label>
+              <Col sm="4">
+                <Form.Control
+                  required
+                  type="number"
+                  name="price"
+                  value={price}
+                  onChange={handleChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Обязательно для заполнения
+                </Form.Control.Feedback>
+              </Col>
+            </Form.Group>
           </Col>
-        </Form.Group>
+          <Col>
+            <Form.Group as={Row} controlId="formGroupSelect">
+              <Col sm="6">
+                <Form.Label>
+                  <h5>Выбор валюты:</h5>
+                </Form.Label>
+              </Col>
+              <Col sm="4">
+                <Form.Control
+                  as="select"
+                  required
+                  onChange={handleChange}
+                  name="currency"
+                  value={currency}
+                >
+                  <option>Выбрать</option>
+                  {currencies.map((valuta, index) => {
+                    return (
+                      <option value={valuta.id} key={index}>
+                        {valuta.symbol}
+                      </option>
+                    );
+                  })}
+                </Form.Control>
+              </Col>
+            </Form.Group>
+          </Col>
+        </Row>
         <hr />
         <Row>
           <Col>

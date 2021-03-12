@@ -17,13 +17,27 @@ const AddData = () => {
     bug,
     image,
     addUserId,
+    currencies,
+    addCurrencies,
   } = useContext(BaseContext);
   useEffect(() => {
     addUserId(receiveDataStorage('userId'));
     // eslint-disable-next-line
   }, [activeItem.owner]);
+  useEffect(() => {
+    addCurrencies();
+    // eslint-disable-next-line
+  }, []);
   const inputEl = useRef(null);
-  const { description, price, address, status, house_type, photo } = activeItem;
+  const {
+    description,
+    price,
+    address,
+    status,
+    house_type,
+    photo,
+    currency,
+  } = activeItem;
   const { country, city, street, house_number, zip_code } = address;
 
   const splitPhoto = () => {
@@ -54,6 +68,8 @@ const AddData = () => {
       zip_code={zip_code}
       inputEl={inputEl}
       splitPhoto={splitPhoto}
+      currencies={currencies}
+      currency={currency}
     />
   );
 };
