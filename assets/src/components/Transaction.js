@@ -4,7 +4,7 @@ import { Modal, Button, Card, Row, Col, CardDeck } from 'react-bootstrap';
 const Transaction = ({ open, closeTransaction, selectedWallet, itemCard }) => {
   const { currency } = selectedWallet;
   const valuta = { ...currency };
-  const { address, price, owner_username } = itemCard;
+  const { address, price, owner_username, currency_symbol } = itemCard;
   // console.log(itemCard);
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
@@ -34,7 +34,7 @@ const Transaction = ({ open, closeTransaction, selectedWallet, itemCard }) => {
             </Card.Body>
             <Card.Footer>
               <h6>
-                Стоимость:<span> </span> {price} руб.
+                Стоимость:<span> </span> {price} {currency_symbol}
               </h6>
             </Card.Footer>
           </Card>
@@ -54,7 +54,7 @@ const Transaction = ({ open, closeTransaction, selectedWallet, itemCard }) => {
             <Card.Footer>
               <h6>
                 С вашего счёта будет списано:<span> </span>
-                {price} руб.
+                {price} {currency_symbol}
               </h6>
             </Card.Footer>
           </Card>

@@ -19,7 +19,7 @@ const ProfileModalWallet = ({
     }
   };
 
-  //console.log(wallet);
+  console.log(wallet);
   return (
     <Modal show={show} onHide={closeWalet} size="lg">
       <Modal.Header closeButton>

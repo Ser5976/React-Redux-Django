@@ -18,7 +18,9 @@ const MyCard = ({ price, photo, item, rememberLastEvent }) => {
         />
       </NavLink>
       <Card.Body>
-        <Card.Text>Цена: {price} руб.</Card.Text>
+        <Card.Text>
+          Цена: {price} {item.currency_symbol}
+        </Card.Text>
       </Card.Body>
     </Card>
   );
