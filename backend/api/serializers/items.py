@@ -12,6 +12,7 @@ from rest_framework.fields import get_error_detail, SkipField, set_value
 
 from todo.models import Item, Address, Comment
 from users.models import User
+from wallet.models import Currency
 
 
 class AddressSerializer(serializers.ModelSerializer):
@@ -24,15 +25,16 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class ItemSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
-    # owner_username = serializers.CharField(source='owner.username')
     owner_username = serializers.CharField(source='owner.username',
                                            read_only=True)
+    currency_symbol = serializers.CharField(source='currency.symbol',
+                                            read_only=True)
 
     class Meta:
         model = Item
         fields = ('id', 'owner', 'owner_username', 'house_type', 'description',
                   'status', 'address', 'photo', 'price', 'currency',
-                  'created_at', 'updated_at')
+                  'currency_symbol', 'created_at', 'updated_at')
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
@@ -69,19 +71,17 @@ class ItemSerializer(serializers.ModelSerializer):
         errors = OrderedDict()
         fields = self._writable_fields
         for field in fields:
+
             validate_method = getattr(self, 'validate_' + field.field_name,
                                       None)
             field_name = field.field_name
             field_data = data.get(field_name)
             if field_name == 'address':
-                print('field_data ', field_data)
                 primitive_value = json.loads(field_data)
             elif field_name == 'photo' and isinstance(field_data, str):
                 continue
             elif field_name == 'owner' and field_data is None:
                 primitive_value = User.objects.get(is_admin=True).id
-            # elif field_name == 'owner_username':
-                # continue
             else:
                 primitive_value = field.get_value(data)
             try:
