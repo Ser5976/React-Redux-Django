@@ -93,6 +93,11 @@ const BaseState = ({ children }) => {
     setDataStorage('urlPage', urlPage); //записываем в local или sessionStorage
     refreshList(urlPage);
   };
+  // Очищаем currentPage при выходе из логина
+  const clearCurrentPage = () => {
+    dispatch({ type: 'CURRENT_PAGE', payload: 1 });
+  };
+  // console.log(state.currentPage);
   //Запрос на сервер,  при помощи id, для получения  объект дома для профайла
   const refreshCard = async (itemId) => {
     console.log(itemList);
@@ -296,6 +301,7 @@ const BaseState = ({ children }) => {
         addUserId,
         pagination,
         addCurrencies,
+        clearCurrentPage,
       }}
     >
       {children}

@@ -17,6 +17,7 @@ const ProfileCard = ({
     price,
     owner,
     owner_username,
+    currency_symbol,
   } = itemCard;
   // console.log(itemCard);
   const ad = { ...address };
@@ -50,7 +51,9 @@ const ProfileCard = ({
           <div>{description}</div>
           <b>Владелец</b>
           <div>{owner_username}</div>
-          <h3>Цена: {price} руб.</h3>
+          <h3>
+            Цена: {price} {currency_symbol}
+          </h3>
           {owner === +receiveDataStorage('userId') ? (
             <>
               <NavLink to="/addData" className="btn-primary" role="button">

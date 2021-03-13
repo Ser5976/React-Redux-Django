@@ -2,6 +2,7 @@ import React from 'react';
 import { Pagination } from 'react-bootstrap';
 
 const NumberingSystem = ({ count, pageSize, currentPage, pagination }) => {
+  // console.log(currentPage);
   const active = currentPage;
   const pagesCount = Math.ceil(count / pageSize);
   const pages = [];

@@ -19,6 +19,7 @@ export default function Navibar({
   setShowAdmin,
   showAccount,
   setShowAccount,
+  clearCurrentPage,
 }) {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -137,6 +138,7 @@ export default function Navibar({
                 onClick={() => {
                   logout(history);
                   setShowAccount(false);
+                  clearCurrentPage();
                 }}
               >
                 Выйти
