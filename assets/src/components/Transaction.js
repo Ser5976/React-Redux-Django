@@ -1,7 +1,13 @@
 import React from 'react';
 import { Modal, Button, Card, Row, Col, CardDeck } from 'react-bootstrap';
 
-const Transaction = ({ open, closeTransaction, selectedWallet, itemCard }) => {
+const Transaction = ({
+  open,
+  closeTransaction,
+  selectedWallet,
+  itemCard,
+  calculationMoney,
+}) => {
   const { currency } = selectedWallet;
   const valuta = { ...currency };
   const { address, price, owner_username, currency_symbol } = itemCard;
@@ -34,7 +40,10 @@ const Transaction = ({ open, closeTransaction, selectedWallet, itemCard }) => {
             </Card.Body>
             <Card.Footer>
               <h6>
-                Стоимость:<span> </span> {price} {currency_symbol}
+                Стоимость:
+                <div>
+                  {price} {currency_symbol}
+                </div>
               </h6>
             </Card.Footer>
           </Card>
@@ -52,16 +61,32 @@ const Transaction = ({ open, closeTransaction, selectedWallet, itemCard }) => {
               </Row>
             </Card.Body>
             <Card.Footer>
-              <h6>
-                С вашего счёта будет списано:<span> </span>
-                {price} {currency_symbol}
-              </h6>
+              {calculationMoney.remains >= 0 ? (
+                currency_symbol === valuta.symbol ? (
+                  <h6>
+                    С вашего счёта будет списано:
+                    <div>{`${price} ${valuta.symbol}`}</div>
+                  </h6>
+                ) : (
+                  <h6>
+                    С вашего счёта будет списано:
+                    <div>{`${calculationMoney.result} ${valuta.symbol}`}</div>
+                    <div>
+                      <small>{`Расчёт произведён по курсу на: ${calculationMoney.date}`}</small>
+                    </div>
+                  </h6>
+                )
+              ) : (
+                <h5 className="text-danger">Недостаточно средств на счёте</h5>
+              )}
             </Card.Footer>
           </Card>
         </CardDeck>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary">Подтвердить</Button>
+        <Button variant="secondary" disabled={calculationMoney.remains < 0}>
+          Подтвердить
+        </Button>
       </Modal.Footer>
     </Modal>
   );

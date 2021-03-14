@@ -10,9 +10,14 @@ const ProfileCardContainer = ({ match }) => {
   const { itemCard, refreshCard, editItem, handleDelete } = useContext(
     BaseContext
   );
-  const { wallet, getUser, chooseWallet, selectedWallet } = useContext(
-    PersonalAccountContext
-  );
+  const {
+    wallet,
+    getUser,
+    chooseWallet,
+    selectedWallet,
+    convertetTransaction,
+    calculationMoney,
+  } = useContext(PersonalAccountContext);
   const urlId = match.params.name;
   const history = useHistory();
   useEffect(() => {
@@ -52,12 +57,15 @@ const ProfileCardContainer = ({ match }) => {
         wallet={wallet}
         showTransaction={showTransaction}
         chooseWallet={chooseWallet}
+        itemCard={itemCard}
+        convertetTransaction={convertetTransaction}
       />
       <Transaction
         open={open}
         closeTransaction={closeTransaction}
         selectedWallet={selectedWallet}
         itemCard={itemCard}
+        calculationMoney={calculationMoney}
       />
     </>
   );

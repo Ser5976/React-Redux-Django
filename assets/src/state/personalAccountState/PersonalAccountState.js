@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import { PersonalAccountReducer } from '../../reducers/PersonalAccountReducer';
 import { PersonalAccountContext } from './PersonalAccountContext';
-import { ModelUrls } from '../../constants/urls';
+import { ModelUrls, RATE } from '../../constants/urls';
 import { receiveDataStorage } from '../../utilities/receiveDataStorage';
 
 const initialState = {
@@ -47,6 +47,7 @@ const initialState = {
       couple2: null,
     },
   ],
+  calculationMoney: {}, // для конвертацию на transaction, если разные валюты
 };
 
 const PersonalAccountState = ({ children }) => {
@@ -59,6 +60,7 @@ const PersonalAccountState = ({ children }) => {
     date,
     rate,
     selectedWallet,
+    calculationMoney,
   } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
@@ -219,6 +221,42 @@ const PersonalAccountState = ({ children }) => {
     dispatch({ type: 'SELECTED_WALLET', payload: money });
   };
   // console.log(selectedWallet);
+  //делаем конвертацию на transaction, если разные валюты
+  const convertetTransaction = async (
+    currencyWallet,
+    currencyHouse,
+    price,
+    balance
+  ) => {
+    let copiCalculationMoney = {};
+    if (currencyHouse === currencyWallet) {
+      const remains = balance - price;
+      copiCalculationMoney = {
+        remains: remains,
+      };
+    } else {
+      console.log(`Конвертация: ${currencyWallet} ${currencyHouse}`);
+      const responseCurrency = await axios.get(
+        `${RATE}?symbols=${currencyWallet}&base=${currencyHouse}`
+      ); //делаем запрос , базовая единица-валюта дома,symbols-валюта кашелька
+      const rateCurrency = responseCurrency.data.rates[currencyWallet]; // отношение валюты дома/на валюту кашелька
+      const date = responseCurrency.data.date; //какой датой брался курс валют
+      console.log(rateCurrency);
+      const result = (price * rateCurrency).toFixed(2);
+      console.log(result);
+      const remains = balance - result; //проверка достаточности  средств
+      copiCalculationMoney = {
+        date: date,
+        result: result,
+        remains: remains,
+      };
+    }
+    dispatch({
+      type: 'CALCULATION_MONEY',
+      payload: { ...copiCalculationMoney },
+    });
+  };
+  console.log(calculationMoney);
   return (
     <PersonalAccountContext.Provider
       value={{
@@ -229,12 +267,14 @@ const PersonalAccountState = ({ children }) => {
         date,
         rate,
         selectedWallet,
+        calculationMoney,
         getUser,
         handleChangeAccount,
         handleSubmitAccount,
         handleChangeAvatar,
         currencyRate,
         chooseWallet,
+        convertetTransaction,
       }}
     >
       {children}

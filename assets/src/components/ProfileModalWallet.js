@@ -8,7 +8,12 @@ const ProfileModalWallet = ({
   wallet,
   showTransaction,
   chooseWallet,
+  itemCard,
+  convertetTransaction,
 }) => {
+  console.log(itemCard);
+  const { currency_symbol, price } = itemCard; //нужен для конвертации в transaction
+
   const [flag, setFlag] = useState({ green: false, disabled: true });
 
   const changeBorder = (id) => {
@@ -35,6 +40,12 @@ const ProfileModalWallet = ({
                 onClick={() => {
                   changeBorder(index);
                   chooseWallet(money);
+                  convertetTransaction(
+                    money.currency.symbol,
+                    currency_symbol,
+                    price,
+                    money.balance
+                  ); // будет делать конвертацию на transaction, если разные валюты
                 }}
               >
                 <Card.Body>

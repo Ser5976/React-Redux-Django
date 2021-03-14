@@ -23,3 +23,5 @@ export const AdminUrls = {
 export const USD =
   'https://api.exchangeratesapi.io/latest?symbols=RUB,EUR&base=USD';
 export const EUR = 'https://api.exchangeratesapi.io/latest?symbols=RUB,USD';
+
+export const RATE = 'https://api.exchangeratesapi.io/latest';
