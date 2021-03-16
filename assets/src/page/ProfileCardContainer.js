@@ -17,6 +17,8 @@ const ProfileCardContainer = ({ match }) => {
     selectedWallet,
     convertetTransaction,
     calculationMoney,
+    transctionSabmit,
+    addDataTransaction,
   } = useContext(PersonalAccountContext);
   const urlId = match.params.name;
   const history = useHistory();
@@ -59,6 +61,7 @@ const ProfileCardContainer = ({ match }) => {
         chooseWallet={chooseWallet}
         itemCard={itemCard}
         convertetTransaction={convertetTransaction}
+        addDataTransaction={addDataTransaction}
       />
       <Transaction
         open={open}
@@ -66,6 +69,7 @@ const ProfileCardContainer = ({ match }) => {
         selectedWallet={selectedWallet}
         itemCard={itemCard}
         calculationMoney={calculationMoney}
+        transctionSabmit={transctionSabmit}
       />
     </>
   );

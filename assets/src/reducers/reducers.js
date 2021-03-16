@@ -64,6 +64,7 @@ export const itemReducer = (state, action) => {
         ...state,
         currencies: action.payload,
       };
+
     default:
       return state;
   }

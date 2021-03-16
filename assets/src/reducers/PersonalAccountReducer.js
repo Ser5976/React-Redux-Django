@@ -51,6 +51,11 @@ export const PersonalAccountReducer = (state, action) => {
         ...state,
         calculationMoney: action.payload,
       };
+    case 'TRANSACTION':
+      return {
+        ...state,
+        transaction: action.payload,
+      };
 
     default:
       return state;

@@ -48,6 +48,7 @@ const initialState = {
     },
   ],
   calculationMoney: {}, // для конвертацию на transaction, если разные валюты
+  transaction: {}, //данные по транзакции
 };
 
 const PersonalAccountState = ({ children }) => {
@@ -61,6 +62,7 @@ const PersonalAccountState = ({ children }) => {
     rate,
     selectedWallet,
     calculationMoney,
+    transaction,
   } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
@@ -141,8 +143,8 @@ const PersonalAccountState = ({ children }) => {
   const handleSubmitAccount = async (event) => {
     event.preventDefault();
     console.log(changeUser);
-    let userId = localStorage.getItem('userId');
-    let token = localStorage.getItem('token');
+    let token = receiveDataStorage('token');
+    let userId = receiveDataStorage('userId');
     // console.log(token);
     // добавляем наш объект в new FormData при помощи append, это поможет нам отправить файл с аватаром на сервер
     let userFormData = new FormData();
@@ -230,20 +232,20 @@ const PersonalAccountState = ({ children }) => {
   ) => {
     let copiCalculationMoney = {};
     if (currencyHouse === currencyWallet) {
-      const remains = balance - price;
+      const remains = balance - price; ////проверка достаточности  средств
       copiCalculationMoney = {
         remains: remains,
       };
     } else {
-      console.log(`Конвертация: ${currencyWallet} ${currencyHouse}`);
+      // console.log(`Конвертация: ${currencyWallet} ${currencyHouse}`);
       const responseCurrency = await axios.get(
         `${RATE}?symbols=${currencyWallet}&base=${currencyHouse}`
       ); //делаем запрос , базовая единица-валюта дома,symbols-валюта кашелька
       const rateCurrency = responseCurrency.data.rates[currencyWallet]; // отношение валюты дома/на валюту кашелька
       const date = responseCurrency.data.date; //какой датой брался курс валют
-      console.log(rateCurrency);
+      //console.log(rateCurrency);
       const result = (price * rateCurrency).toFixed(2);
-      console.log(result);
+      //console.log(result);
       const remains = balance - result; //проверка достаточности  средств
       copiCalculationMoney = {
         date: date,
@@ -256,7 +258,39 @@ const PersonalAccountState = ({ children }) => {
       payload: { ...copiCalculationMoney },
     });
   };
-  console.log(calculationMoney);
+  // console.log(calculationMoney);
+  // добавить данные для транзакции
+  const addDataTransaction = (
+    walletId,
+    itemCardId,
+    itemCardCurrency,
+    itemCardPrice
+  ) => {
+    const copiTransactions = {
+      from_wallet: walletId,
+      currency: itemCardCurrency,
+      item: itemCardId,
+      amount: itemCardPrice,
+    };
+    console.log(copiTransactions);
+    dispatch({ type: 'TRANSACTION', payload: { ...copiTransactions } });
+  };
+  console.log(transaction);
+  //отправка данных по транзакции на сервер
+  const transctionSabmit = async () => {
+    console.log('транзакция');
+    let token = receiveDataStorage('token');
+    try {
+      const response = await axios.post(ModelUrls.TRANSACTION, transaction, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <PersonalAccountContext.Provider
       value={{
@@ -275,6 +309,8 @@ const PersonalAccountState = ({ children }) => {
         currencyRate,
         chooseWallet,
         convertetTransaction,
+        transctionSabmit,
+        addDataTransaction,
       }}
     >
       {children}

@@ -7,6 +7,7 @@ const Transaction = ({
   selectedWallet,
   itemCard,
   calculationMoney,
+  transctionSabmit,
 }) => {
   const { currency } = selectedWallet;
   const valuta = { ...currency };
@@ -84,7 +85,11 @@ const Transaction = ({
         </CardDeck>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" disabled={calculationMoney.remains < 0}>
+        <Button
+          variant="secondary"
+          disabled={calculationMoney.remains < 0}
+          onClick={transctionSabmit}
+        >
           Подтвердить
         </Button>
       </Modal.Footer>
