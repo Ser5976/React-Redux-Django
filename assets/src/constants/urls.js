@@ -6,6 +6,7 @@ export const ModelUrls = {
   ADDRESSES: `${ROOT_URL}/api/addresses/`,
   COMMENTS: `${ROOT_URL}/api/comments/`,
   CURRENCIES: `${ROOT_URL}/api/currencies`,
+  TRANSACTION: `${ROOT_URL}/api/transactions/`,
 };
 
 let ROOT_AUTH = 'dj-rest-auth';
