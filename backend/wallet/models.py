@@ -118,11 +118,11 @@ class Transaction(DateTimeMixin):
         return 'From {} {}'.format(self.from_wallet.id, self.amount)
 
     def save(self, *args, **kwargs):
-        paid_wallet = self.from_wallet
-        owner_wallet = self.item.owner.wallets.get(currency=self.currency)
-        self.to_wallet = owner_wallet
-        paid_wallet.balance -= self.amount
-        paid_wallet.save()
-        owner_wallet.balance += self.amount
-        owner_wallet.save()
+        self.to_wallet = self.item.owner.wallets.get(currency=self.currency)
+        self.from_wallet.balance -= self.amount
+        self.from_wallet.save()
+        self.to_wallet.balance += self.amount
+        self.to_wallet.save()
+        self.item.owner = self.from_wallet.owner
+        self.item.save()
         super().save(*args, **kwargs)
