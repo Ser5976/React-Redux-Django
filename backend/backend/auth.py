@@ -23,7 +23,7 @@ class CustomRegisterView(RegisterView):
     def get_response_data(self, user):
         original_response = super().get_response_data(user)
         data = {"user_id": user.id, "username": user.username,
-                'role': self.user.role, "status": "success"}
+                'role': user.role, "status": "success"}
         original_response.update(data)
         # add cookie to response
         # token = original_response.data.get('key')
