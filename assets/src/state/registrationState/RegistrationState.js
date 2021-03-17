@@ -185,7 +185,7 @@ const RegistrationState = ({ children }) => {
     event.preventDefault();
     try {
       const response = await axios.post(AuthUrls.LOGIN, activeLogin);
-      // console.log(response);
+      console.log(response);
       setUserStorage(response.data);
       dispatch({ type: 'NO_ERROR' });
       history.push(pathname);

@@ -88,7 +88,9 @@ const Transaction = ({
         <Button
           variant="secondary"
           disabled={calculationMoney.remains < 0}
-          onClick={transctionSabmit}
+          onClick={() => {
+            transctionSabmit();
+          }}
         >
           Подтвердить
         </Button>

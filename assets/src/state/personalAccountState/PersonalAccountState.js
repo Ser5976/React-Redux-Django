@@ -287,6 +287,7 @@ const PersonalAccountState = ({ children }) => {
         },
       });
       console.log(response);
+      window.location.reload();
     } catch (e) {
       console.log(e);
     }
