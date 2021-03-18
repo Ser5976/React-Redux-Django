@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AdminUrls } from '../../constants/urls';
+import { receiveDataStorage } from '../../utilities/receiveDataStorage';
 
 export default function Navibar({
   handleRegistrationShow,
@@ -50,32 +51,34 @@ export default function Navibar({
               Замени на что-нибудь полезное
             </Link>
           </NavDropdown>
-
-          <NavDropdown
-            title="Для бизнеса"
-            className="mr-3"
-            show={showBusiness}
-            onMouseEnter={() => setShowBusiness(!showBusiness)}
-            onMouseLeave={() => setShowBusiness(!showBusiness)}
-            id="business-dropdown"
-          >
-            <Link to="/ListCard" className="dropdown-item">
-              Список объектов
-            </Link>
-
-            <NavDropdown.Divider />
-
-            <Link
-              to="/addData"
-              className="dropdown-item"
-              onClick={(event) => {
-                rememberLastEvent(event);
-                clearActiveItem();
-              }}
+          {receiveDataStorage('role') === '1' ? null : (
+            <NavDropdown
+              title="Для бизнеса"
+              className="mr-3"
+              show={showBusiness}
+              onMouseEnter={() => setShowBusiness(!showBusiness)}
+              onMouseLeave={() => setShowBusiness(!showBusiness)}
+              id="business-dropdown"
             >
-              Разместить объявление
-            </Link>
-          </NavDropdown>
+              <Link to="/ListCard" className="dropdown-item">
+                Список объектов
+              </Link>
+
+              <NavDropdown.Divider />
+
+              <Link
+                to="/addData"
+                className="dropdown-item"
+                onClick={(event) => {
+                  rememberLastEvent(event);
+                  clearActiveItem();
+                }}
+              >
+                Разместить объявление
+              </Link>
+            </NavDropdown>
+          )}
+
           <NavDropdown
             title="Для администраторов"
             show={showAdmin}
