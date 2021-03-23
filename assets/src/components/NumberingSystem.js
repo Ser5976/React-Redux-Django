@@ -13,7 +13,7 @@ const NumberingSystem = ({
   const pagesCount = Math.ceil(count / pageSize); //количество страниц(count-общее количество домов,pageSize-сколько домов будет на странице)
   //получение массива страниц
   const pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
+  for (let i = 2; i <= pagesCount - 1; i++) {
     pages.push(i);
   }
 
@@ -28,24 +28,38 @@ const NumberingSystem = ({
   //С помощью фильтрации будем выбирать те страницы,которые входят в порцию
   return (
     <Pagination>
-      {
-        portionNumber > 1 && (
-          <Pagination.First
-            onClick={() => setPortionNumber(portionNumber - 1)}
-          />
-        ) //если номер порции > 1, показываем "<<"
-      }
-      {
-        currentPage > 1 && (
-          <Pagination.Prev
-            onClick={() => {
-              pagination(3, currentPage);
-              currentPage === leftBorderPortion &&
-                setPortionNumber(portionNumber - 1);
-            }}
-          />
-        ) //если номер страницы > 1, показываем "<"
-      }
+      <Pagination.First
+        disabled={currentPage === 1}
+        onClick={() => {
+          pagination(1, 1);
+          setPortionNumber(1);
+        }}
+      />
+
+      <Pagination.Prev
+        disabled={currentPage === 1}
+        onClick={() => {
+          pagination(3, currentPage);
+          currentPage === leftBorderPortion &&
+            setPortionNumber(portionNumber - 1);
+        }}
+      />
+
+      <Pagination.Item
+        active={1 === active}
+        onClick={() => {
+          pagination(1, 1);
+          setPortionNumber(1);
+        }}
+      >
+        {1}
+      </Pagination.Item>
+      {portionNumber > 1 && (
+        <Pagination.Ellipsis
+          onClick={() => setPortionNumber(portionNumber - 1)}
+        />
+      )}
+
       {
         pages
           .filter(
@@ -63,25 +77,38 @@ const NumberingSystem = ({
             );
           }) // это фильтрация
       }
-      {
-        currentPage < pagesCount && (
-          <Pagination.Next
-            onClick={() => {
-              pagination(2, currentPage);
-              currentPage === rightBorderPortion &&
-                setPortionNumber(portionNumber + 1);
-            }}
-          />
-        ) //если номер страницы меньше количества страниц,показываем ">"
-      }
+      {portionCount > portionNumber && (
+        <Pagination.Ellipsis
+          onClick={() => setPortionNumber(portionNumber + 1)}
+        />
+      )}
 
-      {
-        portionCount > portionNumber && (
-          <Pagination.Last
-            onClick={() => setPortionNumber(portionNumber + 1)}
-          />
-        ) //если  количество порций больше номера порции, показываем ">>"
-      }
+      <Pagination.Item
+        active={pagesCount === active}
+        onClick={() => {
+          pagination(1, pagesCount);
+          setPortionNumber(portionCount);
+        }}
+      >
+        {pagesCount}
+      </Pagination.Item>
+
+      <Pagination.Next
+        disabled={currentPage === pagesCount}
+        onClick={() => {
+          pagination(2, currentPage);
+          currentPage === rightBorderPortion &&
+            setPortionNumber(portionNumber + 1);
+        }}
+      />
+
+      <Pagination.Last
+        disabled={currentPage === pagesCount}
+        onClick={() => {
+          pagination(1, pagesCount);
+          setPortionNumber(portionCount);
+        }}
+      />
     </Pagination>
   );
 };

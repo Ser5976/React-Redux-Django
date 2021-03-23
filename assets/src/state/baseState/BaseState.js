@@ -64,21 +64,7 @@ const BaseState = ({ children }) => {
     } else if (flag === 3) {
       value = currentPage - 1;
       // Подключаем ' < ' в пагинации для перехода к предыдущей страницы
-    } /* else if (flag === 4) {
-      value = currentPage;
-      if (value === 1) {
-        return;
-      } else {
-        value = 1;
-      } // Подключаем "в начало" в пагинации для перехода на первую страницу
-    } else if (flag === 5) {
-      value = currentPage;
-      if (value === pages.length) {
-        return;
-      } else {
-        value = pages.length;
-      }
-    } // Подключаем "в конец" в пагинации для перехода на последнюю страницу */
+    }
     dispatch({ type: 'CURRENT_PAGE', payload: value });
     const offset = (value - 1) * pageSize;
     const urlPage = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
