@@ -17,7 +17,7 @@ class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wallet
         fields = ('id', 'balance', 'is_default', 'public_key', 'owner',
-                  'currency', 'updated')
+                  'current_exchange', 'updated')
 
     def get_updated(self, obj):
         return obj.updated_at.strftime('%H:%M:%S %d-%m-%y')
