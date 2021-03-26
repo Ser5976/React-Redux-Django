@@ -1,12 +1,14 @@
 import React, { useEffect, useContext } from 'react';
-import { Container, CardColumns, Row } from 'react-bootstrap';
-import MyCard from '../components/MyCard';
-import NumberingSystem from '../components/NumberingSystem';
+import { Row } from 'react-bootstrap';
+//import MyCard from '../components/MyCard';
+import NumberingSystem from '../components/listCard/NumberingSystem';
+import ProfileListCard from '../components/listCard/ProfileListCard';
 import { BaseContext } from '../state/baseState/BaseContext';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
-const ListCard = () => {
+const ListCard = ({ match }) => {
+  console.log(match);
   const {
     itemList,
     refreshList,
@@ -30,24 +32,13 @@ const ListCard = () => {
 
   return (
     <>
-      <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
-        <CardColumns style={{ columnCount: 'auto' }}>
-          {itemList.map((item) => {
-            return (
-              <MyCard
-                key={item.id}
-                price={item.price}
-                photo={item.photo}
-                handleDelete={handleDelete}
-                item={item}
-                handleShow={handleShow}
-                editItem={editItem}
-                rememberLastEvent={rememberLastEvent}
-              />
-            );
-          })}
-        </CardColumns>
-      </Container>
+      <ProfileListCard
+        itemList={itemList}
+        handleDelete={handleDelete}
+        handleShow={handleShow}
+        editItem={editItem}
+        rememberLastEvent={rememberLastEvent}
+      />
       <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
         <hr />
         <Row className="justify-content-sm-center ">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Card, Container, Button } from 'react-bootstrap';
-import { receiveDataStorage } from '../utilities/receiveDataStorage';
+import { receiveDataStorage } from '../../utilities/receiveDataStorage';
 
 const ProfileCard = ({
   itemCard,
