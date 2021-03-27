@@ -13,7 +13,7 @@ function MyRouter() {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/ListCard" component={ListCard} />
+      <Route exact path="/ListCard/:name" component={ListCard} />
       <PrivateRoute path="/profile/:name" component={ProfileCardContainer} />
       <PrivateRoute path="/addData" component={AddData} />
       <Route path="/login" component={LoginContainer} />

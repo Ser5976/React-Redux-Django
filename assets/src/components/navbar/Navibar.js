@@ -21,6 +21,7 @@ export default function Navibar({
   showAccount,
   setShowAccount,
   clearCurrentPage,
+  currentPage,
 }) {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -42,12 +43,12 @@ export default function Navibar({
             onMouseLeave={() => setShowCustomer(!showCustomer)}
             id="customer-dropdown"
           >
-            <Link to="/ListCard" className="dropdown-item">
+            <Link to={'/ListCard/' + currentPage} className="dropdown-item">
               Выбрать дом
             </Link>
 
             <NavDropdown.Divider />
-            <Link to="/ListCard" className="dropdown-item">
+            <Link to={'/ListCard/' + currentPage} className="dropdown-item">
               Замени на что-нибудь полезное
             </Link>
           </NavDropdown>
@@ -60,7 +61,7 @@ export default function Navibar({
               onMouseLeave={() => setShowBusiness(!showBusiness)}
               id="business-dropdown"
             >
-              <Link to="/ListCard" className="dropdown-item">
+              <Link to={'/ListCard/' + currentPage} className="dropdown-item">
                 Список объектов
               </Link>
 

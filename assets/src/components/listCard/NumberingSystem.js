@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const NumberingSystem = ({
   count,
   pageSize,
-  currentPage,
-  pagination,
   portionSize = 5,
+  urlPageNumber,
 }) => {
-  // console.log(currentPage);
-  const active = currentPage; // currentPage выбранная страница
+  //urlPageNumber выбранная страница по ссылке
   const pagesCount = Math.ceil(count / pageSize); //количество страниц(count-общее количество домов,pageSize-сколько домов будет на странице)
   //получение массива страниц
   const pages = [];
@@ -27,102 +24,146 @@ const NumberingSystem = ({
   const rightBorderPortion = portionNumber * portionSize; //вычисление правой границы порции
 
   //С помощью фильтрации будем выбирать те страницы,которые входят в порцию
-  return (
-    <Pagination>
-      <Link to={'/ListCard/' + 1}>
-        <Pagination.First
-          disabled={currentPage === 1}
-          onClick={() => {
-            pagination(1, 1);
-            setPortionNumber(1);
-          }}
-        />
-      </Link>
-      <Link to={'/ListCard/' + currentPage - 1}>
-        <Pagination.Prev
-          disabled={currentPage === 1}
-          onClick={() => {
-            pagination(3, currentPage);
-            currentPage === leftBorderPortion &&
-              setPortionNumber(portionNumber - 1);
-          }}
-        />
-      </Link>
-      <Link to={'/ListCard/' + 1}>
-        <Pagination.Item
-          active={1 === active}
-          onClick={() => {
-            pagination(1, 1);
-            setPortionNumber(1);
-          }}
-        >
-          {1}
-        </Pagination.Item>
-      </Link>
-      {portionNumber > 1 && (
-        <Link to="!#">
-          <Pagination.Ellipsis
-            onClick={() => setPortionNumber(portionNumber - 1)}
-          />
-        </Link>
-      )}
 
-      {
-        pages
-          .filter(
-            (page) => page >= leftBorderPortion && page <= rightBorderPortion
-          )
-          .map((page, index) => {
-            return (
-              <Link to={'/ListCard/' + page} key={index}>
-                <Pagination.Item
-                  active={page === active}
-                  onClick={() => pagination(1, page)}
-                >
-                  {page}
-                </Pagination.Item>
-              </Link>
-            );
-          }) // это фильтрация
-      }
-      {portionCount > portionNumber && (
-        <Link to="!#">
-          <Pagination.Ellipsis
-            onClick={() => setPortionNumber(portionNumber + 1)}
-          />
-        </Link>
-      )}
-      <Link to={'/ListCard/' + pagesCount}>
-        <Pagination.Item
-          active={pagesCount === active}
-          onClick={() => {
-            pagination(1, pagesCount);
-            setPortionNumber(portionCount);
-          }}
+  return (
+    <nav aria-label="Page navigation example">
+      <ul className="pagination justify-content-center">
+        <li
+          className={+urlPageNumber === 1 ? `page-item disabled` : `page-item`}
         >
-          {pagesCount}
-        </Pagination.Item>
-      </Link>
-      <Link to={'/ListCard/' + (currentPage + 1)}>
-        <Pagination.Next
-          disabled={currentPage === pagesCount}
-          onClick={() => {
-            pagination(2, currentPage);
-            currentPage === rightBorderPortion &&
-              setPortionNumber(portionNumber + 1);
-          }}
-        />
-      </Link>
-      <Link to={'/ListCard/' + pagesCount}>
-        <Pagination.Last
-          disabled={currentPage === pagesCount}
-          onClick={() => {
-            pagination(1, pagesCount);
-            setPortionNumber(portionCount);
-          }}
-        />
-      </Link>
-    </Pagination>
+          <Link
+            to="/ListCard/1"
+            className="page-link"
+            onClick={() => {
+              setPortionNumber(1);
+            }}
+          >
+            <span aria-hidden={true}>&#x003C;&#x003C;</span>
+            <span className="sr-only">First</span>
+          </Link>
+        </li>
+
+        <li
+          className={+urlPageNumber === 1 ? `page-item disabled` : `page-item`}
+        >
+          <Link
+            to={`/ListCard/${urlPageNumber - 1}`}
+            className="page-link"
+            onClick={() => {
+              +urlPageNumber === leftBorderPortion &&
+                setPortionNumber(portionNumber - 1);
+            }}
+          >
+            <span aria-hidden={true}>&#x003C;</span>
+            <span className="sr-only">Previous</span>
+          </Link>
+        </li>
+        <li className={+urlPageNumber === 1 ? `page-item active` : `page-item`}>
+          <Link to="/ListCard/1" className="page-link">
+            1
+          </Link>
+        </li>
+        {
+          portionNumber > 1 && (
+            <li className="page-item">
+              <Link
+                to="#"
+                role="button"
+                className="page-link"
+                onClick={() => setPortionNumber(portionNumber - 1)}
+              >
+                <span aria-hidden={true}>...</span>
+                <span className="sr-only">More</span>
+              </Link>
+            </li>
+          ) //добавляем кнопку многоточие
+        }
+
+        {
+          pages
+            .filter(
+              (page) => page >= leftBorderPortion && page <= rightBorderPortion
+            )
+            .map((page, index) => {
+              return (
+                <li
+                  key={index}
+                  className={
+                    +urlPageNumber === page ? `page-item active` : `page-item`
+                  }
+                >
+                  <Link to={`/ListCard/${page}`} className="page-link">
+                    {page}
+                  </Link>
+                </li>
+              );
+            }) // это фильтрация
+        }
+        {
+          portionCount > portionNumber && (
+            <li className="page-item">
+              <Link
+                to="#"
+                role="button"
+                className="page-link"
+                onClick={() => setPortionNumber(portionNumber + 1)}
+              >
+                <span aria-hidden={true}>...</span>
+                <span className="sr-only">More</span>
+              </Link>
+            </li>
+          ) //добавляем кнопку многоточие
+        }
+        <li
+          className={
+            +urlPageNumber === pagesCount ? `page-item active` : `page-item`
+          }
+        >
+          <Link
+            to={`/ListCard/${pagesCount}`}
+            className="page-link"
+            onClick={() => {
+              setPortionNumber(portionCount);
+            }}
+          >
+            {pagesCount}
+          </Link>
+        </li>
+        <li
+          className={
+            +urlPageNumber === pagesCount ? `page-item disabled` : `page-item`
+          }
+        >
+          <Link
+            to={`/ListCard/${+urlPageNumber + 1}`}
+            className="page-link"
+            onClick={() => {
+              +urlPageNumber === rightBorderPortion &&
+                setPortionNumber(portionNumber + 1);
+            }}
+          >
+            <span aria-hidden={true}>&#x003E;</span>
+            <span className="sr-only">Previous</span>
+          </Link>
+        </li>
+        <li
+          className={
+            +urlPageNumber === pagesCount ? `page-item disabled` : `page-item`
+          }
+        >
+          <Link
+            to={`/ListCard/${pagesCount}`}
+            className="page-link"
+            onClick={() => {
+              setPortionNumber(portionCount);
+            }}
+          >
+            <span aria-hidden={true}>&#x003E;&#x003E;</span>
+            <span className="sr-only">Last</span>
+          </Link>
+        </li>
+      </ul>
+    </nav>
   );
 };
 export default NumberingSystem;

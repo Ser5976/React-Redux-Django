@@ -3,7 +3,6 @@ import axios from 'axios';
 import { BaseContext } from './BaseContext';
 import { ModelUrls } from '../../constants/urls';
 import { itemReducer } from '../../reducers/reducers';
-import { setDataStorage } from '../../utilities/setDataStorage';
 import { receiveDataStorage } from '../../utilities/receiveDataStorage';
 
 const initialState = {
@@ -42,7 +41,7 @@ const BaseState = ({ children }) => {
   //запрос на сервер , получаем список домов
   const refreshList = async (url = ModelUrls.ITEMS) => {
     const response = await axios.get(url);
-    console.log(response);
+    // console.log(response);
     dispatch({
       type: 'LIST',
       payload: response.data.results,
@@ -50,25 +49,14 @@ const BaseState = ({ children }) => {
     // получение общего количества домов на сервере(count)
     dispatch({ type: 'COUNT', payload: response.data.count });
   };
-  // постраничный запрос на сервер(onClick на пагинации, меняем currentPage, вычисляем offset и делаем запрос)
+  // постраничный запрос на сервер(через router (match.params.name), вычисляем offset и делаем запрос)
   // offset(смещение на лимит), нужен для вычисления страницы. (1 стр.offset =0, 2стр - offset=лимит,  3 стр- offset=2 лимита и т.д )
   // лимит -кол. домов на странице. offset=(номер страниц-1)*лимит
 
-  const pagination = (flag, currentPage) => {
-    let value;
-    if (flag === 1) {
-      value = currentPage;
-    } else if (flag === 2) {
-      value = currentPage + 1;
-      // Подключаем ' > ' в пагинации для перехода к следующуй страницы
-    } else if (flag === 3) {
-      value = currentPage - 1;
-      // Подключаем ' < ' в пагинации для перехода к предыдущей страницы
-    }
-    dispatch({ type: 'CURRENT_PAGE', payload: value });
-    const offset = (value - 1) * pageSize;
+  const paginationUrl = (urlPageNumber) => {
+    dispatch({ type: 'CURRENT_PAGE', payload: urlPageNumber });
+    const offset = (urlPageNumber - 1) * pageSize;
     const urlPage = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
-    setDataStorage('urlPage', urlPage); //записываем в local или sessionStorage
     refreshList(urlPage);
   };
   // очистка currenPage
@@ -194,7 +182,7 @@ const BaseState = ({ children }) => {
         await axios.post(ModelUrls.ITEMS, activeForm);
         clearBug();
         refreshList();
-        history.push('/ListCard');
+        history.push('/ListCard/1');
       } catch (e) {
         dispatch({ type: 'BUG', payload: e.message });
       }
@@ -205,7 +193,7 @@ const BaseState = ({ children }) => {
   const handleDelete = async (item, history) => {
     await axios.delete(ModelUrls.ITEMS + item.id);
     refreshList();
-    history.push('/ListCard');
+    history.push('/ListCard/1');
   };
   //очистка ошибки
   const clearBug = () => {
@@ -276,9 +264,9 @@ const BaseState = ({ children }) => {
         handleChangePhoto,
         clearActiveItem,
         addUserId,
-        pagination,
         addCurrencies,
         clearCurrentPage,
+        paginationUrl,
       }}
     >
       {children}

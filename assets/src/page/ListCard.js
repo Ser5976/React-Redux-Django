@@ -1,34 +1,30 @@
 import React, { useEffect, useContext } from 'react';
 import { Row } from 'react-bootstrap';
-//import MyCard from '../components/MyCard';
 import NumberingSystem from '../components/listCard/NumberingSystem';
 import ProfileListCard from '../components/listCard/ProfileListCard';
 import { BaseContext } from '../state/baseState/BaseContext';
 import { RegistrationContext } from '../state/registrationState/RegistrationContext';
-import { receiveDataStorage } from '../utilities/receiveDataStorage';
 
 const ListCard = ({ match }) => {
-  console.log(match);
+  const urlPageNumer = match.params.name; //для пагинации через router
+  console.log(urlPageNumer);
   const {
     itemList,
-    refreshList,
     handleDelete,
     handleShow,
     editItem,
     count,
     pageSize,
-    currentPage,
-    pagination,
+    paginationUrl,
   } = useContext(BaseContext);
   const { rememberLastEvent } = useContext(RegistrationContext);
+
   useEffect(() => {
-    // const url = ModelUrls.ITEMS;
-    currentPage !== 1 && receiveDataStorage('urlPage') !== null
-      ? refreshList(receiveDataStorage('urlPage'))
-      : refreshList();
+    //console.log('работает');
+    paginationUrl(+urlPageNumer);
 
     // eslint-disable-next-line
-  }, []);
+  }, [+urlPageNumer]);
 
   return (
     <>
@@ -45,8 +41,7 @@ const ListCard = ({ match }) => {
           <NumberingSystem
             count={count}
             pageSize={pageSize}
-            pagination={pagination}
-            currentPage={currentPage}
+            urlPageNumber={urlPageNumer}
           />
         </Row>
       </div>
