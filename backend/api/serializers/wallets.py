@@ -17,7 +17,7 @@ class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wallet
         fields = ('id', 'balance', 'is_default', 'public_key', 'owner',
-                  'current_exchange', 'updated')
+                  'currency', 'updated')
 
     def get_updated(self, obj):
         return obj.updated_at.strftime('%H:%M:%S %d-%m-%y')
@@ -26,11 +26,9 @@ class WalletSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('id', 'from_wallet', 'currency', 'item', 'to_wallet',
+        fields = ('id', 'from_wallet', 'current_exchange', 'item', 'to_wallet',
                   'amount', 'status',)
 
     def create(self, validated_data):
-        print(self)
-        print('validated_data --', validated_data)
         instance = Transaction.objects.create(**validated_data)
         return instance
