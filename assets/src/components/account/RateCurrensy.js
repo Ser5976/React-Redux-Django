@@ -5,7 +5,7 @@ const RateCurrensy = ({ date, rate }) => {
   let obj = {};
   for (var i = 0; i < rate.length; i++) {
     obj[i] = true;
-    console.log(obj);
+    // console.log(obj);
   }
   const [mark, setMark] = useState(obj);
 

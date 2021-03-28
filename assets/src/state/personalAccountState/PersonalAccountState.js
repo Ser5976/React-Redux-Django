@@ -47,6 +47,8 @@ const initialState = {
       couple2: null,
     },
   ],
+  currencyHouseСurrencyWallet: null, //отношение валюты дома/на валюту кашелька, чтобы потом использовать в addDataTransaction
+
   calculationMoney: {}, // для конвертацию на transaction, если разные валюты
   transaction: {}, //данные по транзакции
 };
@@ -63,6 +65,7 @@ const PersonalAccountState = ({ children }) => {
     selectedWallet,
     calculationMoney,
     transaction,
+    currencyHouseСurrencyWallet,
   } = state;
   // запрос на сервер, получаем пользователя при помощи токена
   const getUser = async () => {
@@ -74,6 +77,7 @@ const PersonalAccountState = ({ children }) => {
           Authorization: `Token ${token}`,
         },
       });
+      console.log(response);
       const {
         first_name,
         last_name,
@@ -230,6 +234,7 @@ const PersonalAccountState = ({ children }) => {
     price,
     balance
   ) => {
+    let rateCurrency;
     let copiCalculationMoney = {};
     if (currencyHouse === currencyWallet) {
       const remains = balance - price; ////проверка достаточности  средств
@@ -241,7 +246,10 @@ const PersonalAccountState = ({ children }) => {
       const responseCurrency = await axios.get(
         `${RATE}?symbols=${currencyWallet}&base=${currencyHouse}`
       ); //делаем запрос , базовая единица-валюта дома,symbols-валюта кашелька
-      const rateCurrency = responseCurrency.data.rates[currencyWallet]; // отношение валюты дома/на валюту кашелька
+      rateCurrency = responseCurrency.data.rates[currencyWallet]; // отношение валюты дома/на валюту кашелька
+
+      // dispatch({ type: 'CURRENCYHOUSE_CURRENCYWALLET', payload: rateCurrency }); // отношение валюты дома/на валюту кашелька сохраняем в стейте,чтобы потом использовать в addDataTransaction
+
       const date = responseCurrency.data.date; //какой датой брался курс валют
       //console.log(rateCurrency);
       const result = (price * rateCurrency).toFixed(2);
@@ -256,9 +264,11 @@ const PersonalAccountState = ({ children }) => {
     dispatch({
       type: 'CALCULATION_MONEY',
       payload: { ...copiCalculationMoney },
+      rateCurrency: rateCurrency, //// отношение валюты дома/на валюту кашелька сохраняем в стейте,чтобы потом использовать в addDataTransaction
     });
   };
   // console.log(calculationMoney);
+  // console.log(currencyHouseСurrencyWallet);
   // добавить данные для транзакции
   const addDataTransaction = (
     walletId,
@@ -274,6 +284,16 @@ const PersonalAccountState = ({ children }) => {
     };
     console.log(copiTransactions);
     dispatch({ type: 'TRANSACTION', payload: { ...copiTransactions } });
+  };
+  // console.log(transaction);
+
+  //добавление отношение валюты дома/на валюту кашелька в объект transaction
+  const x = () => {
+    let z;
+    currencyHouseСurrencyWallet ? (z = currencyHouseСurrencyWallet) : (z = 1);
+    const xTransaction = { ...transaction, rest: z };
+
+    dispatch({ type: 'TRANSACTION', payload: { ...xTransaction } });
   };
   console.log(transaction);
   //отправка данных по транзакции на сервер
@@ -312,6 +332,7 @@ const PersonalAccountState = ({ children }) => {
         convertetTransaction,
         transctionSabmit,
         addDataTransaction,
+        x,
       }}
     >
       {children}

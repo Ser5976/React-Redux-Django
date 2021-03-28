@@ -50,6 +50,7 @@ export const PersonalAccountReducer = (state, action) => {
       return {
         ...state,
         calculationMoney: action.payload,
+        currencyHouseСurrencyWallet: action.rateCurrency,
       };
     case 'TRANSACTION':
       return {

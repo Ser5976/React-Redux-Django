@@ -11,6 +11,7 @@ const ProfileModalWallet = ({
   itemCard,
   convertetTransaction,
   addDataTransaction,
+  x,
 }) => {
   // console.log(itemCard);
   const { currency_symbol, price } = itemCard; //нужен для конвертации в transaction
@@ -40,6 +41,7 @@ const ProfileModalWallet = ({
                 key={money.id}
                 className={flag.green === index ? styles.card : styles.card1}
                 onClick={() => {
+                  // console.log(money);
                   changeBorder(index);
                   chooseWallet(money);
                   convertetTransaction(
@@ -85,6 +87,7 @@ const ProfileModalWallet = ({
           onClick={() => {
             closeWalet();
             showTransaction();
+            x();
           }}
         >
           Далее

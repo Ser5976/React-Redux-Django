@@ -19,6 +19,7 @@ const ProfileCardContainer = ({ match }) => {
     calculationMoney,
     transctionSabmit,
     addDataTransaction,
+    x,
   } = useContext(PersonalAccountContext);
   const urlId = match.params.name;
   const history = useHistory();
@@ -62,6 +63,7 @@ const ProfileCardContainer = ({ match }) => {
         itemCard={itemCard}
         convertetTransaction={convertetTransaction}
         addDataTransaction={addDataTransaction}
+        x={x}
       />
       <Transaction
         open={open}

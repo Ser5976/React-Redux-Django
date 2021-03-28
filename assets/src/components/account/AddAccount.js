@@ -1,14 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
-const AddAccount = ({
-  first_name,
-  last_name,
-  username,
-  email,
-  avatar,
-  role,
-}) => {
+const AddAccount = ({ first_name, last_name, email, avatar, role }) => {
   const firstName = first_name ? first_name : 'Имя';
   const lastName = last_name ? last_name : 'Фамилия';
   const mail = email ? email : '';

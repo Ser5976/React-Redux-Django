@@ -18,7 +18,7 @@ const PersonalAccount = ({
   inputEl,
 }) => {
   const { first_name, last_name, email, username, role, avatar } = activeUser;
-  const firstName = first_name ? first_name : 'Имя';
+  const firstName = first_name ? first_name : '';
   //background-color: rgba(0,0,0,.03);
   return (
     <>
