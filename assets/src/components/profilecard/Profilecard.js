@@ -26,7 +26,7 @@ const ProfileCard = ({
   return (
     <Container className="mt-5">
       <Card>
-        <NavLink to="/ListCard" className="nav-link">
+        <NavLink to="/ListCard/1" className="nav-link">
           <Card.Img
             variant="left"
             src={photo}

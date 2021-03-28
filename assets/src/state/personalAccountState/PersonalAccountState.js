@@ -278,7 +278,6 @@ const PersonalAccountState = ({ children }) => {
   ) => {
     const copiTransactions = {
       from_wallet: walletId,
-      currency: itemCardCurrency,
       item: itemCardId,
       amount: itemCardPrice,
     };
@@ -288,12 +287,14 @@ const PersonalAccountState = ({ children }) => {
   // console.log(transaction);
 
   //добавление отношение валюты дома/на валюту кашелька в объект transaction
-  const x = () => {
-    let z;
-    currencyHouseСurrencyWallet ? (z = currencyHouseСurrencyWallet) : (z = 1);
-    const xTransaction = { ...transaction, rest: z };
+  const addCurrentExchange = () => {
+    let result;
+    currencyHouseСurrencyWallet
+      ? (result = currencyHouseСurrencyWallet)
+      : (result = 1);
+    const currentExchange = { ...transaction, current_exchange: result };
 
-    dispatch({ type: 'TRANSACTION', payload: { ...xTransaction } });
+    dispatch({ type: 'TRANSACTION', payload: { ...currentExchange } });
   };
   console.log(transaction);
   //отправка данных по транзакции на сервер
@@ -332,7 +333,7 @@ const PersonalAccountState = ({ children }) => {
         convertetTransaction,
         transctionSabmit,
         addDataTransaction,
-        x,
+        addCurrentExchange,
       }}
     >
       {children}

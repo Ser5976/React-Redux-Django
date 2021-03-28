@@ -11,7 +11,7 @@ const ProfileModalWallet = ({
   itemCard,
   convertetTransaction,
   addDataTransaction,
-  x,
+  addCurrentExchange,
 }) => {
   // console.log(itemCard);
   const { currency_symbol, price } = itemCard; //нужен для конвертации в transaction
@@ -87,7 +87,7 @@ const ProfileModalWallet = ({
           onClick={() => {
             closeWalet();
             showTransaction();
-            x();
+            addCurrentExchange();
           }}
         >
           Далее
