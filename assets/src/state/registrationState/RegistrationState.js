@@ -90,12 +90,15 @@ const RegistrationState = ({ children }) => {
     let userName = data.username;
     let userId = data['user_id'];
     let role = data.role;
+    let isAdmin = data['is_admin'];
     // место хранение токена выбирается от значения "Запомнить меня"
     //эта функция лежит в utilities, она добавляет данные в localStorage или sessionStorage
     setDataStorage('token', token);
     setDataStorage('userName', userName);
     setDataStorage('userId', userId);
     setDataStorage('role', role);
+    setDataStorage('is_admin', isAdmin);
+
     dispatch({
       type: 'AUTH',
       payload: token,

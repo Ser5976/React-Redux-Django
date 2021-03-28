@@ -17,7 +17,9 @@ export default function NavbarContainer() {
   } = useContext(RegistrationContext);
   // console.log(history.location.state.from.pathname);
 
-  const { clearActiveItem, clearCurrentPage } = useContext(BaseContext);
+  const { clearActiveItem, clearCurrentPage, currentPage } = useContext(
+    BaseContext
+  );
   useEffect(() => {
     receiveUserStorage();
     // eslint-disable-next-line
@@ -46,6 +48,7 @@ export default function NavbarContainer() {
         setShowAccount={setShowAccount}
         history={history}
         clearCurrentPage={clearCurrentPage}
+        currentPage={currentPage}
       />
       <FormModal />
     </>

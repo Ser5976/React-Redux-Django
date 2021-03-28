@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Card, CardDeck, Row, Col, Button } from 'react-bootstrap';
-import styles from '../css/profileModalWallet.module.css';
+import styles from '../../css/profileModalWallet.module.css';
 
 const ProfileModalWallet = ({
   closeWalet,
