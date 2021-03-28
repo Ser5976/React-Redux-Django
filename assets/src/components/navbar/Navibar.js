@@ -79,41 +79,42 @@ export default function Navibar({
               </Link>
             </NavDropdown>
           )}
-
-          <NavDropdown
-            title="Для администраторов"
-            show={showAdmin}
-            onMouseEnter={() => setShowAdmin(!showAdmin)}
-            onMouseLeave={() => setShowAdmin(!showAdmin)}
-            id="admin-dropdown"
-          >
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={AdminUrls.ADMIN}
-              className="dropdown-item"
+          {receiveDataStorage('is_admin') === 'true' && (
+            <NavDropdown
+              title="Для администраторов"
+              show={showAdmin}
+              onMouseEnter={() => setShowAdmin(!showAdmin)}
+              onMouseLeave={() => setShowAdmin(!showAdmin)}
+              id="admin-dropdown"
             >
-              Django admin
-            </a>
-            <NavDropdown.Divider />
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={AdminUrls.SWAGGER}
-              className="dropdown-item"
-            >
-              Swagger
-            </a>
-            <NavDropdown.Divider />
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href={AdminUrls.SILK}
-              className="dropdown-item"
-            >
-              Silk
-            </a>
-          </NavDropdown>
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={AdminUrls.ADMIN}
+                className="dropdown-item"
+              >
+                Django admin
+              </a>
+              <NavDropdown.Divider />
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={AdminUrls.SWAGGER}
+                className="dropdown-item"
+              >
+                Swagger
+              </a>
+              <NavDropdown.Divider />
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={AdminUrls.SILK}
+                className="dropdown-item"
+              >
+                Silk
+              </a>
+            </NavDropdown>
+          )}
         </Nav>
         <Nav>
           {token ? null : (

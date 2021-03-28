@@ -7,7 +7,6 @@ import { RegistrationContext } from '../state/registrationState/RegistrationCont
 
 const ListCard = ({ match }) => {
   const urlPageNumer = match.params.name; //для пагинации через router
-  console.log(urlPageNumer);
   const {
     itemList,
     handleDelete,
