@@ -54,50 +54,23 @@ const BaseState = ({ children }) => {
   // offset(смещение на лимит), нужен для вычисления страницы. (1 стр.offset =0, 2стр - offset=лимит,  3 стр- offset=2 лимита и т.д )
   // лимит -кол. домов на странице. offset=(номер страниц-1)*лимит
 
-  const pagination = (flag, currentPage, pages) => {
+  const pagination = (flag, currentPage) => {
     let value;
     if (flag === 1) {
       value = currentPage;
     } else if (flag === 2) {
-      value = currentPage;
-      if (value > pages.length - 1) {
-        return;
-      } else {
-        value = value + 1;
-      } // Подключаем ' > ' в пагинации для перехода к следующуй страницы
+      value = currentPage + 1;
+      // Подключаем ' > ' в пагинации для перехода к следующуй страницы
     } else if (flag === 3) {
-      value = currentPage;
-      if (value < 2) {
-        return;
-      } else {
-        value = value - 1;
-      } // Подключаем ' < ' в пагинации для перехода к предыдущей страницы
-    } else if (flag === 4) {
-      value = currentPage;
-      if (value === 1) {
-        return;
-      } else {
-        value = 1;
-      } // Подключаем "в начало" в пагинации для перехода на первую страницу
-    } else if (flag === 5) {
-      value = currentPage;
-      if (value === pages.length) {
-        return;
-      } else {
-        value = pages.length;
-      }
-    } // Подключаем "в конец" в пагинации для перехода на последнюю страницу
+      value = currentPage - 1;
+      // Подключаем ' < ' в пагинации для перехода к предыдущей страницы
+    }
     dispatch({ type: 'CURRENT_PAGE', payload: value });
     const offset = (value - 1) * pageSize;
     const urlPage = `${ModelUrls.ITEMS}?offset=${offset}&limit=${pageSize}`;
     setDataStorage('urlPage', urlPage); //записываем в local или sessionStorage
     refreshList(urlPage);
   };
-  // Очищаем currentPage при выходе из логина
-  const clearCurrentPage = () => {
-    dispatch({ type: 'CURRENT_PAGE', payload: 1 });
-  };
-  // console.log(state.currentPage);
   //Запрос на сервер,  при помощи id, для получения  объект дома для профайла
   const refreshCard = async (itemId) => {
     console.log(itemList);
@@ -301,7 +274,6 @@ const BaseState = ({ children }) => {
         addUserId,
         pagination,
         addCurrencies,
-        clearCurrentPage,
       }}
     >
       {children}
