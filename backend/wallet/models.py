@@ -87,17 +87,7 @@ class Transaction(DateTimeMixin):
             (CANCELLED, 'CANCELLED'),
         )
 
-    def get_default_currency():
-        try:
-            currency = Currency.objects.get(symbol='USD')
-        except Currency.DoesNotExists:
-            return 1
-        return currency.id
-
     amount = models.DecimalField(_('Amount'), max_digits=12, decimal_places=2)
-    currency = models.ForeignKey(Currency, verbose_name=_('Currency'),
-                                 on_delete=models.SET_NULL, null=True,
-                                 default=get_default_currency())
     item = models.ForeignKey(Item, verbose_name=_('Item'), null=True,
                              on_delete=models.SET_NULL)
     from_wallet = models.ForeignKey(Wallet, verbose_name=_('From Wallet'),
@@ -109,6 +99,7 @@ class Transaction(DateTimeMixin):
     status = models.CharField(_('Status'), max_length=25,
                               choices=Status.CHOICES,
                               default=Status.INITIAL)
+    current_exchange = models.FloatField(_('Current exchange'), null=True)
 
     class Meta:
         verbose_name = ('Transaction')
@@ -118,8 +109,9 @@ class Transaction(DateTimeMixin):
         return 'From {} {}'.format(self.from_wallet.id, self.amount)
 
     def save(self, *args, **kwargs):
-        self.to_wallet = self.item.owner.wallets.get(currency=self.currency)
-        self.from_wallet.balance -= self.amount
+        currency = self.item.currency
+        self.to_wallet = self.item.owner.wallets.get(currency=currency)
+        self.from_wallet.balance -= self.amount * self.current_exchange
         self.from_wallet.save()
         self.to_wallet.balance += self.amount
         self.to_wallet.save()

@@ -19,8 +19,8 @@ class CurrencyAdmin(admin.ModelAdmin):
 
 
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'amount', 'currency', 'from_wallet', 'to_wallet',
-                    'item', 'status',)
+    list_display = ('id', 'amount', 'from_wallet', 'to_wallet', 'item',
+                    'status', 'current_exchange')
     list_display_links = ('amount', 'status',)
 
 
