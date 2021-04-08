@@ -53,7 +53,7 @@ const ProfileModalWallet = ({
                   addDataTransaction(
                     money.id,
                     itemCard.id,
-                    itemCard.currency,
+                    // itemCard.currency,
                     itemCard.price
                   );
                 }}

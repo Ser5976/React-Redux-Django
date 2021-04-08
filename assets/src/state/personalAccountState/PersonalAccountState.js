@@ -235,6 +235,8 @@ const PersonalAccountState = ({ children }) => {
     balance
   ) => {
     let rateCurrency;
+    let rateCurrencyWallet;
+    let rateCurrencyHouse;
     let copiCalculationMoney = {};
     if (currencyHouse === currencyWallet) {
       const remains = balance - price; ////проверка достаточности  средств
@@ -244,14 +246,14 @@ const PersonalAccountState = ({ children }) => {
     } else {
       // console.log(`Конвертация: ${currencyWallet} ${currencyHouse}`);
       const responseCurrency = await axios.get(
-        `${RATE}?symbols=${currencyWallet}&base=${currencyHouse}`
+        `${RATE}&symbols=${currencyWallet},${currencyHouse}`
       ); //делаем запрос , базовая единица-валюта дома,symbols-валюта кашелька
-      rateCurrency = responseCurrency.data.rates[currencyWallet]; // отношение валюты дома/на валюту кашелька
-
-      // dispatch({ type: 'CURRENCYHOUSE_CURRENCYWALLET', payload: rateCurrency }); // отношение валюты дома/на валюту кашелька сохраняем в стейте,чтобы потом использовать в addDataTransaction
+      rateCurrencyWallet = responseCurrency.data.rates[currencyWallet]; // ставка валюты  кашелька к евро
+      rateCurrencyHouse = responseCurrency.data.rates[currencyHouse]; // ставка валюты дома к евро
+      rateCurrency = rateCurrencyWallet / rateCurrencyHouse; // ставка отношения валют кашелька и дома
+      console.log(rateCurrency);
 
       const date = responseCurrency.data.date; //какой датой брался курс валют
-      //console.log(rateCurrency);
       const result = (price * rateCurrency).toFixed(2);
       //console.log(result);
       const remains = balance - result; //проверка достаточности  средств
@@ -273,7 +275,7 @@ const PersonalAccountState = ({ children }) => {
   const addDataTransaction = (
     walletId,
     itemCardId,
-    itemCardCurrency,
+    // itemCardCurrency,
     itemCardPrice
   ) => {
     const copiTransactions = {

@@ -1,4 +1,5 @@
 let ROOT_URL = 'http://localhost:8000';
+let API_KEY = 'cc2ca05491baaca9dc9e223533a1aa3c';
 
 export const ModelUrls = {
   ITEMS: `${ROOT_URL}/api/items/`,
@@ -25,4 +26,10 @@ export const USD =
   'https://api.exchangeratesapi.io/latest?symbols=RUB,EUR&base=USD';
 export const EUR = 'https://api.exchangeratesapi.io/latest?symbols=RUB,USD';
 
-export const RATE = 'https://api.exchangeratesapi.io/latest';
+export const RATE = `http://api.exchangeratesapi.io/v1/latest?access_key=${API_KEY}`;
+
+/* https://api.exchangeratesapi.io/v1/ latest
+    ? access_key = API_KEY
+    & base = USD
+    & символы = GBP, JPY, EUR
+ */
