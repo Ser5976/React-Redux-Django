@@ -177,8 +177,19 @@ const PersonalAccountState = ({ children }) => {
     }
   };
   // получение курса валют
-  const currencyRate = async (EUR, USD) => {
-    const responseUsd = await axios.get(USD);
+  const currencyRate = async (CONVERTER) => {
+    const response = await axios.get(CONVERTER);
+    console.log(response.data);
+    const date = response.data.date;
+    console.log(date);
+    const eurUsd = response.data.rates.USD.toFixed(2);
+    const eurRub = response.data.rates.RUB.toFixed(2);
+    const rubEur = (1 / eurRub).toFixed(4);
+    const usdEur = (1 / eurUsd).toFixed(4);
+    const usdRub = (eurRub / eurUsd).toFixed(2);
+    const rubUsd = (eurUsd / eurRub).toFixed(4);
+
+    /* const responseUsd = await axios.get(USD);
     const responseEur = await axios.get(EUR);
     const date = responseUsd.data.date;
     //  console.log(responseUsd.data.rates);
@@ -189,7 +200,7 @@ const PersonalAccountState = ({ children }) => {
     const eurRub = responseEur.data.rates.RUB.toFixed(2);
 
     const rubUsd = (1 / usdRub).toFixed(4);
-    const rubEur = (1 / eurRub).toFixed(4);
+    const rubEur = (1 / eurRub).toFixed(4); */
 
     const copiRate = [
       {

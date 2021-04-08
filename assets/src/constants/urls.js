@@ -22,12 +22,9 @@ export const AdminUrls = {
   SWAGGER: `${ROOT_URL}/swagger/`,
   SILK: `${ROOT_URL}/silk/`,
 };
-export const USD =
-  'https://api.exchangeratesapi.io/latest?symbols=RUB,EUR&base=USD';
-export const EUR = 'https://api.exchangeratesapi.io/latest?symbols=RUB,USD';
 
 export const RATE = `http://api.exchangeratesapi.io/v1/latest?access_key=${API_KEY}`;
-
+export const CONVERTER = `${RATE}&symbols=RUB,USD`;
 /* https://api.exchangeratesapi.io/v1/ latest
     ? access_key = API_KEY
     & base = USD

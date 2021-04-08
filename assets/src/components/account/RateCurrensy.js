@@ -13,7 +13,7 @@ const RateCurrensy = ({ date, rate }) => {
     mark[index] = !mark[index];
     setMark({ ...mark });
   };
-  console.log(mark);
+  //console.log(mark);
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Header>Курсы валют на {date}</Card.Header>

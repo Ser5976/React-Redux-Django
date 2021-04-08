@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useContext } from 'react';
 import { PersonalAccountContext } from '../state/personalAccountState/PersonalAccountContext';
 import PersonalAccount from '../components/account/PersonalAccount';
-import { USD, EUR } from '../constants/urls';
+import { CONVERTER } from '../constants/urls';
 
 const PersonalAccountContainer = () => {
   const {
@@ -21,7 +21,7 @@ const PersonalAccountContainer = () => {
   const inputEl = useRef(null);
   useEffect(() => {
     getUser();
-    currencyRate(EUR, USD);
+    currencyRate(CONVERTER);
     // eslint-disable-next-line
   }, []);
 
