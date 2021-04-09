@@ -4,6 +4,9 @@ import { PersonalAccountReducer } from '../../reducers/PersonalAccountReducer';
 import { PersonalAccountContext } from './PersonalAccountContext';
 import { ModelUrls, RATE } from '../../constants/urls';
 import { receiveDataStorage } from '../../utilities/receiveDataStorage';
+import { returnRate, returnCopyRate } from '../../utilities/rate';
+
+console.log(returnRate());
 
 const initialState = {
   activeUser: {
@@ -27,26 +30,8 @@ const initialState = {
   selectedWallet: {},
   date: '',
 
-  rate: [
-    {
-      nameCouple1: 'EUR/USD',
-      nameCouple2: 'USD/EUR',
-      couple1: null,
-      couple2: null,
-    },
-    {
-      nameCouple1: 'EUR/RUB',
-      nameCouple2: 'RUB/EUR',
-      couple1: null,
-      couple2: null,
-    },
-    {
-      nameCouple1: 'USD/RUB',
-      nameCouple2: 'RUB/USD',
-      couple1: null,
-      couple2: null,
-    },
-  ],
+  rate: returnRate(), // эта функция возвращает массив(см. в папке utilities)
+
   currencyHouseСurrencyWallet: null, //отношение валюты дома/на валюту кашелька, чтобы потом использовать в addDataTransaction
 
   calculationMoney: {}, // для конвертацию на transaction, если разные валюты
@@ -189,43 +174,15 @@ const PersonalAccountState = ({ children }) => {
     const usdRub = (eurRub / eurUsd).toFixed(2);
     const rubUsd = (eurUsd / eurRub).toFixed(4);
 
-    /* const responseUsd = await axios.get(USD);
-    const responseEur = await axios.get(EUR);
-    const date = responseUsd.data.date;
-    //  console.log(responseUsd.data.rates);
-    // console.log(responseEur.data.rates);
-    const usdEur = responseUsd.data.rates.EUR.toFixed(2);
-    const usdRub = responseUsd.data.rates.RUB.toFixed(2);
-    const eurUsd = responseEur.data.rates.USD.toFixed(2);
-    const eurRub = responseEur.data.rates.RUB.toFixed(2);
-
-    const rubUsd = (1 / usdRub).toFixed(4);
-    const rubEur = (1 / eurRub).toFixed(4); */
-
-    const copiRate = [
-      {
-        ...rate[0],
-        nameCouple1: 'EUR/USD',
-        nameCouple2: 'USD/EUR',
-        couple1: eurUsd,
-        couple2: usdEur,
-      },
-
-      {
-        ...rate[1],
-        nameCouple1: 'EUR/RUB',
-        nameCouple2: 'RUB/EUR',
-        couple1: eurRub,
-        couple2: rubEur,
-      },
-      {
-        ...rate[2],
-        nameCouple1: 'USD/RUB',
-        nameCouple2: 'RUB/USD',
-        couple1: usdRub,
-        couple2: rubUsd,
-      },
-    ];
+    const copiRate = returnCopyRate(
+      rate,
+      eurUsd,
+      usdEur,
+      eurRub,
+      rubEur,
+      usdRub,
+      rubUsd
+    ); // эта функция возвращает массив(см. в папке utilities)
 
     dispatch({
       type: 'CURRENCY_RATE',
