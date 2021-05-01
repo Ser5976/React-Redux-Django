@@ -95,14 +95,19 @@ class Item(DateTimeMixin):
     def __str__(self):
         return f'{self.get_house_type_display()} {self.get_status_display()}'
 
+    @property
+    def get_owner_currencies(self):
+        return self.owner.wallet_set.
+
     def save(self, *args, **kwargs):
-        try:
-            send_mail('Django React', f'Your house - {self.house_type} succefully added',
-                      settings.EMAIL_HOST_USER, [f'{self.owner.email}'],
-                      fail_silently=False)
-        except SMTPAuthenticationError:
-            pass
-        super(Item, self).save(*args, **kwargs)
+        # try:
+        #     send_mail('Django React', f'Your house - {self.house_type} succefully added',
+        #               settings.EMAIL_HOST_USER, [f'{self.owner.email}'],
+        #               fail_silently=False)
+        # except SMTPAuthenticationError:
+        #     pass
+        new_item = super(Item, self).save(*args, **kwargs)
+        return new_item
 
 
 class Comment(DateTimeMixin):
