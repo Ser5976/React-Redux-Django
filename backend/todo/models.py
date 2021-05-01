@@ -97,7 +97,7 @@ class Item(DateTimeMixin):
 
     @property
     def get_owner_currencies(self):
-        return self.owner.wallet_set.
+        return self.owner.wallet_set.all()
 
     def save(self, *args, **kwargs):
         # try:
