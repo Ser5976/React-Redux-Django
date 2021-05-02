@@ -1,4 +1,4 @@
-from smtplib import SMTPAuthenticationError
+from smtplib import SMTPAuthenticationError, SMTPConnectError
 
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.account.utils import user_username, user_email
@@ -9,8 +9,9 @@ class AccountAdapter(DefaultAccountAdapter):
         msg = self.render_mail(template_prefix, email, context)
         try:
             msg.send()
-        except SMTPAuthenticationError as e:
+        except (SMTPAuthenticationError, SMTPConnectError) as e:
             print(e)
+            pass
 
     def save_user(self, request, user, form, commit=True):
         """
