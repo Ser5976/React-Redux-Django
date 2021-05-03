@@ -3,10 +3,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Jumbot from '../components/home/Jumbot';
 import Slider from '../components/home/Slider';
 import Futer from '../components/home/Futer';
-import { house1, house2, house3, house4, house5 } from '../constants/img';
+import { house1, house2, house3, house4 } from '../constants/img';
 import styles from '../css/home.module.css';
 
-const imgHouse = [house1, house2, house3, house4, house5];
+const imgHouse = [house1, house2, house3, house4];
 
 const Home = () => {
   return (
@@ -18,7 +18,7 @@ const Home = () => {
             <Slider imgHouse={imgHouse} />
           </Col>
           <Col md={5}>
-            <h2>Django react</h2>
+            <h2>React Redux Django</h2>
             <p>
               Bootstrap Icons are designed to work best with Bootstrap
               components, but they’ll work in any project. They’re SVGs, so they

@@ -7,7 +7,7 @@ const Jumbot = () => (
     <Jumbo fluid className="jumbo">
       <div className="overlay"></div>
       <Container>
-        <h1>Django react</h1>
+        <h1>React Redux Django</h1>
         <p>
           Bootstrap Icons are designed to work best with Bootstrap components,
           but they’ll work in any project. They’re SVGs, so they scale quickly

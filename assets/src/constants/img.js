@@ -7,5 +7,5 @@ export const house2 =
 export const house3 = 'https://w-dog.ru/wallpapers/1/63/505337564317458.jpg';
 export const house4 =
   'https://mebel-go.ru/mebelgoer/2718New-and-Child-Friendly-Residence-in-Altamont-10.jpg';
-export const house5 =
-  'https://lh3.googleusercontent.com/proxy/mv87eG87_sa9kVjBECa_hVvvRQRBgrE_oxxu6zwlXZALpDEuYX797wMUV3CEyb4PbGZqSghLn9DGdLs1nf8jY7--Ztj-abVQVDCCqZBfZJIX-ZoH9RDo9RwBxsLcLKr_-CyVkk3rIU8gFLXTxm2tmEJYJMqOtl0sEQ4';
+//export const house5 =
+//  'https://lh3.googleusercontent.com/proxy/mv87eG87_sa9kVjBECa_hVvvRQRBgrE_oxxu6zwlXZALpDEuYX797wMUV3CEyb4PbGZqSghLn9DGdLs1nf8jY7--Ztj-abVQVDCCqZBfZJIX-ZoH9RDo9RwBxsLcLKr_-CyVkk3rIU8gFLXTxm2tmEJYJMqOtl0sEQ4';

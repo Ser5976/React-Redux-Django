@@ -2,14 +2,10 @@ import { React } from 'react';
 import { Card } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-const MyCard = ({ price, photo, item, rememberLastEvent }) => {
+const MyCard = ({ price, photo, item }) => {
   return (
     <Card style={{ width: '18rem', margin: '.75rem' }}>
-      <NavLink
-        to={'/profile/' + item.id}
-        className="nav-link"
-        onClick={rememberLastEvent}
-      >
+      <NavLink to={'/profile/' + item.id} className="nav-link">
         <Card.Img
           variant="top"
           src={photo}

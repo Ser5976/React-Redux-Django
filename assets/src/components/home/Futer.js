@@ -6,7 +6,7 @@ const Futer = () => (
     <Container
       style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
     >
-      <p>Django React</p>
+      <p>React Redux Django</p>
     </Container>
   </Container>
 );
