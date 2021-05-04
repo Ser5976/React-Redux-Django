@@ -2,18 +2,19 @@ import { React } from 'react';
 import { Card } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-const MyCard = ({ price, photo, item }) => {
+const MyCard = ({ price, photo, item, ownerUsername }) => {
   return (
-    <Card style={{ width: '18rem', margin: '.75rem' }}>
+    <Card style={{ width: '21rem', margin: '.75rem' }}>
       <NavLink to={'/profile/' + item.id} className="nav-link">
         <Card.Img
           variant="top"
           src={photo}
           alt="фото"
-          style={{ width: '254px', height: '170px' }}
+          style={{ width: '300px', height: '197px' }}
         />
       </NavLink>
       <Card.Body>
+        Владелец: {ownerUsername}
         <Card.Text>
           Цена: {price} {item.currency_symbol}
         </Card.Text>

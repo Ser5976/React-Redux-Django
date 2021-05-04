@@ -4,7 +4,7 @@ import MyCard from './MyCard';
 
 const ProfileListCard = ({ listHouses }) => {
   return (
-    <Container fluid style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
+    <Container className="mt-3">
       <CardColumns style={{ columnCount: 'auto' }}>
         {listHouses.map((item) => {
           return (
@@ -12,11 +12,13 @@ const ProfileListCard = ({ listHouses }) => {
               key={item.id}
               price={item.price}
               photo={item.photo}
+              ownerUsername={item.owner_username}
               item={item}
             />
           );
         })}
       </CardColumns>
+      <hr />
     </Container>
   );
 };

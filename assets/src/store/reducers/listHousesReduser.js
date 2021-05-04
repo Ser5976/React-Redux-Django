@@ -1,16 +1,15 @@
 const SET_LIST_HOUSES = 'SET_LIST_HOUSES';
 const IS_FETCHING = 'IS_FETCHING';
-const SET_FETCH_ERROR = 'SET_FETCH_ERROR';
 
 const defaultState = {
   //получение  списка домов
   listHouses: [],
   // для крутёлки
   isFetching: true,
-  // количество элементов, для пагинации
+  // количество элементов всего, для пагинации
   сount: 0,
-  // вывод ошибки
-  isFetchError: false,
+  //количество элементов на странице
+  pageSize: 3,
 };
 
 export const listHousesReducer = (state = defaultState, action) => {
@@ -27,11 +26,6 @@ export const listHousesReducer = (state = defaultState, action) => {
         ...state,
         isFetching: action.payload,
       };
-    case SET_FETCH_ERROR:
-      return {
-        ...state,
-        isFetchError: action.payload,
-      };
 
     default:
       return state;
@@ -44,5 +38,3 @@ export const setListHouses = (data) => ({
 });
 //для крутёлки
 export const setIsFetching = (bul) => ({ type: IS_FETCHING, payload: bul });
-//добавляет ошибку
-export const setFetchError = (bul) => ({ type: SET_FETCH_ERROR, payload: bul });
