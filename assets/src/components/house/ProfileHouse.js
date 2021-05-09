@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { deleteData } from '../../action/sendingData'; // для удаления дома
 import { Card, Container, Button } from 'react-bootstrap';
 import styles from '../../css/profileHouse.module.css';
 
@@ -59,7 +60,12 @@ const ProfileHouse = ({ selectedHouse, setImg }) => {
           </Button>
 
           <span> </span>
-          <Button variant="danger">Delete</Button>
+          <Button
+            variant="danger"
+            onClick={() => deleteData(selectedHouse.id, history)}
+          >
+            Delete
+          </Button>
         </Card.Body>
       </Card>
     </Container>

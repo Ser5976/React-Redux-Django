@@ -16,7 +16,6 @@ const AddDataContainer = ({
 }) => {
   const history = useHistory();
   const owner = 1;
-  console.log(selectedHouse.id);
 
   const onSubmit = (data) => {
     console.log('Отправлено:', data);

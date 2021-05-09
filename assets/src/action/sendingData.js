@@ -29,3 +29,14 @@ export const editData = (formData, history, id) => {
     }
   };
 };
+
+// удаление дома(это простая функция)
+export const deleteData = async (id, history) => {
+  try {
+    await axios.delete(ModelUrls.ITEMS + id);
+    loadingListHouses();
+    history.push('/ListHousesContainer/1');
+  } catch (e) {
+    console.log(e);
+  }
+};
