@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Card, Container, Button } from 'react-bootstrap';
 import styles from '../../css/profileHouse.module.css';
 
-const ProfileHouse = ({ selectedHouse }) => {
+const ProfileHouse = ({ selectedHouse, setImg }) => {
   const {
     description,
     address,
@@ -48,7 +48,15 @@ const ProfileHouse = ({ selectedHouse }) => {
             Цена: {price} {currency_symbol}
           </h3>
 
-          <Button variant="primary">Edit</Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              history.push('/addDataContainer');
+              setImg(true);
+            }}
+          >
+            Edit
+          </Button>
 
           <span> </span>
           <Button variant="danger">Delete</Button>

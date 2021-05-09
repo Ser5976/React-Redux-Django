@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function Navibar() {
+const Navibar = ({ setSelectedHouseClear }) => {
   const [showCustomer, setShowCustomer] = useState(false);
   const [showBusiness, setShowBusiness] = useState(false);
   return (
@@ -40,7 +40,11 @@ export default function Navibar() {
             onMouseLeave={() => setShowBusiness(!showBusiness)}
             id="business-dropdown"
           >
-            <Link to="/addDataContainer" className="dropdown-item">
+            <Link
+              to="/addDataContainer"
+              className="dropdown-item"
+              onClick={setSelectedHouseClear}
+            >
               Разместить объявление
             </Link>
           </NavDropdown>
@@ -48,4 +52,5 @@ export default function Navibar() {
       </Navbar.Collapse>
     </Navbar>
   );
-}
+};
+export default Navibar;

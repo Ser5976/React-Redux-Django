@@ -25,7 +25,7 @@ export const loadingSelectedHouse = (urlId) => {
     try {
       dispatch(setIsFetching(true));
       const response = await axios.get(ModelUrls.ITEMS + urlId);
-      console.log(response);
+      // console.log(response);
       dispatch(setSelectedHouse(response.data));
     } catch (e) {
       console.log(e);

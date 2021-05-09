@@ -1,6 +1,7 @@
 const SET_LIST_HOUSES = 'SET_LIST_HOUSES';
 const IS_FETCHING = 'IS_FETCHING';
 const SET_SELECTED_HOUSE = 'SET_SELECTED_HOUSE';
+const SET_SELECTED_HOUSE_CLEAR = 'SET_SELECTED_HOUSE_CLEAR';
 
 const defaultState = {
   //получение  списка домов
@@ -30,6 +31,11 @@ export const houseReducer = (state = defaultState, action) => {
         selectedHouse: action.payload,
         isFetching: false,
       };
+    case SET_SELECTED_HOUSE_CLEAR:
+      return {
+        ...state,
+        selectedHouse: action.payload,
+      };
     case IS_FETCHING:
       return {
         ...state,
@@ -50,6 +56,11 @@ export const setListHouses = (data) => ({
 export const setSelectedHouse = (data) => ({
   type: SET_SELECTED_HOUSE,
   payload: data,
+});
+// очистить selectedHouse
+export const setSelectedHouseClear = () => ({
+  type: SET_SELECTED_HOUSE_CLEAR,
+  payload: {},
 });
 //для крутёлки
 export const setIsFetching = (bul) => ({ type: IS_FETCHING, payload: bul });

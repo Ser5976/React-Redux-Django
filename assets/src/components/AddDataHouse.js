@@ -5,14 +5,47 @@ import { schema } from '../constants/validationSchema'; // схема валид
 import { yupResolver } from '@hookform/resolvers/yup';
 import { radioStatus, radioType } from '../constants/objects'; //массивы для радиокнопок
 
-const AddDataHouse = ({ onSubmit, isFetchError }) => {
+const AddDataHouse = ({
+  onSubmit,
+  isFetchError,
+  selectedHouse,
+  setImg,
+  img,
+}) => {
+  const {
+    description,
+    price,
+    address,
+    status,
+    house_type,
+    photo,
+    currency,
+  } = selectedHouse;
+  const ad = { ...address };
+  const { country, city, street, house_number, zip_code } = ad;
+  // вырезаем то что нужно из строки photo, для того что бы вставить в форму при редактировании дома
+  const splitPhoto = () => {
+    const photo1 = photo.split('/');
+    const photo2 = photo1[photo1.length - 1];
+    return photo2;
+  };
   // хук useForm собирает данные из формы и при помощи handleSubmit передаёт данные в onSumit
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    // defaultValues: { firstName: 'Таня', radio: '2' }, // можно установить дефолтные значения полей формы
+    defaultValues: {
+      description: description,
+      price: price,
+      status: `${status}`,
+      house_type: `${house_type}`,
+      country: country,
+      city: city,
+      street: street,
+      house_number: house_number,
+      zip_code: zip_code,
+    }, // можно установить дефолтные значения полей формы
     mode: 'onBlur',
     resolver: yupResolver(schema),
   });
@@ -46,7 +79,14 @@ const AddDataHouse = ({ onSubmit, isFetchError }) => {
             <h5>Фото:</h5>
           </Form.Label>
           <Col sm="10">
-            <Form.Control type="file" {...register('photo')} />
+            {img && typeof photo == 'string' && (
+              <small>В настоящее время:{splitPhoto()}</small>
+            )}
+            <Form.Control
+              type="file"
+              {...register('photo')}
+              onChange={() => setImg(false)}
+            />
           </Col>
         </Form.Group>
         <hr />

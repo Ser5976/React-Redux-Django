@@ -1,13 +1,22 @@
 import React from 'react';
 import AddDataHouse from '../components/AddDataHouse';
 import { defaultData } from '../constants/objects'; //шаблон объекта, для создания объекта с данными из формы и отправки на сервак
-import { sendData } from '../action/sendingData';
+import { editData, sendData } from '../action/sendingData';
 import { useHistory } from 'react-router-dom';
+import { setImg } from '../store/reducers/addDataReduser';
 import { connect } from 'react-redux';
 
-const AddDataContainer = ({ sendData, isFetchError }) => {
+const AddDataContainer = ({
+  sendData,
+  editData,
+  isFetchError,
+  selectedHouse,
+  setImg, //изменение булевого значения, если выбрано фото
+  img, //чтобы убрать название файла, в форме, при редактировании дома
+}) => {
   const history = useHistory();
   const owner = 1;
+  console.log(selectedHouse.id);
 
   const onSubmit = (data) => {
     console.log('Отправлено:', data);
@@ -17,7 +26,7 @@ const AddDataContainer = ({ sendData, isFetchError }) => {
       owner: owner,
       description: data.description,
       photo: data.photo[0],
-      currency: null,
+      currency: 2,
       price: data.price,
       status: data.status,
       house_type: data.house_type,
@@ -30,7 +39,7 @@ const AddDataContainer = ({ sendData, isFetchError }) => {
         zip_code: data.zip_code,
       },
     };
-    console.log(currentData);
+    // console.log(currentData);
     // т.к. в объекте есть файл, для отправки на сервер  нужно создать специальный объект при помощи new FormData()
     const formData = new FormData();
 
@@ -46,17 +55,34 @@ const AddDataContainer = ({ sendData, isFetchError }) => {
         formData.append(key, currentData[key]);
       }
     }
-    sendData(formData, history);
+    // отправка данных на санки
+    if (selectedHouse.id) {
+      editData(formData, history, selectedHouse.id);
+    } else {
+      sendData(formData, history);
+    }
   };
 
-  return <AddDataHouse onSubmit={onSubmit} isFetchError={isFetchError} />;
+  return (
+    <AddDataHouse
+      onSubmit={onSubmit}
+      isFetchError={isFetchError}
+      selectedHouse={selectedHouse}
+      setImg={setImg}
+      img={img}
+    />
+  );
 };
 
 const mapStateToProps = (state) => {
   return {
     isFetchError: state.addData.isFetchError,
+    selectedHouse: state.house.selectedHouse,
+    img: state.addData.img,
   };
 };
 export default connect(mapStateToProps, {
   sendData,
+  editData,
+  setImg,
 })(AddDataContainer);

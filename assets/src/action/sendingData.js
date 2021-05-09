@@ -7,12 +7,24 @@ import axios from 'axios';
 export const sendData = (formData, history) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(ModelUrls.ITEMS, formData);
-      console.log(response);
+      await axios.post(ModelUrls.ITEMS, formData);
       loadingListHouses();
       history.push('/ListHousesContainer/1');
     } catch (e) {
       console.log(e);
+      dispatch(setFetchError(true));
+    }
+  };
+};
+
+// редактирование дома
+export const editData = (formData, history, id) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(ModelUrls.ITEMS + id + '/', formData);
+      loadingListHouses();
+      history.goBack();
+    } catch (e) {
       dispatch(setFetchError(true));
     }
   };
