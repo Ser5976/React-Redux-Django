@@ -1,10 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension'; //  это расширение в хроме,можно наблюдать за state
 import thunk from 'redux-thunk';
-import { listHousesReducer } from './reducers/listHousesReduser';
+import { addDataReduser } from './reducers/addDataReduser';
+import { houseReducer } from './reducers/houseReduser';
 
 const rootReducer = combineReducers({
-  listHouses: listHousesReducer,
+  house: houseReducer,
+  addData: addDataReduser,
 });
 
 export const store = createStore(

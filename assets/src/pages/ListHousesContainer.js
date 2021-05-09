@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Row, Spinner } from 'react-bootstrap';
-import ProfileListCard from '../components/listhouses/ProfileListCard';
-import { loadingListHouses } from '../action/listHouseAction';
+import ProfileListHouses from '../components/listhouses/ProfileListHouses';
+import { loadingListHouses } from '../action/houseAction';
 import { ModelUrls } from '../constants/urls';
 import PaginationComponent from '../components/listhouses/PaginationComponent';
 import { connect } from 'react-redux';
@@ -14,7 +14,8 @@ const ListHousesContainer = ({
   count,
   match,
 }) => {
-  const urlPageNumer = match.params.name; //для пагинации через router
+  // console.log(match);
+  const urlPageNumer = match.params.page; //для пагинации через router
 
   //useEffect запускается при каждом изменении urlPageNumer
   useEffect(() => {
@@ -43,7 +44,7 @@ const ListHousesContainer = ({
         </Row>
       ) : (
         <>
-          <ProfileListCard listHouses={listHouses} />
+          <ProfileListHouses listHouses={listHouses} />
 
           <PaginationComponent
             count={count}
@@ -57,11 +58,11 @@ const ListHousesContainer = ({
 };
 const mapStateToProps = (state) => {
   return {
-    listHouses: state.listHouses.listHouses,
-    isFetching: state.listHouses.isFetching,
-    isFetchError: state.listHouses.isFetchError,
-    pageSize: state.listHouses.pageSize,
-    count: state.listHouses.count,
+    listHouses: state.house.listHouses,
+    isFetching: state.house.isFetching,
+    isFetchError: state.house.isFetchError,
+    pageSize: state.house.pageSize,
+    count: state.house.count,
   };
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, CardColumns } from 'react-bootstrap';
 import MyCard from './MyCard';
 
-const ProfileListCard = ({ listHouses }) => {
+const ProfileListHouses = ({ listHouses }) => {
   return (
     <Container className="mt-3">
       <CardColumns style={{ columnCount: 'auto' }}>
@@ -22,4 +22,4 @@ const ProfileListCard = ({ listHouses }) => {
     </Container>
   );
 };
-export default ProfileListCard;
+export default ProfileListHouses;

@@ -1,0 +1,9 @@
+.img {
+  width: 35%;
+  height: auto;
+  padding: 10px;
+}
+
+.img:hover {
+  cursor: pointer;
+}
