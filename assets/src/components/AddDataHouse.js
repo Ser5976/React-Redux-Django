@@ -33,13 +33,11 @@ const AddDataHouse = ({ onSubmit, isFetchError }) => {
               as="textarea"
               rows={7}
               {...register('description')}
-              className={errors.description && 'border border-danger'}
+              className={errors.description && 'form-control is-invalid'}
             />
-            <p>
-              <small className="text-danger">
-                {errors.description?.message}
-              </small>
-            </p>
+            <div className="invalid-feedback">
+              {errors.description?.message}
+            </div>
           </Col>
         </Form.Group>
         <hr />
@@ -62,11 +60,9 @@ const AddDataHouse = ({ onSubmit, isFetchError }) => {
                 <Form.Control
                   type="number"
                   {...register('price')}
-                  className={errors.price && 'border border-danger'}
+                  className={errors.price && 'form-control is-invalid'}
                 />
-                <p>
-                  <small className="text-danger">{errors.price?.message}</small>
-                </p>
+                <div className="invalid-feedback">{errors.price?.message}</div>
               </Col>
             </Form.Group>
           </Col>
@@ -112,11 +108,11 @@ const AddDataHouse = ({ onSubmit, isFetchError }) => {
                     />
                   );
                 })}
-                <p>
+                <div>
                   <small className="text-danger">
                     {errors.status?.message}
                   </small>
-                </p>
+                </div>
               </Col>
             </Form.Group>
           </Col>
@@ -138,11 +134,11 @@ const AddDataHouse = ({ onSubmit, isFetchError }) => {
                     />
                   );
                 })}
-                <p>
+                <div>
                   <small className="text-danger">
                     {errors.house_type?.message}
                   </small>
-                </p>
+                </div>
               </Col>
             </Form.Group>
           </Col>
@@ -156,12 +152,10 @@ const AddDataHouse = ({ onSubmit, isFetchError }) => {
               <Form.Control
                 type="text"
                 {...register('country')}
-                className={errors.country && 'border border-danger'}
+                className={errors.country && 'form-control is-invalid'}
               />
+              <div className="invalid-feedback">{errors.country?.message}</div>
             </Form.Group>
-            <p>
-              <small className="text-danger">{errors.city?.message}</small>
-            </p>
           </Col>
           <Col>
             <Form.Group controlId="formGroupCity">
@@ -169,12 +163,10 @@ const AddDataHouse = ({ onSubmit, isFetchError }) => {
               <Form.Control
                 type="text"
                 {...register('city')}
-                className={errors.city && 'border border-danger'}
+                className={errors.city && 'form-control is-invalid'}
               />
+              <div className="invalid-feedback">{errors.city?.message}</div>
             </Form.Group>
-            <p>
-              <small className="text-danger">{errors.city?.message}</small>
-            </p>
           </Col>
           <Col>
             <Form.Group controlId="formGroupStreet">
@@ -182,12 +174,10 @@ const AddDataHouse = ({ onSubmit, isFetchError }) => {
               <Form.Control
                 type="text"
                 {...register('street')}
-                className={errors.street && 'border border-danger'}
+                className={errors.street && 'form-control is-invalid'}
               />
+              <div className="invalid-feedback">{errors.street?.message}</div>
             </Form.Group>
-            <p>
-              <small className="text-danger">{errors.street?.message}</small>
-            </p>
           </Col>
           <Col sm="2">
             <Form.Group controlId="formGroupHouseNumber">
@@ -195,14 +185,12 @@ const AddDataHouse = ({ onSubmit, isFetchError }) => {
               <Form.Control
                 type="text"
                 {...register('house_number')}
-                className={errors.house_number && 'border border-danger'}
+                className={errors.house_number && 'form-control is-invalid'}
               />
-            </Form.Group>
-            <p>
-              <small className="text-danger">
+              <div className="invalid-feedback">
                 {errors.house_number?.message}
-              </small>
-            </p>
+              </div>
+            </Form.Group>
           </Col>
           <Col sm="2">
             <Form.Group controlId="formGroupZipCode">
