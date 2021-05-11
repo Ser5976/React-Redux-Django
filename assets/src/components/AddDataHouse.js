@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { schema } from '../constants/validationSchema'; // схема валидации
+import { schema } from '../constants/validationSchemaAddData'; // схема валидации
 import { yupResolver } from '@hookform/resolvers/yup';
 import { radioStatus, radioType } from '../constants/objects'; //массивы для радиокнопок
 
@@ -10,7 +10,7 @@ const AddDataHouse = ({
   isFetchError,
   selectedHouse,
   setImg,
-  img,
+  img, //чтобы убрать название файла, в форме, при редактировании дома
 }) => {
   const {
     description,
@@ -23,6 +23,8 @@ const AddDataHouse = ({
   } = selectedHouse;
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
+  const s = status && String(status); // этот костыль для того чтобы и defaultValues угодить(нужна строка) и ошибку получать.(из-за числа на серваке)
+  const h = house_type && String(house_type);
   // вырезаем то что нужно из строки photo, для того что бы вставить в форму при редактировании дома
   const splitPhoto = () => {
     const photo1 = photo.split('/');
@@ -38,8 +40,8 @@ const AddDataHouse = ({
     defaultValues: {
       description: description,
       price: price,
-      status: `${status}`,
-      house_type: `${house_type}`,
+      status: s,
+      house_type: h,
       country: country,
       city: city,
       street: street,
@@ -145,14 +147,10 @@ const AddDataHouse = ({
                       label={radio.label}
                       value={radio.value}
                       {...register('status')}
+                      className={errors.status && 'text-danger'}
                     />
                   );
                 })}
-                <div>
-                  <small className="text-danger">
-                    {errors.status?.message}
-                  </small>
-                </div>
               </Col>
             </Form.Group>
           </Col>
@@ -171,14 +169,10 @@ const AddDataHouse = ({
                       label={radio.label}
                       value={radio.value}
                       {...register('house_type')}
+                      className={errors.house_type && 'text-danger'}
                     />
                   );
                 })}
-                <div>
-                  <small className="text-danger">
-                    {errors.house_type?.message}
-                  </small>
-                </div>
               </Col>
             </Form.Group>
           </Col>

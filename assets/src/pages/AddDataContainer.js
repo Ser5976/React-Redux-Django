@@ -18,7 +18,7 @@ const AddDataContainer = ({
   const owner = 1;
 
   const onSubmit = (data) => {
-    console.log('Отправлено:', data);
+    // console.log('Отправлено:', data);
     //создаём объект с данными по дому
     const currentData = {
       ...defaultData,

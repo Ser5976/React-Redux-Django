@@ -1,5 +1,5 @@
 let ROOT_URL = 'http://localhost:8000';
-let API_KEY = 'cc2ca05491baaca9dc9e223533a1aa3c';
+let API_KEY = 'cc2ca05491baaca9dc9e223533a1aa3c'; // конвертор валют
 
 export const ModelUrls = {
   ITEMS: `${ROOT_URL}/api/items/`,

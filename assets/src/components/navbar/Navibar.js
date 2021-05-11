@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const Navibar = ({ setSelectedHouseClear }) => {
+const Navibar = ({ setSelectedHouseClear, setShowRegistration }) => {
   const [showCustomer, setShowCustomer] = useState(false);
   const [showBusiness, setShowBusiness] = useState(false);
   return (
@@ -43,11 +43,22 @@ const Navibar = ({ setSelectedHouseClear }) => {
             <Link
               to="/addDataContainer"
               className="dropdown-item"
-              onClick={setSelectedHouseClear}
+              onClick={setSelectedHouseClear} //очистка стейта выранного дома
             >
               Разместить объявление
             </Link>
           </NavDropdown>
+        </Nav>
+        <Nav>
+          <Button
+            variant="outline-light"
+            className=" mr-2"
+            onClick={() => {
+              setShowRegistration(true);
+            }}
+          >
+            Регистрация
+          </Button>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
