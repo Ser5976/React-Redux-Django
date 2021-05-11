@@ -1,4 +1,4 @@
-from smtplib import SMTPAuthenticationError, SMTPConnectError
+# from smtplib import SMTPAuthenticationError, SMTPConnectError
 
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.account.utils import user_username, user_email
@@ -9,7 +9,7 @@ class AccountAdapter(DefaultAccountAdapter):
         msg = self.render_mail(template_prefix, email, context)
         try:
             msg.send()
-        except (SMTPAuthenticationError, SMTPConnectError) as e:
+        except BaseException as e:
             print(e)
             pass
 
