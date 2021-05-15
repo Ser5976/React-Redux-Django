@@ -10,7 +10,7 @@ const RegistrationForm = ({ onSubmit }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     resolver: yupResolver(schema),
   });
 

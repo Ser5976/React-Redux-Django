@@ -1,9 +1,11 @@
 const SET_REGISTRATION_ERROR = 'SET_REGISTRATION_ERROR';
 const SET_REGISTRATION_ERROR_CLEAR = 'SET_REGISTRATION_ERROR_CLEAR';
+const SET_MODAL_REGISTRATION = 'SET_MODAL_REGISTRATION';
 
 const defaultState = {
   registrationError: {}, //вывод данных по ошибки
   registrationMistake: false, // есть ошибка или нет
+  openCloseModal: false, //открыть закрыть модальное окно регистрации
 };
 
 export const registrationReduser = (state = defaultState, action) => {
@@ -23,6 +25,11 @@ export const registrationReduser = (state = defaultState, action) => {
         registrationMistake: false,
         registrationError: action.payload,
       };
+    case SET_MODAL_REGISTRATION:
+      return {
+        ...state,
+        openCloseModal: action.payload,
+      };
 
     default:
       return state;
@@ -37,4 +44,9 @@ export const setRegistrationError = (error) => ({
 export const setRegistrationErrorClear = () => ({
   type: SET_REGISTRATION_ERROR_CLEAR,
   payload: {},
+});
+//открывает закрывает модальное окно регистрации
+export const setModalRegistration = (bul) => ({
+  type: SET_MODAL_REGISTRATION,
+  payload: bul,
 });

@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import AddDataContainer from '../pages/AddDataContainer';
 import Home from '../pages/Home';
 import ListHousesContainer from '../pages/ListHousesContainer';
+import LoginContainer from '../pages/LoginContainer';
 import ProfileHouseContainer from '../pages/ProfileHouseContainer';
 
 function MyRouter() {
@@ -16,6 +17,7 @@ function MyRouter() {
       />
       <Route path="/profile/:urlId" component={ProfileHouseContainer} />
       <Route path="/addDataContainer" component={AddDataContainer} />
+      <Route path="/login" component={LoginContainer} />
       <Redirect to="/" />
     </Switch>
   );

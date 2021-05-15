@@ -10,6 +10,6 @@ export const schema = yup.object().shape({
   password1: yup.string().min(8, 'В пароле недостаточно символов'),
   password2: yup
     .string()
-    .oneOf([yup.ref('password1'), null], 'Неверный пароль')
+    .oneOf([yup.ref('password1')], 'Неверный пароль')
     .required('Пожалуйста повторите пароль'),
 });

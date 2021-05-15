@@ -4,19 +4,19 @@ const RegistrationError = ({ registrationError }) => {
   return (
     <>
       {registrationError.email && registrationError.username ? (
-        <h8 className="text-center text-danger pt-3">
+        <div className="text-center text-danger pt-3">
           Пользователь и email уже существует
-        </h8>
+        </div>
       ) : registrationError.username ? (
-        <h8 className="text-center text-danger pt-3">
+        <div className="text-center text-danger pt-3">
           Пользователь с этим именем уже существует
-        </h8>
+        </div>
       ) : registrationError.email ? (
-        <h8 className="text-center text-danger pt-3">
+        <div className="text-center text-danger pt-3">
           Данный email уже существует
-        </h8>
+        </div>
       ) : (
-        <h8 className="text-center text-danger pt-3">Что-то пошло не так</h8>
+        <div className="text-center text-danger pt-3">Что-то пошло не так</div>
       )}
     </>
   );
