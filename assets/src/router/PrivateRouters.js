@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { RegistrationContext } from '../state/registrationState/RegistrationContext';
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
+import { connect } from 'react-redux';
 
-function PrivateRoute({ component: Component, ...rest }) {
-  const { token } = useContext(RegistrationContext);
-
+function PrivateRoute({ token, component: Component, ...rest }) {
   return (
     <Route
       {...rest}
@@ -22,4 +20,9 @@ function PrivateRoute({ component: Component, ...rest }) {
   );
 }
 
-export default PrivateRoute;
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token, //токен
+  };
+};
+export default connect(mapStateToProps)(PrivateRoute);

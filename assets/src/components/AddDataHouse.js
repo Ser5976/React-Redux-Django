@@ -6,12 +6,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { radioStatus, radioType } from '../constants/objects'; //массивы для радиокнопок
 
 const AddDataHouse = ({
-  onSubmit,
-  isFetchError,
-  selectedHouse,
-  setImg,
+  onSubmit, //отправка данных дома
+  isFetchError, //булевое значение ошибки
+  selectedHouse, //данные выбранного дома
+  setImg, //изменение булевого значения, если выбрано фото
   img, //чтобы убрать название файла, в форме, при редактировании дома
+  сurrencies, //массив валют,для выбора валюты стоимости дома
 }) => {
+  //console.log(сurrencies)
   const {
     description,
     price,
@@ -23,7 +25,7 @@ const AddDataHouse = ({
   } = selectedHouse;
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
-  const s = status && String(status); // этот костыль для того чтобы и defaultValues угодить(нужна строка) и ошибку получать.(из-за числа на серваке)
+  const s = status && String(status); // этот костыль для того чтобы и defaultValues угодить(нужна строка) и ошибку при валидации получать.(из-за числа на серваке)
   const h = house_type && String(house_type);
   // вырезаем то что нужно из строки photo, для того что бы вставить в форму при редактировании дома
   const splitPhoto = () => {
@@ -47,11 +49,12 @@ const AddDataHouse = ({
       street: street,
       house_number: house_number,
       zip_code: zip_code,
+      currency: currency,
     }, // можно установить дефолтные значения полей формы
     mode: 'onBlur',
     resolver: yupResolver(schema),
   });
-
+  console.log(errors);
   return (
     <Container className="p-5">
       {isFetchError && (
@@ -115,10 +118,17 @@ const AddDataHouse = ({
                   <h5>Выбор валюты:</h5>
                 </Form.Label>
               </Col>
-              {/* <Col sm="4">
-                <Form.Control as="select" name="currency">
-                  <option>Выбрать</option>
-                  {currencies.map((valuta, index) => {
+
+              <Col sm="4">
+                <Form.Control
+                  as="select"
+                  {...register('currency')}
+                  className={
+                    errors.currency && 'text-danger border border-danger'
+                  }
+                >
+                  <option></option>
+                  {сurrencies.map((valuta, index) => {
                     return (
                       <option value={valuta.id} key={index}>
                         {valuta.symbol}
@@ -126,7 +136,7 @@ const AddDataHouse = ({
                     );
                   })}
                 </Form.Control>
-              </Col> */}
+              </Col>
             </Form.Group>
           </Col>
         </Row>

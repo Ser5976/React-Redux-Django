@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, CardColumns } from 'react-bootstrap';
 import MyCard from './MyCard';
 
-const ProfileListHouses = ({ listHouses }) => {
+const ProfileListHouses = ({ listHouses, rememberLastEvent }) => {
   return (
     <Container className="mt-3">
       <CardColumns style={{ columnCount: 'auto' }}>
@@ -14,6 +14,7 @@ const ProfileListHouses = ({ listHouses }) => {
               photo={item.photo}
               ownerUsername={item.owner_username}
               item={item}
+              rememberLastEvent={rememberLastEvent} //запомнить путь к последнему клику
             />
           );
         })}

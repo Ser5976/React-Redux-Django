@@ -6,8 +6,8 @@ import { setImg } from '../store/reducers/addDataReduser'; //чтобы убра
 import { connect } from 'react-redux';
 
 const ProfileHouseContainer = ({
-  loadingSelectedHouse,
-  selectedHouse,
+  loadingSelectedHouse, //запрос для списка домов
+  selectedHouse, // данные выбранного дома
   setImg,
 }) => {
   const { urlId } = useParams(); //  хук роутера ,который помогает получить значение params

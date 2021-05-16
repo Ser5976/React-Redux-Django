@@ -16,7 +16,9 @@ export const authAction = (data, history, pathname) => {
         setAuth(
           response.data.key,
           response.data.username,
-          response.data['user_id']
+          response.data['user_id'],
+          response.data.role,
+          response.data['is_admin']
         )
       );
       setUserStorage(response.data);

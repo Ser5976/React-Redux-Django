@@ -2,6 +2,7 @@ const SET_LIST_HOUSES = 'SET_LIST_HOUSES';
 const IS_FETCHING = 'IS_FETCHING';
 const SET_SELECTED_HOUSE = 'SET_SELECTED_HOUSE';
 const SET_SELECTED_HOUSE_CLEAR = 'SET_SELECTED_HOUSE_CLEAR';
+const SET_CURRENCIES = 'SET_CURRENCIES';
 
 const defaultState = {
   //получение  списка домов
@@ -14,6 +15,8 @@ const defaultState = {
   сount: 0,
   //количество элементов на странице
   pageSize: 3,
+  //массив имеющихся валют на серваке,для выбора валюты стоимости дома
+  сurrencies: [],
 };
 
 export const houseReducer = (state = defaultState, action) => {
@@ -41,6 +44,11 @@ export const houseReducer = (state = defaultState, action) => {
         ...state,
         isFetching: action.payload,
       };
+    case SET_CURRENCIES:
+      return {
+        ...state,
+        сurrencies: action.payload,
+      };
 
     default:
       return state;
@@ -64,3 +72,8 @@ export const setSelectedHouseClear = () => ({
 });
 //для крутёлки
 export const setIsFetching = (bul) => ({ type: IS_FETCHING, payload: bul });
+// запись массива валют
+export const setCurrencies = (data) => ({
+  type: SET_CURRENCIES,
+  payload: data,
+});

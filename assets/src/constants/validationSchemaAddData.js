@@ -4,6 +4,7 @@ import * as yup from 'yup';
 export const schema = yup.object().shape({
   description: yup.string().required('Обязательно поле для заполнения*'),
   price: yup.string().required('Обязательно поле для заполнения*'),
+  currency: yup.string().required(),
   status: yup.string().nullable().required(),
   house_type: yup.string().nullable().required(),
   city: yup.string().required('Обязательно поле для заполнения*'),

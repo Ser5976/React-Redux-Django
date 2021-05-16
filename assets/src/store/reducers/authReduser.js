@@ -9,6 +9,8 @@ const defaultState = {
   token: null,
   userName: null,
   userId: null,
+  role: null,
+  admin: false,
 };
 
 export const authReduser = (state = defaultState, action) => {
@@ -19,6 +21,8 @@ export const authReduser = (state = defaultState, action) => {
         token: action.token,
         userName: action.userName,
         userId: action.userId,
+        role: action.role,
+        admin: action.admin,
       };
     case SET_AUTH_CLEAR:
       return {
@@ -26,6 +30,8 @@ export const authReduser = (state = defaultState, action) => {
         token: null,
         userName: null,
         userId: null,
+        role: null,
+        admin: null,
       };
     case SET_AUTH_ERROR:
       return {
@@ -42,11 +48,13 @@ export const authReduser = (state = defaultState, action) => {
   }
 };
 //запись данных пользователя в стор
-export const setAuth = (token, userName, userId) => ({
+export const setAuth = (token, userName, userId, role, admin) => ({
   type: SET_AUTH,
   token,
   userName,
   userId,
+  role,
+  admin,
 });
 // удаление данных пользователя из стора
 export const setAuthClear = () => ({

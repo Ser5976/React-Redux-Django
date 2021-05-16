@@ -4,6 +4,7 @@ import {
   setListHouses,
   setIsFetching,
   setSelectedHouse,
+  setCurrencies,
 } from '../store/reducers/houseReduser';
 
 //запрос для списка домов,крутилка, обработка ошибок
@@ -32,3 +33,35 @@ export const loadingSelectedHouse = (urlId) => {
     }
   };
 };
+//Получения массива валют,для выбора валюты стоимости дома
+export const receiveCurrencies = (token) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(ModelUrls.CURRENCIES, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      // console.log(response);
+      dispatch(setCurrencies(response.data.results));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+/* //запрос для валюты
+const addCurrencies = async () => {
+  let token = receiveDataStorage('token');
+  try {
+    const response = await axios.get(ModelUrls.CURRENCIES, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+
+    dispatch({ type: 'ADD_CURRENCIES', payload: [...response.data.results] });
+  } catch (e) {
+    console.log(e);
+  }
+}; */

@@ -2,7 +2,7 @@ import { React } from 'react';
 import { Card } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-const MyCard = ({ price, photo, item, ownerUsername }) => {
+const MyCard = ({ price, photo, item, ownerUsername, rememberLastEvent }) => {
   return (
     <Card style={{ width: '21rem', margin: '.75rem' }}>
       <NavLink to={'/profile/' + item.id} className="nav-link">
@@ -11,6 +11,7 @@ const MyCard = ({ price, photo, item, ownerUsername }) => {
           src={photo}
           alt="фото"
           style={{ width: '300px', height: '197px' }}
+          onClick={rememberLastEvent} // запомнить путь к последнему клику
         />
       </NavLink>
       <Card.Body>

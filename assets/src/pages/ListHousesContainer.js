@@ -4,15 +4,17 @@ import ProfileListHouses from '../components/listhouses/ProfileListHouses';
 import { loadingListHouses } from '../action/houseAction';
 import { ModelUrls } from '../constants/urls';
 import PaginationComponent from '../components/listhouses/PaginationComponent';
+import { rememberLastEvent } from '../action/authAction';
 import { connect } from 'react-redux';
 
 const ListHousesContainer = ({
-  listHouses,
-  loadingListHouses,
-  isFetching,
-  pageSize,
-  count,
-  match,
+  listHouses, //список домов
+  loadingListHouses, //запрос для списка домов
+  rememberLastEvent, //запомнить путь к последнему клику
+  isFetching, //крутилка
+  pageSize, //количество элементов на странице
+  count, //общее количество элементов
+  match, //объект роутера
 }) => {
   // console.log(match);
   const urlPageNumer = match.params.page; //для пагинации через router
@@ -44,7 +46,10 @@ const ListHousesContainer = ({
         </Row>
       ) : (
         <>
-          <ProfileListHouses listHouses={listHouses} />
+          <ProfileListHouses
+            listHouses={listHouses}
+            rememberLastEvent={rememberLastEvent}
+          />
 
           <PaginationComponent
             count={count}
@@ -68,4 +73,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   loadingListHouses,
+  rememberLastEvent,
 })(ListHousesContainer);

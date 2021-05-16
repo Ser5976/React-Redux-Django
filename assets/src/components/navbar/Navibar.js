@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { AdminUrls } from '../../constants/urls';
 
 const Navibar = ({
   setSelectedHouseClear, //очистка стейта выбранного дома
   setModalRegistration, // открытие модального окна регистрации
   logout, //очистка storage(токен и т.д.(данных пользователя))
   setAuthClear, // удаление данных пользователя из стора
-  rememberLastEvent, //запомнить  путь к последнему клику
   token, //токен
   userName, //логин
+  role, //роль
+  admin, //администратор
 }) => {
   const history = useHistory();
+  // локальные стейты для выпадающих списков(открываются и закрываются на действие мыши)
   const [showCustomer, setShowCustomer] = useState(false);
   const [showBusiness, setShowBusiness] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -44,25 +48,62 @@ const Navibar = ({
               Замени на что-нибудь полезное
             </Link>
           </NavDropdown>
-          <NavDropdown
-            title="Для бизнеса"
-            className="mr-3"
-            show={showBusiness}
-            onMouseEnter={() => setShowBusiness(!showBusiness)}
-            onMouseLeave={() => setShowBusiness(!showBusiness)}
-            id="business-dropdown"
-          >
-            <Link
-              to="/addDataContainer"
-              className="dropdown-item"
-              onClick={(e) => {
-                setSelectedHouseClear(); //очистка стейта выбранного дома
-                rememberLastEvent(e); //запомнить клик(путь)
-              }}
+          {+role === 2 && (
+            <NavDropdown
+              title="Для бизнеса"
+              className="mr-3"
+              show={showBusiness}
+              onMouseEnter={() => setShowBusiness(!showBusiness)}
+              onMouseLeave={() => setShowBusiness(!showBusiness)}
+              id="business-dropdown"
             >
-              Разместить объявление
-            </Link>
-          </NavDropdown>
+              <Link
+                to="/addDataContainer"
+                className="dropdown-item"
+                onClick={() => {
+                  setSelectedHouseClear(); //очистка стейта выбранного дома
+                }}
+              >
+                Разместить объявление
+              </Link>
+            </NavDropdown>
+          )}
+          {(admin === true || admin === 'true') && (
+            <NavDropdown
+              title="Для администраторов"
+              show={showAdmin}
+              onMouseEnter={() => setShowAdmin(!showAdmin)}
+              onMouseLeave={() => setShowAdmin(!showAdmin)}
+              id="admin-dropdown"
+            >
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={AdminUrls.ADMIN}
+                className="dropdown-item"
+              >
+                Django admin
+              </a>
+              <NavDropdown.Divider />
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={AdminUrls.SWAGGER}
+                className="dropdown-item"
+              >
+                Swagger
+              </a>
+              <NavDropdown.Divider />
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={AdminUrls.SILK}
+                className="dropdown-item"
+              >
+                Silk
+              </a>
+            </NavDropdown>
+          )}
         </Nav>
 
         <Nav>
@@ -92,6 +133,7 @@ const Navibar = ({
                 onClick={() => {
                   logout(history);
                   setAuthClear();
+                  setShowAccount(false);
                 }}
               >
                 Выйти
