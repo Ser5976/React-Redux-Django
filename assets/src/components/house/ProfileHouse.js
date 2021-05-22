@@ -4,7 +4,7 @@ import { deleteData } from '../../action/sendingData'; // для удалени�
 import { Card, Container, Button } from 'react-bootstrap';
 import styles from '../../css/profileHouse.module.css';
 
-const ProfileHouse = ({ selectedHouse, setImg }) => {
+const ProfileHouse = ({ selectedHouse, setImg, userId }) => {
   const {
     description,
     address,
@@ -12,6 +12,7 @@ const ProfileHouse = ({ selectedHouse, setImg }) => {
     price,
     owner_username,
     currency_symbol,
+    owner,
   } = selectedHouse;
   const history = useHistory();
   const ad = { ...address };
@@ -49,23 +50,28 @@ const ProfileHouse = ({ selectedHouse, setImg }) => {
             Цена: {price} {currency_symbol}
           </h3>
 
-          <Button
-            variant="primary"
-            onClick={() => {
-              history.push('/addDataContainer');
-              setImg(true);
-            }}
-          >
-            Edit
-          </Button>
-
-          <span> </span>
-          <Button
-            variant="danger"
-            onClick={() => deleteData(selectedHouse.id, history)}
-          >
-            Delete
-          </Button>
+          {owner === +userId ? (
+            <>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  history.push('/addDataContainer');
+                  setImg(true);
+                }}
+              >
+                Edit
+              </Button>
+              <span> </span>
+              <Button
+                variant="danger"
+                onClick={() => deleteData(selectedHouse.id, history)}
+              >
+                Delete
+              </Button>
+            </>
+          ) : (
+            <Button variant="danger">Купить</Button>
+          )}
         </Card.Body>
       </Card>
     </Container>

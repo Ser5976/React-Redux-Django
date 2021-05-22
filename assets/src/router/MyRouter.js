@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import ListHousesContainer from '../pages/ListHousesContainer';
 import LoginContainer from '../pages/LoginContainer';
 import ProfileHouseContainer from '../pages/ProfileHouseContainer';
+import PersonalAccountContainer from '../pages/PersonalAccountContainer';
 import PrivateRoute from './PrivateRouters';
 
 function MyRouter() {
@@ -19,6 +20,7 @@ function MyRouter() {
       <PrivateRoute path="/profile/:urlId" component={ProfileHouseContainer} />
       <Route path="/addDataContainer" component={AddDataContainer} />
       <Route path="/login" component={LoginContainer} />
+      <Route path="/personalAccount" component={PersonalAccountContainer} />
       <Redirect to="/" />
     </Switch>
   );

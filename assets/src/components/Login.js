@@ -55,7 +55,7 @@ const Login = ({
 
             <Row>
               <Col>
-                <Button variant="primary" type="submit">
+                <Button variant="secondary" type="submit">
                   Войти
                 </Button>
               </Col>

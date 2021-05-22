@@ -49,19 +49,3 @@ export const receiveCurrencies = (token) => {
     }
   };
 };
-
-/* //запрос для валюты
-const addCurrencies = async () => {
-  let token = receiveDataStorage('token');
-  try {
-    const response = await axios.get(ModelUrls.CURRENCIES, {
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-    });
-
-    dispatch({ type: 'ADD_CURRENCIES', payload: [...response.data.results] });
-  } catch (e) {
-    console.log(e);
-  }
-}; */

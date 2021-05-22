@@ -9,6 +9,7 @@ const ProfileHouseContainer = ({
   loadingSelectedHouse, //запрос для списка домов
   selectedHouse, // данные выбранного дома
   setImg,
+  userId, //чтобы распознать кто владелец
 }) => {
   const { urlId } = useParams(); //  хук роутера ,который помогает получить значение params
   console.log(selectedHouse);
@@ -18,11 +19,18 @@ const ProfileHouseContainer = ({
     // eslint-disable-next-line
   }, []);
 
-  return <ProfileHouse selectedHouse={selectedHouse} setImg={setImg} />;
+  return (
+    <ProfileHouse
+      selectedHouse={selectedHouse}
+      setImg={setImg}
+      userId={userId}
+    />
+  );
 };
 const mapStateToProps = (state) => {
   return {
     selectedHouse: state.house.selectedHouse,
+    userId: state.auth.userId,
   };
 };
 export default connect(mapStateToProps, {

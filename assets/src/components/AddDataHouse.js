@@ -13,7 +13,7 @@ const AddDataHouse = ({
   img, //чтобы убрать название файла, в форме, при редактировании дома
   сurrencies, //массив валют,для выбора валюты стоимости дома
 }) => {
-  //console.log(сurrencies)
+  //console.log(selectedHouse);
   const {
     description,
     price,
@@ -244,7 +244,7 @@ const AddDataHouse = ({
           </Col>
         </Row>
         <hr />
-        <Button className="float-right" variant="primary" type="submit">
+        <Button className="float-right" variant="secondary" type="submit">
           Сохранить
         </Button>
       </Form>

@@ -83,7 +83,7 @@ const RegistrationForm = ({ onSubmit }) => {
         />
         <div className="invalid-feedback">{errors.password2?.message}</div>
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="secondary" type="submit">
         Зарегистрироваться
       </Button>
     </Form>

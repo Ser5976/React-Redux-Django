@@ -9,6 +9,7 @@ const Navibar = ({
   setModalRegistration, // открытие модального окна регистрации
   logout, //очистка storage(токен и т.д.(данных пользователя))
   setAuthClear, // удаление данных пользователя из стора
+  clearFormUser, //очистка formUser(данных пользователя которые в форме)
   token, //токен
   userName, //логин
   role, //роль
@@ -123,7 +124,7 @@ const Navibar = ({
               onMouseLeave={() => setShowAccount(!showAccount)}
               show={showAccount}
             >
-              <Link to="#" className="dropdown-item">
+              <Link to="/personalAccount" className="dropdown-item">
                 Личный кабинет
               </Link>
               <NavDropdown.Divider />
@@ -134,6 +135,7 @@ const Navibar = ({
                   logout(history);
                   setAuthClear();
                   setShowAccount(false);
+                  clearFormUser();
                 }}
               >
                 Выйти
