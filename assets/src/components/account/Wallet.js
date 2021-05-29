@@ -1,43 +1,63 @@
-import React from 'react';
-import { Card, Row, Col, Accordion, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, CardColumns, Button } from 'react-bootstrap';
 
-const Wallet = ({ wallet }) => {
-  // console.log(wallet);
-  const wallets = wallet.map((money) => {
-    return (
-      <Accordion key={money.id}>
-        <Card>
-          <Card.Header>
-            <Row className="justify-content-between">
-              <Col sm={7}>
-                <Accordion.Toggle
-                  as={Button}
-                  variant="link"
-                  eventKey={money.id}
+const Wallet = ({ wallet, activWallet }) => {
+  const [flag, setFlag] = useState(localStorage.getItem('disabled')); //это всё для блокирование кнопок кашельков,которые не активны
+  localStorage.setItem('disabled', flag);
+  // console.log(flag);
+
+  return (
+    <Card>
+      <Card.Header>Выбор карты для начисления средств</Card.Header>
+      <Card.Body>
+        <CardColumns>
+          {wallet.map((money, index) => {
+            return (
+              <Card
+                bg={
+                  money.is_default
+                    ? 'Success'.toLowerCase()
+                    : 'Light'.toLowerCase()
+                }
+                text={money.is_default ? 'white' : 'dark'}
+                key={index}
+              >
+                <div className="m-1">Карта {index + 1}</div>
+                <Card.Body>
+                  <Card.Title>
+                    {money.balance} {money.currency.symbol}
+                  </Card.Title>
+                  <div>
+                    <small>Остаток на {money.updated}</small>
+                  </div>
+                  <Card.Text>№{money.public_key}</Card.Text>
+                </Card.Body>
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  block
+                  className="border-0 text-white"
+                  disabled={
+                    +flag !== 0 ? (+flag === money.id ? false : true) : false
+                  }
+                  onClick={() => {
+                    activWallet(money.id, !money.is_default);
+                    setFlag(money.is_default ? 0 : money.id);
+                  }}
                 >
-                  {money.currency.name}
-                </Accordion.Toggle>
-              </Col>
-              <Col sm={4}> № {money.public_key}</Col>
-            </Row>
-          </Card.Header>
-          <Accordion.Collapse eventKey={money.id}>
-            <Card.Body>
-              {' '}
-              <Row className="justify-content-between">
-                <Col sm={4}>Ваш баланc:</Col>
-                <Col sm={5}>
-                  {money.balance} <span></span>
-                  {money.currency.symbol}
-                </Col>
-              </Row>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
-    );
-  });
-  return <>{wallets}</>;
+                  {money.is_default ? (
+                    <small>Карта активна</small>
+                  ) : (
+                    <small>Карта не активна</small>
+                  )}
+                </Button>
+              </Card>
+            );
+          })}
+        </CardColumns>
+      </Card.Body>
+    </Card>
+  );
 };
 
 export default Wallet;

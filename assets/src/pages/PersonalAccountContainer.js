@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import PersonalAccount from '../components/account/PersonalAccount';
-import { getUser, editAccount } from '../action/accountAction';
+import { getUser, editAccount, activWallet } from '../action/accountAction';
 import { setFormUser } from '../store/reducers/accountReduser';
 import { connect } from 'react-redux';
 
 const PersonalAccountContainer = ({
   formUser,
   user,
+  wallet,
   getUser,
   setFormUser,
   editAccount,
+  activWallet,
 }) => {
   //запускаем функцию, получаем данные пользователя из сервака
   useEffect(() => {
@@ -34,9 +36,11 @@ const PersonalAccountContainer = ({
   return (
     <PersonalAccount
       user={user}
+      wallet={wallet}
       formUser={formUser}
       handleSubmit={handleSubmit}
       handleChangeAccount={handleChangeAccount}
+      activWallet={activWallet}
     />
   );
 };
@@ -44,10 +48,12 @@ const mapStateToProps = (state) => {
   return {
     formUser: state.account.formUser, // данные пользователя( которые в форме)
     user: state.account.user, //полные данные пользователя
+    wallet: state.account.wallet, //данные кашелька пользователя
   };
 };
 export default connect(mapStateToProps, {
   getUser, // получение данных пользователя(user) из сервера
   setFormUser, //запись данных пользователя(только которые в форме) в formUser, нужно для формы личного кабинета
   editAccount, //изменение учётной записи на серваке
+  activWallet, //активирование выбранного кашелька
 })(PersonalAccountContainer);

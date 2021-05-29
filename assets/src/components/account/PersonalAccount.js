@@ -1,10 +1,13 @@
 import React from 'react';
 import { Container, Row, Col, Tab, ListGroup } from 'react-bootstrap';
 import AccountForm from './AccountForm';
+import Wallet from './Wallet';
 
 const PersonalAccount = ({
+  wallet,
   user,
   formUser,
+  activWallet, //активирование выбранного кашелька
   handleSubmit, // отправка formUser на сервак
   handleChangeAccount, // получение значений из формы и запись их в стор в formUser(для контроля за формой, а так же подготовка объекта для отправки на сервак)
 }) => {
@@ -28,10 +31,10 @@ const PersonalAccount = ({
                 Учётная запись
               </ListGroup.Item>
               <ListGroup.Item action variant="light" href="#second">
-                Профиль
+                Ваш кошелёк
               </ListGroup.Item>
               <ListGroup.Item action variant="light" href="#third">
-                Профиль
+                Ваши объявления
               </ListGroup.Item>
             </ListGroup>
           </Col>
@@ -44,7 +47,9 @@ const PersonalAccount = ({
                   handleChangeAccount={handleChangeAccount}
                 />
               </Tab.Pane>
-              <Tab.Pane eventKey="#second">второй</Tab.Pane>
+              <Tab.Pane eventKey="#second">
+                <Wallet wallet={wallet} activWallet={activWallet} />
+              </Tab.Pane>
               <Tab.Pane eventKey="#third">третий</Tab.Pane>
             </Tab.Content>
           </Col>

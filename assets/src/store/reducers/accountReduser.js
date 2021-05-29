@@ -1,6 +1,7 @@
 const SET_USER = 'SET_USER';
 const SET_FORM_USER = 'SET_FORM_USER';
 const CLEAR_FORM_USER = 'CLEAR_FORM_USER';
+const SET_WALLET = 'SET_WALLET';
 
 const defaultState = {
   user: {},
@@ -11,6 +12,7 @@ const defaultState = {
     username: '',
     role: '',
   },
+  wallet: [],
 };
 
 export const accountReduser = (state = defaultState, action) => {
@@ -37,6 +39,11 @@ export const accountReduser = (state = defaultState, action) => {
           role: '',
         },
       };
+    case SET_WALLET:
+      return {
+        ...state,
+        wallet: action.payload,
+      };
 
     default:
       return state;
@@ -48,3 +55,5 @@ export const setUser = (data) => ({ type: SET_USER, payload: data });
 export const setFormUser = (data) => ({ type: SET_FORM_USER, payload: data });
 //очистка formUser(данных пользователя которые в форме)
 export const clearFormUser = () => ({ type: CLEAR_FORM_USER });
+//запись данных кашелка пользователя
+export const setWallet = (data) => ({ type: SET_WALLET, payload: data });

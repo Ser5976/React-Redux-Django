@@ -1,13 +1,22 @@
 import axios from 'axios';
 import { ModelUrls } from '../constants/urls';
-import { setUser, setFormUser } from '../store/reducers/accountReduser'; //запись данных по пользователю в стор
+import {
+  setUser,
+  setFormUser,
+  setWallet,
+} from '../store/reducers/accountReduser'; //запись данных по пользователю в стор
+import { receiveDataStorage } from '../utilities/receiveDataStorage';
 import { setEditRole } from '../store/reducers/authReduser'; //редактирование статуса покупатель,продавец(в личном кабинете)
 
 // получение данных  пользователя(user) из сервера
 export const getUser = () => {
   return async (dispatch, getState) => {
-    const token = getState().auth.token;
-    const userId = getState().auth.userId;
+    const token = getState().auth.token
+      ? getState().auth.token
+      : receiveDataStorage('token');
+    const userId = getState().auth.userId
+      ? getState().auth.userId
+      : receiveDataStorage('userId');
     // при помощи getState() мы можем получать данные из стора
     try {
       const response = await axios.get(ModelUrls.USERS + userId, {
@@ -19,6 +28,7 @@ export const getUser = () => {
       // console.log(token);
       //console.log(userId);
       dispatch(setUser(response.data)); // запись данных(все данные) пользователя в стор
+      dispatch(setWallet([...response.data.wallets])); // запись данных кашелька пользователя  в стор
       const formUser = getState().account.formUser;
       const user = {
         ...formUser,
@@ -49,6 +59,29 @@ export const editAccount = (data) => {
       });
       dispatch(setEditRole(response.data.role));
       dispatch(getUser());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+//активация выбранного кашелька
+export const activWallet = (id, bul) => {
+  //console.log(bul);
+  return async (dispatch, getState) => {
+    const walletActiv = { is_default: bul };
+    const token = getState().auth.token;
+    try {
+      const response = await axios.patch(
+        ModelUrls.WALLETS + id + '/',
+        walletActiv,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+      dispatch(getUser());
+      console.log(response);
     } catch (e) {
       console.log(e);
     }
