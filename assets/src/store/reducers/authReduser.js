@@ -38,7 +38,7 @@ export const authReduser = (state = defaultState, action) => {
     case SET_AUTH_ERROR:
       return {
         ...state,
-        authError: true,
+        authError: action.payload,
       };
     case SET_PATHNAME:
       return {
@@ -67,7 +67,7 @@ export const setAuth = (token, userName, userId, role, admin) => ({
 export const setAuthClear = () => ({
   type: SET_AUTH_CLEAR,
 });
-//  активация ошибки при авторизации
+//  активация или удаление ошибки при авторизации
 export const setAuthError = (bul) => ({
   type: SET_AUTH_ERROR,
   payload: bul,

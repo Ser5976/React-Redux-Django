@@ -6,6 +6,7 @@ import { authReduser } from './reducers/authReduser';
 import { houseReducer } from './reducers/houseReduser';
 import { registrationReduser } from './reducers/registrationReduser';
 import { accountReduser } from './reducers/accountReduser';
+import { transactionReduser } from './reducers/transactionReduser';
 
 const rootReducer = combineReducers({
   house: houseReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   registration: registrationReduser,
   auth: authReduser,
   account: accountReduser,
+  transaction: transactionReduser,
 });
 
 export const store = createStore(

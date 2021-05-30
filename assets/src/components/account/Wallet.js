@@ -11,6 +11,9 @@ const Wallet = ({ wallet, activWallet }) => {
       <Card.Header>Выбор карты для начисления средств</Card.Header>
       <Card.Body>
         <CardColumns>
+          {wallet.length === 0 && (
+            <Card.Title className="text-center">Нет карт</Card.Title>
+          )}
           {wallet.map((money, index) => {
             return (
               <Card

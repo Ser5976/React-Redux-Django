@@ -15,8 +15,8 @@ const RateCurrensy = ({ date, rate }) => {
   };
   //console.log(mark);
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Header>Курсы валют на {date}</Card.Header>
+    <Card className="mt-5">
+      <Card.Header>Курс валют на {date}</Card.Header>
       <ListGroup variant="flush">
         {rate.map((element, index) => {
           return (
@@ -32,7 +32,7 @@ const RateCurrensy = ({ date, rate }) => {
                     {mark[index] ? element.nameCouple2 : element.nameCouple1}
                   </Button>
                 </Col>
-                <Col sm={4}>
+                <Col sm={5}>
                   {mark[index] ? element.couple2 : element.couple1}
                 </Col>
               </Row>

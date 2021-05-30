@@ -10,6 +10,7 @@ const Navibar = ({
   logout, //очистка storage(токен и т.д.(данных пользователя))
   setAuthClear, // удаление данных пользователя из стора
   clearFormUser, //очистка formUser(данных пользователя которые в форме)
+  setAuthError, // удаление ошибки авторизации
   token, //токен
   userName, //логин
   role, //роль
@@ -110,7 +111,11 @@ const Navibar = ({
         <Nav>
           {token ? null : (
             <Link to="/login">
-              <Button variant="outline-light" className=" mr-2">
+              <Button
+                variant="outline-light"
+                className=" mr-2"
+                onClick={() => setAuthError(false)}
+              >
                 Войти
               </Button>
             </Link>

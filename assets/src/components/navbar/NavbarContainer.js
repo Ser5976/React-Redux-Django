@@ -5,7 +5,11 @@ import RegistrationContainer from '../registration/RegistrationContainer';
 import { registrationAction } from '../../action/regisrationAction'; // отправление данных регистрации на сервер,  получение токена
 import { setModalRegistration } from '../../store/reducers/registrationReduser'; //открывает закрывает модальное окно регистрации
 import { logout } from '../../action/regisrationAction'; // очистка Storage
-import { setAuth, setAuthClear } from '../../store/reducers/authReduser';
+import {
+  setAuth,
+  setAuthClear,
+  setAuthError,
+} from '../../store/reducers/authReduser';
 import { receiveDataStorage } from '../../utilities/receiveDataStorage'; //Получение данных  из localStorage или sessionStorage
 import { clearFormUser } from '../../store/reducers/accountReduser'; //очистка formUser(данных пользователя которые в форме)
 import { connect } from 'react-redux';
@@ -18,6 +22,7 @@ const NavbarContainer = ({
   registrationMistake,
   setAuth, // запись данных пользователя в стор
   setAuthClear, // удаление данных пользователя из стора
+  setAuthError, // удаление ошибки авторизации
   clearFormUser,
   openCloseModal,
   token,
@@ -48,6 +53,7 @@ const NavbarContainer = ({
         admin={admin} //администратор
         setAuthClear={setAuthClear} // удаление данных пользователя из стора
         clearFormUser={clearFormUser} //очистка formUser(данных пользователя которые в форме)
+        setAuthError={setAuthError} // удаление ошибки авторизации
       />
       <RegistrationContainer
         openCloseModal={openCloseModal}
@@ -78,4 +84,5 @@ export default connect(mapStateToProps, {
   setAuth,
   setAuthClear,
   clearFormUser,
+  setAuthError,
 })(NavbarContainer);

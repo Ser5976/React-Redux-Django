@@ -11,8 +11,9 @@ import { removeDataStorage } from '../utilities/removeDataStorage'; //эта ф�
 import { setAuth } from '../store/reducers/authReduser'; //запись токена и т.д в стейт
 
 // отправление данных регистрации на сервер,  получение токена
-export const registrationAction = (data) => {
-  return async (dispatch) => {
+export const registrationAction = (data, history) => {
+  return async (dispatch, getState) => {
+    const pathname = getState().auth.pathname;
     try {
       const response = await axios.post(AuthUrls.REGISTRATION, data);
       dispatch(
@@ -28,6 +29,7 @@ export const registrationAction = (data) => {
       console.log(response);
       dispatch(setRegistrationErrorClear());
       dispatch(setModalRegistration(false));
+      history.push(pathname);
     } catch (e) {
       console.log(e.response);
       dispatch(setRegistrationError(e.response.data));

@@ -87,3 +87,26 @@ export const activWallet = (id, bul) => {
     }
   };
 };
+
+// удаление аккаунта
+export const deleteAccount = () => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token
+      ? getState().auth.token
+      : receiveDataStorage('token');
+    const userId = getState().auth.userId
+      ? getState().auth.userId
+      : receiveDataStorage('userId');
+    console.log(token);
+    try {
+      await axios.delete(ModelUrls.USERS + userId, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
