@@ -5,14 +5,14 @@ const Transaction = ({
   open,
   closeTransaction,
   selectedWallet,
-  itemCard,
+  selectedHouse,
   calculationMoney,
   transctionSabmit,
 }) => {
   const { currency } = selectedWallet;
   const valuta = { ...currency };
-  const { address, price, owner_username, currency_symbol } = itemCard;
-  // console.log(itemCard);
+  const { address, price, owner_username, currency_symbol } = selectedHouse;
+  // console.log(selectedHouse);
   const ad = { ...address };
   const { country, city, street, house_number, zip_code } = ad;
   return (

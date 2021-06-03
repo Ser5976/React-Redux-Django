@@ -3,18 +3,19 @@ import { Modal, Card, CardDeck, Row, Col, Button } from 'react-bootstrap';
 import styles from '../../css/profileModalWallet.module.css';
 
 const ProfileModalWallet = ({
-  closeWalet,
-  show,
-  wallet,
+  closeWalet, // закрытие модольного окна
+  show, // флаг открытия модального окна
+  wallet, // все кошелки пользователя
+  selectedHouse, //данные выбранного дома
+  setSelectedWallet, //запись данных выбранного кашелька
   showTransaction,
-  chooseWallet,
-  itemCard,
-  convertetTransaction,
-  addDataTransaction,
-  addCurrentExchange,
+  // chooseWallet,
+  convertetTransaction, //делаем конвертацию на transaction, если разные валюты
+  addDataTransaction, // добавляем данные для транзакции
+  addCurrentExchange, //добавление отношение валюты дома/на валюту кашелька в объект transaction
 }) => {
-  // console.log(itemCard);
-  const { currency_symbol, price } = itemCard; //нужен для конвертации в transaction
+  console.log(selectedHouse);
+  const { currency_symbol, price } = selectedHouse; //нужен для конвертации в transaction
 
   const [flag, setFlag] = useState({ green: false, disabled: true });
 
@@ -27,7 +28,7 @@ const ProfileModalWallet = ({
   };
 
   //console.log(wallet);
-  // console.log(itemCard);
+  // console.log(selectedHouse);
   return (
     <Modal show={show} onHide={closeWalet} size="lg">
       <Modal.Header closeButton>
@@ -43,7 +44,7 @@ const ProfileModalWallet = ({
                 onClick={() => {
                   // console.log(money);
                   changeBorder(index);
-                  chooseWallet(money);
+                  setSelectedWallet(money);
                   convertetTransaction(
                     money.currency.symbol,
                     currency_symbol,
@@ -52,9 +53,8 @@ const ProfileModalWallet = ({
                   ); // будет делать конвертацию на transaction, если разные валюты
                   addDataTransaction(
                     money.id,
-                    itemCard.id,
-                    // itemCard.currency,
-                    itemCard.price
+                    selectedHouse.id,
+                    selectedHouse.price
                   );
                 }}
               >

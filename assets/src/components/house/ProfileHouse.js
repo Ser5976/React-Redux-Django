@@ -4,7 +4,7 @@ import { deleteData } from '../../action/sendingData'; // для удалени�
 import { Card, Container, Button } from 'react-bootstrap';
 import styles from '../../css/profileHouse.module.css';
 
-const ProfileHouse = ({ selectedHouse, setImg, userId }) => {
+const ProfileHouse = ({ selectedHouse, setImg, userId, openWallet }) => {
   const {
     description,
     address,
@@ -70,7 +70,9 @@ const ProfileHouse = ({ selectedHouse, setImg, userId }) => {
               </Button>
             </>
           ) : (
-            <Button variant="danger">Купить</Button>
+            <Button variant="danger" onClick={openWallet}>
+              Купить
+            </Button>
           )}
         </Card.Body>
       </Card>

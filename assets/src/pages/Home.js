@@ -3,10 +3,16 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Jumbot from '../components/home/Jumbot';
 import Slider from '../components/home/Slider';
 import Futer from '../components/home/Futer';
-import { house1, house2, house3, house4 } from '../constants/img';
+//import { house1, house2, house3, house4 } from '../constants/img';
+import img1 from '../img/img1.jpg';
+import img2 from '../img/img2.jpg';
+import img3 from '../img/img3.jpg';
+import img4 from '../img/img3.jpg';
+import img5 from '../img/img5.jpg';
 import styles from '../css/home.module.css';
 
-const imgHouse = [house1, house2, house3, house4];
+const imgHouse = [img1, img2, img3, img4, img5];
+//const imgHouse = [house1, house2, house3, house4];
 
 const Home = () => {
   return (

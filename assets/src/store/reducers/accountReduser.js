@@ -4,15 +4,15 @@ const CLEAR_FORM_USER = 'CLEAR_FORM_USER';
 const SET_WALLET = 'SET_WALLET';
 
 const defaultState = {
-  user: {},
+  user: {}, // все данные пользователя
   formUser: {
     first_name: '',
     last_name: '',
     email: '',
     username: '',
     role: '',
-  },
-  wallet: [],
+  }, //данные пользователя(только, которые в форме) в formUser, нужно для формы личного кабинета
+  wallet: [], //данные кашелка пользователя
 };
 
 export const accountReduser = (state = defaultState, action) => {
