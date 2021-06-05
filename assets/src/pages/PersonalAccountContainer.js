@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PersonalAccount from '../components/account/PersonalAccount';
 import {
   getUser,
@@ -6,6 +6,7 @@ import {
   activWallet,
   deleteWallet,
   deleteAccount,
+  addCardWallet,
 } from '../action/accountAction';
 import { setFormUser } from '../store/reducers/accountReduser';
 import { currencyRate } from '../action/transactionAction';
@@ -24,6 +25,7 @@ const PersonalAccountContainer = ({
   activWallet,
   currencyRate,
   deleteAccount,
+  addCardWallet,
   deleteWallet,
 }) => {
   //запускаем функцию, получаем данные пользователя из сервака
@@ -46,6 +48,24 @@ const PersonalAccountContainer = ({
     e.preventDefault();
     editAccount(formUser);
   };
+  const [show, setShow] = useState(false); // для открытия  и закрытия модального окна добавление карты кошелька.
+
+  // сбор данных из формы добавления карты кошелька,создание объекта для отправки на сервак
+  const onSubmit = (data) => {
+    console.log(data);
+    const currency = JSON.parse(data.currency);
+    //чтобы передать объект currency(value: { name: 'доллар', symbol: 'USD' })через useForm  перевели его в JSON
+    //а когда получили, распарсили в объект
+    // Создадим объект кашелька для отправки на сервак
+    const cardWallet = {
+      balance: data.balance,
+      public_key: data.public_key,
+      owner: user.id,
+      currency: { name: currency.name, symbol: currency.symbol },
+    };
+    console.log(cardWallet);
+    addCardWallet(cardWallet);
+  };
 
   return (
     <PersonalAccount
@@ -60,6 +80,9 @@ const PersonalAccountContainer = ({
       deleteAccount={deleteAccount}
       deleteWallet={deleteWallet}
       logout={logout}
+      setShow={setShow}
+      show={show}
+      onSubmit={onSubmit}
     />
   );
 };
@@ -79,5 +102,6 @@ export default connect(mapStateToProps, {
   activWallet, //активирование выбранного кашелька
   currencyRate, //  получение курса валют(сайт ExchangeratesapiExchangeratesapi.io),вычесления результатов валютной пары и создание массива данных
   deleteAccount, //удаление аккаунта
+  addCardWallet, //добавить новую карту в кошелёк
   deleteWallet, //удаление карты кошелька
 })(PersonalAccountContainer);

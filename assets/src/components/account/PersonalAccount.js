@@ -4,11 +4,12 @@ import { useHistory } from 'react-router-dom';
 import AccountForm from './AccountForm';
 import Wallet from './Wallet';
 import RateCurrensy from './RateCurrensy';
+import ModalAddCardWallet from './ModalAddCardWallet';
 
 const PersonalAccount = ({
-  wallet,
-  user,
-  formUser,
+  wallet, //кошельки пользователя
+  user, // данные пользователя
+  formUser, // данные пользователь для формы в учётной записи
   rate, // массив данных валютных пар и результатов отношений валют
   date, // дата получения курса валют
   activWallet, //активирование выбранного кашелька
@@ -16,7 +17,10 @@ const PersonalAccount = ({
   handleChangeAccount, // получение значений из формы и запись их в стор в formUser(для контроля за формой, а так же подготовка объекта для отправки на сервак)
   deleteAccount, //удаление аккаунта
   deleteWallet, //удаление карты кошелька
-  logout, //// очистка Storage
+  logout, // очистка Storage
+  show, //флаг для открытия модального окна
+  setShow, // для открытия  и закрытия модального окна добавление карты кошелька.
+  onSubmit, // сбор данных из формы добавления карты кошелька,создание объекта для отправки на сервак
 }) => {
   const history = useHistory();
   return (
@@ -73,6 +77,7 @@ const PersonalAccount = ({
                   wallet={wallet}
                   activWallet={activWallet}
                   deleteWallet={deleteWallet}
+                  setShow={setShow}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="#third">третий</Tab.Pane>
@@ -80,6 +85,7 @@ const PersonalAccount = ({
           </Col>
         </Row>
       </Tab.Container>
+      <ModalAddCardWallet show={show} setShow={setShow} onSubmit={onSubmit} />
     </Container>
   );
 };

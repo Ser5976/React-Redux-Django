@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { Card, CardColumns, Button, ListGroup } from 'react-bootstrap';
 
-const Wallet = ({ wallet, activWallet, deleteWallet }) => {
+const Wallet = ({
+  wallet, // кошельки пользователя
+  activWallet, // активировать карту кошелька
+  deleteWallet, // удалить карту кошелька
+  setShow, // для открытия модального окна добавление карты кошелька.
+}) => {
   const [flag, setFlag] = useState(localStorage.getItem('disabled')); //это всё для блокирование кнопок кашельков,которые не активны
   localStorage.setItem('disabled', flag);
   // console.log(flag);
   const [remove, setRemove] = useState(false); // флаг это для удаления карты
-  console.log(remove);
+  // console.log(remove);
+
   return (
     <Card>
       <Card.Header>Выбор карты для начисления средств</Card.Header>
@@ -84,7 +90,11 @@ const Wallet = ({ wallet, activWallet, deleteWallet }) => {
           >
             Удалить карту
           </ListGroup.Item>
-          <ListGroup.Item action variant="success">
+          <ListGroup.Item
+            action
+            variant="success"
+            onClick={() => setShow(true)}
+          >
             Добавить карту
           </ListGroup.Item>
         </ListGroup>

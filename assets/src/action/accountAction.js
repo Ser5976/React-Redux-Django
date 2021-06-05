@@ -104,6 +104,23 @@ export const deleteWallet = (id) => {
     }
   };
 };
+// добавить новую карту в кошелёк
+export const addCardWallet = (cardWallet) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    try {
+      const response = await axios.post(ModelUrls.WALLETS, cardWallet, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      dispatch(getUser());
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
 
 // удаление аккаунта
 export const deleteAccount = () => {
