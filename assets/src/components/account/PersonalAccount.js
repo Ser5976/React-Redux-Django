@@ -15,6 +15,7 @@ const PersonalAccount = ({
   handleSubmit, // отправка formUser на сервак
   handleChangeAccount, // получение значений из формы и запись их в стор в formUser(для контроля за формой, а так же подготовка объекта для отправки на сервак)
   deleteAccount, //удаление аккаунта
+  deleteWallet, //удаление карты кошелька
   logout, //// очистка Storage
 }) => {
   const history = useHistory();
@@ -68,7 +69,11 @@ const PersonalAccount = ({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="#second">
-                <Wallet wallet={wallet} activWallet={activWallet} />
+                <Wallet
+                  wallet={wallet}
+                  activWallet={activWallet}
+                  deleteWallet={deleteWallet}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey="#third">третий</Tab.Pane>
             </Tab.Content>

@@ -35,6 +35,7 @@ const ProfileModalWallet = ({
         <Modal.Title>Ваш кошелёк</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {wallet.length === 0 && <h5 className="text-center ">Нет карт</h5>}
         <CardDeck>
           {wallet.map((money, index) => {
             return (

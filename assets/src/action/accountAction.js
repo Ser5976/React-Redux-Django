@@ -88,6 +88,23 @@ export const activWallet = (id, bul) => {
   };
 };
 
+//удаление карты кашелька
+export const deleteWallet = (id) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    try {
+      await axios.delete(ModelUrls.WALLETS + id + '/', {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      dispatch(getUser());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
 // удаление аккаунта
 export const deleteAccount = () => {
   return async (dispatch, getState) => {

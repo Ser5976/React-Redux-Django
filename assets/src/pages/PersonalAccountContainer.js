@@ -4,6 +4,7 @@ import {
   getUser,
   editAccount,
   activWallet,
+  deleteWallet,
   deleteAccount,
 } from '../action/accountAction';
 import { setFormUser } from '../store/reducers/accountReduser';
@@ -23,6 +24,7 @@ const PersonalAccountContainer = ({
   activWallet,
   currencyRate,
   deleteAccount,
+  deleteWallet,
 }) => {
   //запускаем функцию, получаем данные пользователя из сервака
   useEffect(() => {
@@ -56,6 +58,7 @@ const PersonalAccountContainer = ({
       rate={rate}
       date={date}
       deleteAccount={deleteAccount}
+      deleteWallet={deleteWallet}
       logout={logout}
     />
   );
@@ -76,4 +79,5 @@ export default connect(mapStateToProps, {
   activWallet, //активирование выбранного кашелька
   currencyRate, //  получение курса валют(сайт ExchangeratesapiExchangeratesapi.io),вычесления результатов валютной пары и создание массива данных
   deleteAccount, //удаление аккаунта
+  deleteWallet, //удаление карты кошелька
 })(PersonalAccountContainer);
