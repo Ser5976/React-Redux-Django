@@ -64,7 +64,7 @@ const PersonalAccountContainer = ({
       currency: { name: currency.name, symbol: currency.symbol },
     };
     console.log(cardWallet);
-    addCardWallet(cardWallet);
+    addCardWallet(cardWallet, setShow);
   };
 
   return (

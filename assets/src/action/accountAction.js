@@ -66,7 +66,7 @@ export const editAccount = (data) => {
 };
 //активация выбранного кашелька
 export const activWallet = (id, bul) => {
-  //console.log(bul);
+  console.log(bul);
   return async (dispatch, getState) => {
     const walletActiv = { is_default: bul };
     const token = getState().auth.token;
@@ -105,7 +105,7 @@ export const deleteWallet = (id) => {
   };
 };
 // добавить новую карту в кошелёк
-export const addCardWallet = (cardWallet) => {
+export const addCardWallet = (cardWallet, setShow) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
     try {
@@ -115,6 +115,7 @@ export const addCardWallet = (cardWallet) => {
         },
       });
       dispatch(getUser());
+      setShow(false);
       console.log(response);
     } catch (e) {
       console.log(e);
