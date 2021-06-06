@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError
 from rest_framework.settings import api_settings
 from rest_framework import serializers
-from rest_framework.fields import get_error_detail, SkipField, set_value
+from rest_framework.fields import get_error_detail, SkipField, set_value, empty
 
 from wallet.models import Wallet, Currency, Transaction
 
@@ -51,7 +51,7 @@ class WalletSerializer(serializers.ModelSerializer):
             validate_method = getattr(self, 'validate_' + field.field_name, None)
             primitive_value = field.get_value(data)
             try:
-                if field.field_name == 'currency':
+                if field.field_name == 'currency' and primitive_value is not empty:
                     symbol = primitive_value['symbol']
                     validated_value = Currency.objects.get(symbol=symbol)
                 else:
