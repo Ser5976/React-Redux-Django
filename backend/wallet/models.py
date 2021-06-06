@@ -65,6 +65,9 @@ class Wallet(DateTimeMixin):
         return '{}: ({}-{})'.format(self.id, self.currency.symbol,
                                     str(self.balance))
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
 
 class Transaction(DateTimeMixin):
     """
