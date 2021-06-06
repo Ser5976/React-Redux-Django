@@ -1,5 +1,6 @@
 import os
 import uuid
+from decimal import Decimal
 
 # Django
 from django.db import models
@@ -114,7 +115,7 @@ class Transaction(DateTimeMixin):
     def save(self, *args, **kwargs):
         currency = self.item.currency
         self.to_wallet = self.item.owner.wallets.get(currency=currency)
-        self.from_wallet.balance -= self.amount * self.current_exchange
+        self.from_wallet.balance -= self.amount * Decimal(self.current_exchange)
         self.from_wallet.save()
         self.to_wallet.balance += self.amount
         self.to_wallet.save()
