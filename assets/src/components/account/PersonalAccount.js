@@ -5,6 +5,7 @@ import AccountForm from './AccountForm';
 import Wallet from './Wallet';
 import RateCurrensy from './RateCurrensy';
 import ModalAddCardWallet from './ModalAddCardWallet';
+import UserHousesContainer from './userHouses/UserHousesContainer';
 
 const PersonalAccount = ({
   wallet, //кошельки пользователя
@@ -80,7 +81,9 @@ const PersonalAccount = ({
                   setShow={setShow}
                 />
               </Tab.Pane>
-              <Tab.Pane eventKey="#third">третий</Tab.Pane>
+              <Tab.Pane eventKey="#third">
+                <UserHousesContainer />
+              </Tab.Pane>
             </Tab.Content>
           </Col>
         </Row>

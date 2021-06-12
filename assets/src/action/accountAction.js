@@ -4,6 +4,8 @@ import {
   setUser,
   setFormUser,
   setWallet,
+  setUserHouses,
+  setIsFetching,
 } from '../store/reducers/accountReduser'; //запись данных по пользователю в стор
 import { receiveDataStorage } from '../utilities/receiveDataStorage';
 import { setEditRole } from '../store/reducers/authReduser'; //редактирование статуса покупатель,продавец(в личном кабинете)
@@ -140,6 +142,22 @@ export const deleteAccount = () => {
         },
       });
       window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+// запрос для получения списка домов пользователя,крутилка
+export const loadingUserHouses = () => {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.userId;
+    try {
+      dispatch(setIsFetching(true));
+      const response = await axios.get(
+        `${ModelUrls.ITEMS}?filter=auth&user=${userId}`
+      );
+      console.log(response);
+      dispatch(setUserHouses(response.data));
     } catch (e) {
       console.log(e);
     }
