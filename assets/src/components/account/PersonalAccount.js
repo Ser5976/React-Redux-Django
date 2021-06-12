@@ -24,6 +24,8 @@ const PersonalAccount = ({
   show, //флаг для открытия модального окна
   setShow, // для открытия  и закрытия модального окна добавление карты кошелька.
   onSubmit, // сбор данных из формы добавления карты кошелька,создание объекта для отправки на сервак
+  disabled, // для блокирования кнопки в AccountForm(сохранить настройки)
+  setDisabled, // изменение блокирования кнопки в AccountForm(сохранить настройки)
 }) => {
   const history = useHistory();
   return (
@@ -73,6 +75,8 @@ const PersonalAccount = ({
                   formUser={formUser}
                   handleSubmit={handleSubmit}
                   handleChangeAccount={handleChangeAccount}
+                  disabled={disabled}
+                  setDisabled={setDisabled}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="#second">

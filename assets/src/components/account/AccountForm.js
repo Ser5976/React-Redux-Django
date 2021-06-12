@@ -1,7 +1,13 @@
 import React from 'react';
 import { Col, Form, Button, Card } from 'react-bootstrap';
 
-const AccountForm = ({ formUser, handleSubmit, handleChangeAccount }) => {
+const AccountForm = ({
+  formUser, // данные пользователя( которые в форме)
+  handleSubmit, // отправка formUser на сервак
+  handleChangeAccount, // получение значений из формы и запись их в стор в formUser(для контроля за формой, а так же подготовка объекта для отправки на сервак)
+  disabled, //блокировка кнопки
+  setDisabled, // изменение блокирования кнопки в AccountForm(сохранить настройки)
+}) => {
   //console.log(formUser);
   const { first_name, last_name, email, role, username } = formUser;
 
@@ -22,6 +28,7 @@ const AccountForm = ({ formUser, handleSubmit, handleChangeAccount }) => {
                   name="first_name"
                   value={first_name ? first_name : ''} //реакт ругается на null
                   onChange={handleChangeAccount}
+                  onFocus={() => setDisabled(false)}
                 />
               </Col>
             </Form.Row>
@@ -38,6 +45,7 @@ const AccountForm = ({ formUser, handleSubmit, handleChangeAccount }) => {
                   name="last_name"
                   value={last_name ? last_name : ''} //реакт ругается на null
                   onChange={handleChangeAccount}
+                  onFocus={() => setDisabled(false)}
                 />
               </Col>
             </Form.Row>
@@ -54,6 +62,7 @@ const AccountForm = ({ formUser, handleSubmit, handleChangeAccount }) => {
                   name="username"
                   value={username}
                   onChange={handleChangeAccount}
+                  onFocus={() => setDisabled(false)}
                 />
               </Col>
             </Form.Row>
@@ -70,6 +79,7 @@ const AccountForm = ({ formUser, handleSubmit, handleChangeAccount }) => {
                   name="email"
                   value={email}
                   onChange={handleChangeAccount}
+                  onFocus={() => setDisabled(false)}
                 />
               </Col>
             </Form.Row>
@@ -94,6 +104,7 @@ const AccountForm = ({ formUser, handleSubmit, handleChangeAccount }) => {
                           name="role"
                           value={radio.value}
                           onChange={handleChangeAccount}
+                          onFocus={() => setDisabled(false)}
                         />
                       </Col>
                     );
@@ -103,7 +114,7 @@ const AccountForm = ({ formUser, handleSubmit, handleChangeAccount }) => {
             </Form.Row>
           </Form.Group>
 
-          <Button variant="secondary" type="submit">
+          <Button variant="secondary" type="submit" disabled={disabled}>
             Сохранить настройки
           </Button>
         </Form>

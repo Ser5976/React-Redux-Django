@@ -48,10 +48,12 @@ const PersonalAccountContainer = ({
     setFormUser(inputValueAccount);
     // console.log(inputValueAccount);
   };
+  const [disabled, setDisabled] = useState(true); // для блокирования кнопки в AccountForm(сохранить настройки)
   // отправка formUser на сервак
   const handleSubmit = (e) => {
     e.preventDefault();
     editAccount(formUser);
+    setDisabled(true);
   };
   const [show, setShow] = useState(false); // для открытия  и закрытия модального окна добавление карты кошелька.
 
@@ -90,6 +92,8 @@ const PersonalAccountContainer = ({
       onSubmit={onSubmit}
       userHouses={userHouses}
       isFetching={isFetching}
+      disabled={disabled}
+      setDisabled={setDisabled}
     />
   );
 };
