@@ -114,7 +114,15 @@ class Transaction(DateTimeMixin):
 
     def save(self, *args, **kwargs):
         currency = self.item.currency
-        self.to_wallet = self.item.owner.wallets.get(currency=currency)
+        owner_wallets = self.item.owner.wallets
+        default_wallets = owner_wallets.filter(is_default=True)
+        if default_wallets:
+            self.to_wallet = default_wallets[0]
+        else:
+            try:
+                self.to_wallet = owner_wallets.get(currency=currency)
+            except Wallet.DoesNotExist:
+                self.to_wallet = owner_wallets[0]
         self.from_wallet.balance -= self.amount * Decimal(self.current_exchange)
         self.from_wallet.save()
         self.to_wallet.balance += self.amount
