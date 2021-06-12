@@ -5,6 +5,7 @@ from api.serializers import (
     ItemSerializer, AddressSerializer, CommentSerializer
 )
 from todo.models import Item, Comment, Address
+from users.models import User
 
 
 class ItemViewSet(viewsets.ModelViewSet):
@@ -16,10 +17,11 @@ class ItemViewSet(viewsets.ModelViewSet):
         This view should return a list of all the purchases
         for the currently authenticated user.
         """
-        user = self.request.user
         queryset = Item.objects.order_by('-created_at')
         filter_param = self.request.query_params.get('filter')
         if filter_param is not None and filter_param == 'auth':
+            user_id = self.request.query_params.get('user')
+            user = User.objects.get(id=user_id)
             queryset = queryset.filter(owner=user)
 
         return queryset
