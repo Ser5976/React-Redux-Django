@@ -12,7 +12,6 @@ from rest_framework.fields import get_error_detail, SkipField, set_value
 
 from todo.models import Item, Address, Comment
 from users.models import User
-from wallet.models import Currency
 
 
 class AddressSerializer(serializers.ModelSerializer):
