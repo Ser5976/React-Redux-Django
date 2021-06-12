@@ -2,11 +2,11 @@ import React from 'react';
 import { Container, CardColumns } from 'react-bootstrap';
 import UserCard from './userCard';
 
-const ProfileUserHouses = ({ listHouses }) => {
+const ProfileUserHouses = ({ userHouses }) => {
   return (
     <Container className="mt-3">
       <CardColumns style={{ columnCount: 'auto' }}>
-        {listHouses.map((item) => {
+        {userHouses.map((item) => {
           return (
             <UserCard
               key={item.id}

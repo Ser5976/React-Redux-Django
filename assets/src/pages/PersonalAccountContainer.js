@@ -7,6 +7,7 @@ import {
   deleteWallet,
   deleteAccount,
   addCardWallet,
+  loadingUserHouses,
 } from '../action/accountAction';
 import { setFormUser } from '../store/reducers/accountReduser';
 import { currencyRate } from '../action/transactionAction';
@@ -20,6 +21,8 @@ const PersonalAccountContainer = ({
   rate,
   date,
   getUser,
+  userHouses,
+  isFetching,
   setFormUser,
   editAccount,
   activWallet,
@@ -27,11 +30,13 @@ const PersonalAccountContainer = ({
   deleteAccount,
   addCardWallet,
   deleteWallet,
+  loadingUserHouses,
 }) => {
   //запускаем функцию, получаем данные пользователя из сервака
   useEffect(() => {
     getUser();
     currencyRate();
+    loadingUserHouses();
     // eslint-disable-next-line
   }, []);
   // получение значений из формы и запись их в стор в formUser(для контроля за формой, а так же подготовка объекта для отправки на сервак)
@@ -83,6 +88,8 @@ const PersonalAccountContainer = ({
       setShow={setShow}
       show={show}
       onSubmit={onSubmit}
+      userHouses={userHouses}
+      isFetching={isFetching}
     />
   );
 };
@@ -93,6 +100,8 @@ const mapStateToProps = (state) => {
     wallet: state.account.wallet, //данные кашелька пользователя
     rate: state.transaction.rate, // массив данных валютных пар и результатов отношений валют
     date: state.transaction.date, // дата получения курса валют
+    userHouses: state.account.userHouses, // список домов пользователя
+    isFetching: state.account.isFetching, // крутилка при загрузки домов
   };
 };
 export default connect(mapStateToProps, {
@@ -104,4 +113,5 @@ export default connect(mapStateToProps, {
   deleteAccount, //удаление аккаунта
   addCardWallet, //добавить новую карту в кошелёк
   deleteWallet, //удаление карты кошелька
+  loadingUserHouses, //запрос для получения списка домов пользователя
 })(PersonalAccountContainer);

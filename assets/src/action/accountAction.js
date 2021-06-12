@@ -156,8 +156,8 @@ export const loadingUserHouses = () => {
       const response = await axios.get(
         `${ModelUrls.ITEMS}?filter=auth&user=${userId}`
       );
-      console.log(response);
-      dispatch(setUserHouses(response.data));
+      // console.log(response.data.results);
+      dispatch(setUserHouses(response.data.results));
     } catch (e) {
       console.log(e);
     }

@@ -1,19 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Row, Spinner } from 'react-bootstrap';
 import ProfileUserHouses from './ProfileUserHouses';
-import { loadingListHouses } from '../../../action/houseAction';
-import { connect } from 'react-redux';
 
 const UserHousesContainer = ({
-  listHouses, //список домов
-  loadingListHouses, //запрос для списка домов
+  userHouses, //список домов пользователя
   isFetching, //крутилка
 }) => {
-  useEffect(() => {
-    loadingListHouses();
-    // eslint-disable-next-line
-  }, []);
-
   return (
     <>
       {isFetching ? (
@@ -24,18 +16,10 @@ const UserHousesContainer = ({
           <Spinner animation="border" variant="dark" />
         </Row>
       ) : (
-        <ProfileUserHouses listHouses={listHouses} />
+        <ProfileUserHouses userHouses={userHouses} />
       )}
     </>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    listHouses: state.house.listHouses,
-    isFetching: state.house.isFetching,
-  };
-};
 
-export default connect(mapStateToProps, {
-  loadingListHouses,
-})(UserHousesContainer);
+export default UserHousesContainer;

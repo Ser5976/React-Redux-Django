@@ -13,6 +13,8 @@ const PersonalAccount = ({
   formUser, // данные пользователь для формы в учётной записи
   rate, // массив данных валютных пар и результатов отношений валют
   date, // дата получения курса валют
+  userHouses, //список домов пользователя
+  isFetching, // крутилка при загрузки домов
   activWallet, //активирование выбранного кашелька
   handleSubmit, // отправка formUser на сервак
   handleChangeAccount, // получение значений из формы и запись их в стор в formUser(для контроля за формой, а так же подготовка объекта для отправки на сервак)
@@ -82,7 +84,10 @@ const PersonalAccount = ({
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="#third">
-                <UserHousesContainer />
+                <UserHousesContainer
+                  userHouses={userHouses}
+                  isFetching={isFetching}
+                />
               </Tab.Pane>
             </Tab.Content>
           </Col>
