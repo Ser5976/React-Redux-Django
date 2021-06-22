@@ -60,8 +60,13 @@ const PersonalAccount = ({
                 action
                 variant="danger"
                 onClick={() => {
-                  deleteAccount();
-                  logout(history);
+                  const shoudRemove = window.confirm(
+                    'Вы уверены,что хотите удалить аккаунт?'
+                  );
+                  if (shoudRemove) {
+                    deleteAccount();
+                    logout(history);
+                  }
                 }}
               >
                 Удалить аккаунт

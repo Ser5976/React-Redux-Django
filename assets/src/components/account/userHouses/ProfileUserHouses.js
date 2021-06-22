@@ -6,6 +6,7 @@ const ProfileUserHouses = ({ userHouses }) => {
   return (
     <Container className="mt-3">
       <CardColumns style={{ columnCount: 'auto' }}>
+        {userHouses.length === 0 && <h2>У Вас нет объявлений!</h2>}
         {userHouses.map((item) => {
           return (
             <UserCard
